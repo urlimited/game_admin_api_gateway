@@ -28,7 +28,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "8.1",
+        "php": "^8.1",
         "ext-mbstring": "*",
         "ext-openssl": "*",
         "ext-pdo": "*",
@@ -36,6 +36,7 @@
         "apiato/core": "^6.2.5",
         "apiato/documentation-generator-container": "^1.0.0",
         "apiato/welcome-container": "^1.0.0",
+        "bref/laravel-bridge": "^1.2",
         "doctrine/dbal": "^3.1.2",
         "fideloper/proxy": "^4.4.1",
         "fruitcake/laravel-cors": "^1.0.6",

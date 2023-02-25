@@ -1,0 +1,38 @@
+service: gd-api-gateway
+
+provider:
+  name: aws
+  region: us-east-1
+  stage: dev
+  runtime: provided.al2
+
+
+package:
+  exclude:
+    - node_modules/**
+    - public/storage
+    - resources/assets/**
+    - storage/**
+    - tests/**
+
+functions:
+  web:
+    handler: public/index.php
+    timeout: 28
+    memorySize: 512
+    layers:
+      - ${bref:layer.php-82-fpm}
+    events:
+      - http: 'ANY /'
+      - http: 'ANY /{proxy+}'
+
+  artisan:
+    handler: artisan
+    timeout: 120
+    memorySize: 512
+    layers:
+      - ${bref:layer.php-82-fpm}
+      - ${bref:layer.console}
+
+plugins:
+  - ./vendor/bref/bref
