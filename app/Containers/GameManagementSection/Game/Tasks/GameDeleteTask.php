@@ -2,15 +2,15 @@
 
 namespace App\Containers\GameManagementSection\Game\Tasks;
 
-use App\Containers\GameManagementSection\Game\Data\Repositories\GameRepository;
+use App\Containers\GameManagementSection\Game\Data\Repositories\StructureRepository;
 use App\Ship\Parents\Tasks\Task;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class GameDeleteTask extends Task
 {
-    protected GameRepository $repository;
+    protected StructureRepository $repository;
 
-    public function __construct(GameRepository $repository)
+    public function __construct(StructureRepository $repository)
     {
         $this->repository = $repository;
     }
