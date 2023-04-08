@@ -9,7 +9,6 @@ use App\Ship\Criterias\ThisWhereHasThatCriteria;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Collection;
 use Prettus\Repository\Exceptions\RepositoryException;
-use Prettus\Validator\Exceptions\ValidatorException;
 
 class FilterGamesTask extends Task
 {
