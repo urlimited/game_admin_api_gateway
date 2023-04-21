@@ -7,11 +7,11 @@ use App\Ship\Parents\Transformers\Transformer;
 
 class UserPublicTransformer extends Transformer
 {
-    protected $availableIncludes = [
+    protected array $availableIncludes = [
 
     ];
 
-    protected $defaultIncludes = [
+    protected array $defaultIncludes = [
 
     ];
 

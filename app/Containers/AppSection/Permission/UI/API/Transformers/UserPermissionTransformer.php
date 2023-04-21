@@ -7,11 +7,11 @@ use App\Containers\AppSection\Permission\Models\Permission;
 
 class UserPermissionTransformer extends Transformer
 {
-    protected $availableIncludes = [
+    protected array $availableIncludes = [
 
     ];
 
-    protected $defaultIncludes = [
+    protected array $defaultIncludes = [
 
     ];
 

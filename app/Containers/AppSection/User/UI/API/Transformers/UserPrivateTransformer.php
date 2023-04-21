@@ -9,11 +9,11 @@ use App\Containers\AppSection\Role\UI\API\Transformers\UserRoleTransformer;
 
 class UserPrivateTransformer extends Transformer
 {
-    protected $availableIncludes = [
+    protected array $availableIncludes = [
 
     ];
 
-    protected $defaultIncludes = [
+    protected array $defaultIncludes = [
 
     ];
 
