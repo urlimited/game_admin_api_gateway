@@ -27,3 +27,4 @@ aliases
 /app/Containers/Vendor
 /public/vendor
 .editorconfig
+composer.lock
