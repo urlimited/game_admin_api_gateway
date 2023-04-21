@@ -8,11 +8,11 @@ use JetBrains\PhpStorm\ArrayShape;
 
 class PlayerTransformer extends Transformer
 {
-    protected $availableIncludes = [
+    protected array $availableIncludes = [
 
     ];
 
-    protected $defaultIncludes = [
+    protected array $defaultIncludes = [
 
     ];
 

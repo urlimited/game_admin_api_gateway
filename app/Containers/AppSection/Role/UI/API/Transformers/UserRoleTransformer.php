@@ -7,11 +7,11 @@ use App\Containers\AppSection\Role\Models\Role;
 
 class UserRoleTransformer extends Transformer
 {
-    protected $availableIncludes = [
+    protected array $availableIncludes = [
 
     ];
 
-    protected $defaultIncludes = [
+    protected array $defaultIncludes = [
 
     ];
 
