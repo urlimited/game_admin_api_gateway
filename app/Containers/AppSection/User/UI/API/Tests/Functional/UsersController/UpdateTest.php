@@ -14,7 +14,8 @@ use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
  * @desription Test provides assertion for correct players updating processes
  * Covered scenarios:
  *      1. Successfully update user
- *      2.Fail update other user
+ *      2. Successfully update another user data
+ *      3.Fail update other user
  * @group user
  * @group api
  * @covers \App\Containers\AppSection\User\UI\API\Controllers\UsersController::update
@@ -70,14 +71,92 @@ class UpdateTest extends ApiTestCase
             ]
         );
 
+     $this->assertDatabaseHas(
+            'user_has_permissions',
+            [
+                'user_id' => $user->id,
+                'permission_id' => $newPermission,
+            ]
+        );
+
+        $this->assertDatabaseHas(
+            'user_has_roles',
+            [
+                'role_id' => $newRole,
+                'user_id' => $user->id,
+            ]
+        );
+
+    }
+
+    public function testSuccessfullyUpdateAnotherUserData(): void
+    {
+        // 1. Initialization
+        $this->seed();
+        $adminRoleId = Role::query()->where('name', 'admin')->value('id');
+        $userRoleId = Role::query()->where('name', 'common_customer')->value('id');
+
+        $admin = User::factory()->createOne();
+        $admin->roles()->attach($adminRoleId);
+
+        $user = User::factory()->createOne();
+        $user->roles()->attach($userRoleId);
+
+        // 2. Scenario run
+        $newPermission = Permission::query()->orderByDesc('id')->value('id');
+        $newRole = Role::query()->orderByDesc('id')->value('id');
+
+        $data = [
+            'login' => 'user-test',
+            'password' => 'secret',
+            'status' => UserStatus::OnCheck,
+            'permissions' => [
+                $newPermission
+            ],
+            'roles' => [
+                $newRole
+            ]
+        ];
+
+        // 3. Assertion
+        $response = $this
+            ->actingAs($admin, 'api')
+            ->json('put',
+                route('api.private.users.update',
+                    [
+                        'user' => $user->id,
+                    ]
+                ),
+                $data,
+            );
+        $response->assertStatus(200);
+
+        $response->assertJsonStructure(
+            [
+                'data' => [
+                    'id',
+                    'login',
+                ]
+            ]
+        );
+
         $this->assertDatabaseHas(
             'user_has_permissions',
             [
                 'user_id' => $user->id,
-                'permission_id' => $newPermission->id,
+                'permission_id' => $newPermission,
+            ]
+        );
+
+        $this->assertDatabaseHas(
+            'user_has_roles',
+            [
+                'role_id' => $newRole,
+                'user_id' => $user->id,
             ]
         );
     }
+
 
     public function testFailUpdateOtherUser(): void
     {
