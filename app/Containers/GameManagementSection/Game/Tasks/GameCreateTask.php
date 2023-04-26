@@ -2,7 +2,7 @@
 
 namespace App\Containers\GameManagementSection\Game\Tasks;
 
-use App\Containers\GameManagementSection\Game\Data\Repositories\StructureRepository;
+use App\Containers\GameManagementSection\Game\Data\Repositories\GameRepository;
 use App\Ship\Parents\Tasks\Task;
 use App\Containers\GameManagementSection\Game\Models\Game;
 use Prettus\Validator\Exceptions\ValidatorException;
@@ -10,7 +10,7 @@ use Prettus\Validator\Exceptions\ValidatorException;
 class GameCreateTask extends Task
 {
     public function __construct(
-        protected StructureRepository $repository
+        protected GameRepository $repository
     )
     {
     }

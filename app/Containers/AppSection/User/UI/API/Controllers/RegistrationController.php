@@ -13,7 +13,6 @@ class RegistrationController extends ApiController
     public function register(UserStoreRequest $request): JsonResponse
     {
         $user = app(UserRegisterAction::class)->run($request);
-
         auth('api')->login($user);
 
         $request->session()->regenerate();

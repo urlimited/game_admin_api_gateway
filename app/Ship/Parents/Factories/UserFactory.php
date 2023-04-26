@@ -3,16 +3,15 @@
 namespace App\Ship\Parents\Factories;
 
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UserFactory extends Factory
 {
     public function definition(): array
     {
-        static $password;
-
         return [
             'login' => $this->faker->name,
-            'password' => $password ?: $password = Hash::make('secret'),
+            'password' => Hash::make('secret'),
         ];
     }
 }

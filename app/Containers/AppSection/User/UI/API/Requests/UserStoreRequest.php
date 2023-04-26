@@ -32,22 +32,7 @@ class UserStoreRequest extends Request
                 'required',
                 Rule::in(collect(UserStatus::cases())->map(fn($status) => $status->value)->toArray()),
             ],
-            'roles' => [
-                'required',
-                'array',
-            ],
-            'roles.*' => [
-                'integer',
-                'exists:roles,id',
-            ],
-            'permissions' => [
-                'required',
-                'array',
-            ],
-            'permissions.*' => [
-                'integer',
-                'exists:permissions,id',
-            ],
+
         ];
     }
 

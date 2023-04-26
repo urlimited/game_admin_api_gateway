@@ -50,5 +50,6 @@ class UserStoreTask extends Task
         }
 
         return $user;
+
     }
 }

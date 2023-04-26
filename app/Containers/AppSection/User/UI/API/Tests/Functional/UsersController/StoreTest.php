@@ -9,6 +9,9 @@ use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 
 /**
  * @desription test creates new users with permission, role and status//
+ * Covered scenarios:
+ *      1. Store successfully user
+
  * @group user
  * @group api
  * @covers \App\Containers\AppSection\User\UI\API\Controllers\UsersController::store
@@ -23,14 +26,11 @@ class StoreTest extends ApiTestCase
         $this->seed();
 
         $user = User::factory()->createOne();
-
         // 2. Scenario run
         $data = [
             'login' => 'admin-test',
             'password' => 'secret',
             'status' => UserStatus::Active,
-            'permissions' => [1],
-            'roles' => [1],
         ];
 
         // 3. Assertion
