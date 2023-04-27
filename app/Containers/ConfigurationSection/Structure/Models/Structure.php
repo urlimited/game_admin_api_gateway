@@ -2,6 +2,7 @@
 
 namespace App\Containers\ConfigurationSection\Structure\Models;
 
+use Apiato\Core\Traits\HasResourceKeyTrait;
 use App\Containers\ConfigurationSection\Structure\Data\Factories\StructureFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Structure extends Model
 {
+    use HasResourceKeyTrait;
     use HasFactory;
     use SoftDeletes;
 
@@ -32,6 +34,8 @@ class Structure extends Model
     protected $hidden = [
 
     ];
+
+
 
     protected static function newFactory(): StructureFactory
     {
