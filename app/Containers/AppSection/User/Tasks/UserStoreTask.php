@@ -48,7 +48,6 @@ class UserStoreTask extends Task
             Log::debug($e->getMessage());
             throw new CreateResourceFailedException();
         }
-
         return $user;
 
     }

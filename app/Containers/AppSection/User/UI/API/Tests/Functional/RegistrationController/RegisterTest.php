@@ -29,7 +29,6 @@ class RegisterTest extends ApiTestCase
         $data = [
             'login' => 'admin-test',
             'password' => 'secret',
-            'status'=>UserStatus::Active,
         ];
 
         //$response = $this->json('post', '/users/', $data);

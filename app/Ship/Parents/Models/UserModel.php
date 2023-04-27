@@ -26,6 +26,7 @@ abstract class UserModel extends LaravelUser
     protected $fillable = [
         'login',
         'password',
+        'status',
     ];
 
     protected $hidden = [

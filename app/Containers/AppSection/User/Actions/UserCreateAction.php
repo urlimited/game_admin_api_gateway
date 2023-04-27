@@ -18,8 +18,8 @@ class UserCreateAction extends Action
             ->run(
                 login: $validated['login'],
                 password: $validated['password'] ?? 'secret',
-                roles: [Role::query()->where('name','common_customer')->value('id')],
-                permissions:[],
+                roles: $validated['roles'],
+                permissions:$validated['permissions'],
                 status: $validated['status'],
             );
     }

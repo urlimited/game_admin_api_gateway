@@ -2,6 +2,8 @@
 
 namespace App\Containers\AppSection\User\UI\API\Tests\Functional\UsersController;
 
+use App\Containers\AppSection\Permission\Models\Permission;
+use App\Containers\AppSection\Role\Models\Role;
 use App\Containers\AppSection\User\Enums\UserStatus;
 use App\Containers\AppSection\User\Models\User;
 use App\Containers\AppSection\User\Tests\ApiTestCase;
@@ -26,11 +28,15 @@ class StoreTest extends ApiTestCase
         $this->seed();
 
         $user = User::factory()->createOne();
+        $roles = Role::query()->where('name','common_customer')->value('id');
+        $permission =Permission::query()->where('name','game-full-own-read')->value('id');
         // 2. Scenario run
         $data = [
             'login' => 'admin-test',
             'password' => 'secret',
             'status' => UserStatus::Active,
+            'roles'=>[$roles],
+            'permissions'=>[$permission],
         ];
 
         // 3. Assertion
