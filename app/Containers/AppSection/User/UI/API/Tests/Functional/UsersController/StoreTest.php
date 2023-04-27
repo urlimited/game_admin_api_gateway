@@ -2,6 +2,8 @@
 
 namespace App\Containers\AppSection\User\UI\API\Tests\Functional\UsersController;
 
+use App\Containers\AppSection\Permission\Models\Permission;
+use App\Containers\AppSection\Role\Models\Role;
 use App\Containers\AppSection\User\Enums\UserStatus;
 use App\Containers\AppSection\User\Models\User;
 use App\Containers\AppSection\User\Tests\ApiTestCase;
@@ -9,6 +11,9 @@ use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 
 /**
  * @desription test creates new users with permission, role and status//
+ * Covered scenarios:
+ *      1. Store successfully user
+
  * @group user
  * @group api
  * @covers \App\Containers\AppSection\User\UI\API\Controllers\UsersController::store
@@ -23,14 +28,15 @@ class StoreTest extends ApiTestCase
         $this->seed();
 
         $user = User::factory()->createOne();
-
+        $roles = Role::query()->where('name','common_customer')->value('id');
+        $permission =Permission::query()->where('name','game-full-own-read')->value('id');
         // 2. Scenario run
         $data = [
             'login' => 'admin-test',
             'password' => 'secret',
             'status' => UserStatus::Active,
-            'permissions' => [1],
-            'roles' => [1],
+            'roles'=>[$roles],
+            'permissions'=>[$permission],
         ];
 
         // 3. Assertion

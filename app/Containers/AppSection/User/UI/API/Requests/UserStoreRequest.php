@@ -48,6 +48,8 @@ class UserStoreRequest extends Request
                 'integer',
                 'exists:permissions,id',
             ],
+
+
         ];
     }
 

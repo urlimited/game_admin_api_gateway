@@ -10,6 +10,7 @@ use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 /**
  * @desription Covers following scenarios: \
  *  1. Standard game delete flow with Authenticated user
+ *
  * @group game
  * @group api
  * @covers \App\Containers\GameManagementSection\Game\UI\API\Controllers\GamesController::delete

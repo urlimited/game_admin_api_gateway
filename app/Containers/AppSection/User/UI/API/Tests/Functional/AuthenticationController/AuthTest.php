@@ -5,9 +5,13 @@ namespace App\Containers\AppSection\User\UI\API\Tests\Functional\AuthenticationC
 use App\Containers\AppSection\User\Models\User;
 use App\Containers\AppSection\User\Tests\ApiTestCase;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 
 /**
- * @desription Test provides assertion for correct users creating processes
+ * @desription Test provides assertion for correct users creating processes \
+ *      Covered scenarios:
+ *      1. Successful authentication of a user with correct credentials
+ *      2. Fails authentication with 401 status when user's credentials are incorrect
  * @group user
  * @group api
  * @covers \App\Containers\AppSection\User\UI\API\Controllers\AuthenticationController::auth
@@ -24,9 +28,10 @@ class AuthTest extends ApiTestCase
         User::factory()->createOne(
             [
                 'login' => 'admin-test',
-                'password' => 'secret',
+                'password' => Hash::make('secret'),
             ]
         );
+
 
         // 2. Scenario run
         $data = [
@@ -35,14 +40,16 @@ class AuthTest extends ApiTestCase
         ];
 
         $response = $this
-            ->json('post', route('api.private.users.auth'), $data, [
-                'Referer' => 'http://api.apiato.test/'
-            ]);
+            ->json(
+                'post',
+                route('api.private.users.auth'),
+                $data
+            );
 
         // 3. Assertion
         $response->assertStatus(200);
 
-        $response->assertCookie('game');
+        $response->assertCookie(env('SESSION_COOKIE') ?? 'gamedp');
 
         $this->assertEquals(
             $data['login'],
@@ -53,19 +60,19 @@ class AuthTest extends ApiTestCase
     public function testAuthFailsWithWrongCredentials(): void
     {
         // 1. Initialization
-        // $this->seed();
+        $this->seed();
 
         User::factory()->createOne(
             [
                 'login' => 'admin-test',
-                'password' => 'secret',
+                'password' => Hash::make('secret'),
             ]
         );
 
         // 2. Scenario run
         $data = [
             'login' => 'admin-test',
-            'password' => 'wrong password',
+            'password' => 'incorrect-password',
         ];
 
         $response = $this

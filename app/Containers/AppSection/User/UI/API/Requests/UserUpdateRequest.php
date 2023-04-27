@@ -51,9 +51,8 @@ class UserUpdateRequest extends Request
 
     public function authorize(): bool
     {
-        if(
-            $this->user()->hasRole('admin')
-            || $this->user()->hasPermission('user-full-other-update')
+        if (
+            $this->user()->hasPermission('user-full-other-update')
             || (
                 $this->user()->hasPermission('user-full-own-update')
                 && $this->user()->id == $this->route('user')->id

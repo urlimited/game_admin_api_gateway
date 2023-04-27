@@ -27,7 +27,7 @@ class User extends UserModel
 
     public function hasRole(array|string $rolesToBeChecked): bool
     {
-        if(is_string($rolesToBeChecked)) {
+        if (is_string($rolesToBeChecked)) {
             $rolesToBeChecked = [$rolesToBeChecked];
         }
 
@@ -42,12 +42,33 @@ class User extends UserModel
 
     public function hasPermission(array|string $permissionsToBeChecked): bool
     {
-        if(is_string($permissionsToBeChecked)) {
+        if (is_string($permissionsToBeChecked)) {
             $permissionsToBeChecked = [$permissionsToBeChecked];
         }
 
-        foreach ($permissionsToBeChecked as $permissionNameToBeChecked) {
-            if (!$this->getAttribute('permissions')->contains('name', $permissionNameToBeChecked)) {
+        $permissionsFromRoles = $this
+            ->roles()
+            ->with('permissions')
+            ->get()
+            ->map(
+                fn(Role $role) => $role
+                    ->permissions
+                    ->map(fn(Permission $permission) => $permission->name)
+            )->flatten();
+
+        $permissionsFromUser = $this
+            ->permissions
+            ->map(fn(Permission $permission) => $permission->name)
+            ->flatten();
+
+        $totalPermissions = $permissionsFromRoles->merge($permissionsFromUser);
+
+        if (is_string($permissionsToBeChecked)) {
+            return $totalPermissions->contains($permissionsToBeChecked);
+        }
+
+        foreach ( $permissionsToBeChecked as $permissionToBeChecked) {
+            if (!$totalPermissions->contains($permissionToBeChecked)) {
                 return false;
             }
         }

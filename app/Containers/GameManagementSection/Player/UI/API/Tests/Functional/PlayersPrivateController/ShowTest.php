@@ -36,7 +36,6 @@ class ShowTest extends ApiTestCase
                     'password' => Hash::make('password-test'),
                 ]
             );
-
         // 2. Scenario run
         $response = $this
             ->actingAs($user)
@@ -62,7 +61,6 @@ class ShowTest extends ApiTestCase
                 'data' => [
                     'login',
                     'game_id',
-                    'player_token'
                 ]
             ]
         );
