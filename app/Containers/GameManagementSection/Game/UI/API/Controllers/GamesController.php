@@ -76,7 +76,7 @@ class GamesController extends ApiController
         return response()->json($preparedUserData);
     }
 
-    public function show(GameShowRequest $request, Game $game)
+    public function show(GameShowRequest $request, Game $game): JsonResponse
     {
         $game = app(GameShowAction::class)->run($request, $game);
 

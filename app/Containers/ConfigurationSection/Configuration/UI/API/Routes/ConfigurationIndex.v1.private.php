@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @apiGroup           Structure
+ * @apiGroup           Configuration
  * @apiName            api.players.create
  * @api                {post} /v1/admins Create Admin type Users
  * @apiDescription     Create non client users for the Dashboard.
@@ -16,10 +16,9 @@
  * @apiUse             UserSuccessSingleResponse
  */
 
-use App\Containers\ConfigurationSection\Configuration\UI\API\Controllers\ConfigurationsPublicController;
-use App\Containers\GameManagementSection\Game\Middleware\ValidateGameTokenMiddleware;
+use App\Containers\ConfigurationSection\Configuration\UI\API\Controllers\ConfigurationsPrivateController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/configurations/{configuration}', [ConfigurationsPublicController::class, 'show'])
-    ->middleware([ValidateGameTokenMiddleware::class])
-    ->name('api.public.games.configurations.show');
+Route::get('/games/{game}/configurations/', [ConfigurationsPrivateController::class, 'index'])
+    ->middleware(['auth:sanctum'])
+    ->name('api.private.games.configurations.index');

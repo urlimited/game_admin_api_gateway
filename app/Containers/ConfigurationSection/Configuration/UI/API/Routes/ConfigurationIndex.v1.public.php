@@ -17,9 +17,8 @@
  */
 
 use App\Containers\ConfigurationSection\Configuration\UI\API\Controllers\ConfigurationsPublicController;
-use App\Containers\GameManagementSection\Game\Middleware\ValidateGameTokenMiddleware;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/configurations/{configuration}', [ConfigurationsPublicController::class, 'show'])
-    ->middleware([ValidateGameTokenMiddleware::class])
-    ->name('api.public.games.configurations.show');
+Route::get('/games/{game}/structure/{structure}/configurations/', [ConfigurationsPublicController::class, 'index'])
+    ->middleware(['auth:sanctum'])
+    ->name('api.private.games.configurations.show');

@@ -7,7 +7,7 @@ use App\Containers\ConfigurationSection\Structure\Models\Structure;
 use App\Containers\ConfigurationSection\Structure\Support\StructureValidator\Exceptions\InvalidDataProvidedForRuleException;
 use App\Containers\ConfigurationSection\Structure\Tasks\StructureProcessFields;
 use App\Containers\ConfigurationSection\Structure\Tasks\StructureStoreTask;
-use App\Containers\ConfigurationSection\Structure\UI\API\Requests\StructureStoreRequest;
+use App\Containers\ConfigurationSection\Structure\UI\API\Requests\ConfigurationStoreRequest;
 use App\Ship\Parents\Actions\Action;
 use Prettus\Validator\Exceptions\ValidatorException;
 
@@ -31,4 +31,5 @@ class StructureShowAction extends Action
                 $game
             );
     }
+
 }

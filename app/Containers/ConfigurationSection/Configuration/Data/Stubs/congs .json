@@ -1,0 +1,204 @@
+{
+  "resources": [
+    {
+      "id": 1,
+      "name": "gold",
+      "icon": "/path/to/icon"
+    },
+    {
+      "id": 2,
+      "name": "crystal",
+      "icon": "/path/to/icon"
+    }
+  ],
+  "buildings": [
+    {
+      "id": 1,
+      "health": 20,
+      "icon": "/path/to/icon",
+      "build_rate": 1,
+      "model": "/path/to/3d/model",
+      "name": "wood",
+      "type": "wall",
+      "upgrades": {
+        "lvl_1": {
+          "repair_rate": 1,
+          "defense": 2,
+          "health": 20,
+          "name": "Wood-door",
+          "price": 20
+        },
+        "lvl_2": {
+          "repair_rate": 1,
+          "defense": 4,
+          "health": 40,
+          "name": "steel door",
+          "price": 35
+        }
+      }
+    },
+    {
+      "id": 2,
+      "attack_range": 3,
+      "attack_rate": 1,
+      "damage": 5,
+      "icon": "/path/to/icon",
+      "build_rate": 1,
+      "model": "/path/to/3d/model",
+      "name": "Tower 0",
+      "type": "tower",
+      "upgrades": {
+        "lvl_1": {
+          "repair_rate": 1,
+          "defense": 2,
+          "health": 20,
+          "name": "Tower 1",
+          "price": 20
+        },
+        "lvl_2": {
+          "repair_rate": 1,
+          "defense": 4,
+          "health": 40,
+          "name": "Tower 2",
+          "price": 35
+        }
+      }
+    },
+    {
+      "id": 3,
+      "mining_rate": 1,
+      "resource_type_id": 1,
+      "mining_per_rate": 1,
+      "icon": "/path/to/icon",
+      "build_rate": 1,
+      "model": "/path/to/3d/model",
+      "name": "Mine 0",
+      "type": "mine",
+      "upgrades": {
+        "lvl_1": {
+          "repair_rate": 1,
+          "defense": 2,
+          "health": 20,
+          "name": "Mine 1",
+          "price": 20,
+          "mining_rate": 1,
+          "mining_per_rate": 2
+        },
+        "lvl_2": {
+          "repair_rate": 1,
+          "defense": 4,
+          "health": 40,
+          "name": "Mine 2",
+          "price": 35,
+          "mining_rate": 1,
+          "mining_per_rate": 4
+        }
+      }
+    }
+  ],
+  "characters": [
+    {
+      "id": 1,
+      "icon": "/path/to/icon",
+      "model": "/path/to/3d/model",
+      "type": "survivor",
+      "name": "Survivor 1",
+      "animations": {
+        "walk": "/path/to/animation",
+        "idle": "/path/to/animation",
+        "build": "/path/to/animation",
+        "dying": "/path/to/animation"
+      },
+      "repair_speed_rate": 1,
+      "build_speed_rate": 1,
+      "health": 100,
+      "defense": 2,
+      "movement_speed_rate": 1
+    },
+    {
+      "id": 2,
+      "icon": "/path/to/icon",
+      "model": "/path/to/3d/model",
+      "name": "Hunter 1",
+      "type": "hunter",
+      "animations": {
+        "walk": "/path/to/animation",
+        "idle": "/path/to/animation",
+        "attack": "/path/to/animation",
+        "dying": "/path/to/animation"
+      },
+      "attack_speed_rate": 1,
+      "attack_damage": 10,
+      "health": 400,
+      "defense": 2,
+      "movement_speed_rate": 1.2,
+      "upgrades": {
+        "lvl_1": {
+          "attack_speed_rate": 1,
+          "attack_damage": 20,
+          "health": 800,
+          "defense": 3,
+          "movement_speed_rate": 1.2
+        },
+        "lvl_2": {
+          "attack_speed_rate": 1,
+          "attack_damage": 40,
+          "health": 1200,
+          "defense": 4,
+          "movement_speed_rate": 1.2
+        }
+      },
+      "item_slots": 2,
+      "resource_rate_by_hit": 1
+    }
+  ],
+  "maps": [
+    {
+      "id": 1,
+      "name": "Snowy Valleys",
+      "tiles": [
+        {
+          "id": 1,
+          "name": "forBuild",
+          "movable": true,
+          "buildable": true,
+          "model": "/path/to/3d/model"
+        },
+        {
+          "id": 2,
+          "name": "blocked",
+          "movable": false,
+          "buildable": false,
+          "model": "/path/to/3d/model"
+        },
+        {
+          "id": 3,
+          "name": "moveable",
+          "movable": true,
+          "buildable": false,
+          "model": "/path/to/3d/model"
+        }
+      ],
+      "tiles_map": [
+        {
+          "position_x": 1,
+          "position_y": 1,
+          "tile_id": 1
+        },
+        {
+          "position_x": 2,
+          "position_y": 1,
+          "tile_id": 1
+        },
+        {
+          "position_x": 3,
+          "position_y": 1,
+          "tile_id": 2
+        }
+      ],
+      "size_width": 100,
+      "size_height": 100,
+      "icon": "/path/to/icon"
+    }
+  ]
+}
