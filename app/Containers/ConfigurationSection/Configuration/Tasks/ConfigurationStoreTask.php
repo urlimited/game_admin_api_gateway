@@ -17,21 +17,30 @@ class ConfigurationStoreTask extends Task
 
     /**
      * @param string $name
+     * @param int $gameId
      * @param string $schema
-     * @param int $author_id
+     * @param int $authorId
+     * @param int|null $structureId
      * @return Configuration
      * @throws ValidatorException
      */
-    public function run(string $name , ?int $structure_id,string $schema,int $author_id): Configuration
+    public function run(
+        string $name,
+        int $gameId,
+        string $schema,
+        int $authorId,
+        ?int $structureId = null
+    ): Configuration
     {
         return $this
             ->repository
             ->create(
                 [
                     'name' => $name,
-                    'structure_id' => $structure_id,
+                    'structure_id' => $structureId,
                     'schema' => $schema,
-                    'author_id' => $author_id
+                    'author_id' => $authorId,
+                    'game_id' => $gameId,
                 ]
             );
     }

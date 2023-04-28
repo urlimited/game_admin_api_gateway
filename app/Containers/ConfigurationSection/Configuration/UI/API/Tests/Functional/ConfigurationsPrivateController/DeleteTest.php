@@ -12,10 +12,9 @@ use App\Containers\ConfigurationSection\User\Models\User;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 
 /**
- * @desription Successfully delete configuration
- * Covered scenarious
+ * @desription Successfully delete configuration \
+ * Covered scenarios: \
  *       1. Successfully delete configuration
- *       2. Successfully delete configuration with null structure id
  * @group user
  * @group api
  * @covers \App\Containers\ConfigurationSection\Configuration\UI\API\Controllers\ConfigurationsPrivateController::delete
@@ -28,6 +27,7 @@ class DeleteTest extends ApiTestCase
     {
         // 1. Initialization
         $this->seed();
+
         $game = Game::factory()->createOne();
         $user = User::factory()
             ->hasAttached($game)
@@ -37,58 +37,24 @@ class DeleteTest extends ApiTestCase
             ->for($game)
             ->createOne();
 
-        $userGameId = $user->games->pluck('id')->first();
-
-        $configuration =Configuration::factory()
+        $configuration = Configuration::factory()
             ->for($structure)
+            ->for($game)
             ->createOne();
 
-
-       //2.Scenarios run
+        // 2. Scenarios run
         $response = $this
             ->actingAs($user, 'api')
             ->json('delete',
                 route('api.private.games.configurations.delete',
                     [
-                        'game' => $userGameId,
-                        'configuration'=>$configuration->id
+                        'game' => $game->getAttribute('id'),
+                        'configuration' => $configuration->getAttribute('id')
                     ]
                 )
             );
+
         // 3. Assertion
         $response->assertStatus(204);
-
     }
-
-    public function testSuccessfullyDeleteConfigurationWithNullStructureId(): void
-    {
-        // 1. Initialization
-        $this->seed();
-        $game = Game::factory()->createOne();
-        $user = User::factory()
-            ->hasAttached($game)
-            ->createOne();
-
-        $userGameId = $user->games->pluck('id')->first();
-
-        $configuration =Configuration::factory()
-            ->createOne();
-
-
-        //2.Scenarios run
-        $response = $this
-            ->actingAs($user, 'api')
-            ->json('delete',
-                route('api.private.games.configurations.delete',
-                    [
-                        'game' => $userGameId,
-                        'configuration'=>$configuration->id
-                    ]
-                )
-            );
-        // 3. Assertion
-        $response->assertStatus(204);
-
-    }
-
 }

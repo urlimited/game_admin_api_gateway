@@ -11,10 +11,9 @@ use App\Containers\ConfigurationSection\User\Models\User;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 
 /**
- * * @desription Successfully update configuration
- * Covered scenarious
- *       1. Successfully update configuration
- *        2. Successfully update configuration with null structure id
+ * @desription Successfully update configuration \
+ *      Covered scenarios: \
+ *          1. Successfully update configuration
  * @group user
  * @group api
  * @covers \App\Containers\ConfigurationSection\Configuration\UI\API\Controllers\ConfigurationsPrivateController::update
@@ -35,16 +34,14 @@ class UpdateTest extends ApiTestCase
             ->for($game)
             ->createOne();
 
-        $userGameId = $user->games->pluck('id')->first();
-
-        $configuration =Configuration::factory()
+        $configuration = Configuration::factory()
             ->for($structure)
+            ->for($game)
             ->createOne();
 
         // 2. Scenario run
         $data = [
-            'name'=>'rerum',
-            'structure_id'=>$configuration->structure_id,
+            'name' => 'rerum',
             'schema' => '[
                     {
                         "id": 1,
@@ -57,7 +54,6 @@ class UpdateTest extends ApiTestCase
                         "icon": "/path/to/icon"
                     }
                 ]',
-            'author_id'=>$user->id,
         ];
 
 
@@ -67,8 +63,8 @@ class UpdateTest extends ApiTestCase
             ->json('put',
                 route('api.private.games.configurations.update',
                     [
-                        'game' => $userGameId,
-                        'configuration'=>$configuration->id,
+                        'game' => $game->getAttribute('id'),
+                        'configuration' => $configuration->getAttribute('id'),
                     ]
                 ),
                 $data,
@@ -93,72 +89,4 @@ class UpdateTest extends ApiTestCase
             json_decode($response->getContent(), true)['data']['name']
         );
     }
-
-    public function testSuccessfullyUpdateConfigurationWithNullStructureId(): void
-    {
-        // 1. Initialization
-        $game = Game::factory()->createOne();
-        $user = User::factory()
-            ->hasAttached($game)
-            ->createOne();
-
-        $userGameId = $user->games->pluck('id')->first();
-
-        $configuration =Configuration::factory()
-            ->createOne();
-
-        // 2. Scenario run
-        $data = [
-            'name'=>'rerum',
-            'structure_id'=>null,
-            'schema' => '[
-                    {
-                        "id": 1,
-                        "name": "gold",
-                        "icon": "/path/to/icon"
-                    },
-                    {
-                        "id": 2,
-                        "name": "crystal",
-                        "icon": "/path/to/icon"
-                    }
-                ]',
-            'author_id'=>$user->id,
-        ];
-
-
-        // 3. Assertion
-        $response = $this
-            ->actingAs($user, 'api')
-            ->json('put',
-                route('api.private.games.configurations.update',
-                    [
-                        'game' => $userGameId,
-                        'configuration'=>$configuration->id,
-                    ]
-                ),
-                $data,
-            );
-
-        $response->assertStatus(200);
-
-        $response->assertJsonStructure(
-            [
-                'data' => [
-                    'id',
-                    'name',
-                    'structure_id',
-                    'schema',
-                    'author_id'
-                ]
-            ]
-        );
-
-        $this->assertEquals(
-            $data['name'],
-            json_decode($response->getContent(), true)['data']['name']
-        );
-    }
-
-
 }

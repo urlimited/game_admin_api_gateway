@@ -4,7 +4,7 @@ namespace App\Containers\ConfigurationSection\Configuration\UI\API\Requests;
 
 use App\Ship\Parents\Requests\Request;
 
-class ConfigurationStoreRequest extends Request
+class ConfigurationPrivateStoreRequest extends Request
 {
     /**
      * Id's that needs decoding before applying the validation rules.
@@ -26,7 +26,6 @@ class ConfigurationStoreRequest extends Request
         return [
             'structure_id' => ['nullable','exists:structures,id'],
             'schema' => ['required', 'json'],
-            'author_id' => ['required', 'exists:users,id'],
         ];
     }
 

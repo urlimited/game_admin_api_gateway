@@ -18,9 +18,6 @@ class FilterConfigurationsTask extends Task
     {
     }
 
-    /**
-     * @throws RepositoryException
-     */
     public function run(array $data): Collection
     {
 
@@ -29,10 +26,10 @@ class FilterConfigurationsTask extends Task
         foreach ($data as $key => $filterCriteria) {
             if ($key === 'structure_id') {
                 if (!is_null($filterCriteria)) {
-                    $result->where('structure_id', $filterCriteria);
+                    $result->pushCriteria(new ThisEqualThatCriteria('structure_id', $filterCriteria));
                 }
             } else {
-                $result->where($key, $filterCriteria);
+                $result->pushCriteria(new ThisEqualThatCriteria($key, $filterCriteria));
             }
         }
 

@@ -4,7 +4,7 @@ namespace App\Containers\ConfigurationSection\Configuration\UI\API\Requests;
 
 use App\Ship\Parents\Requests\Request;
 
-class ConfigurationIndexRequest extends Request
+class ConfigurationPrivateUpdateRequest extends Request
 {
     /**
      * Id's that needs decoding before applying the validation rules.
@@ -24,7 +24,8 @@ class ConfigurationIndexRequest extends Request
     public function rules(): array
     {
         return [
-
+            'schema' => ['required', 'json'],
+            'name' => ['required', 'string'],
         ];
     }
 

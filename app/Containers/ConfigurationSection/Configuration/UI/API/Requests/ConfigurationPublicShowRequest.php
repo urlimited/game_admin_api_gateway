@@ -2,9 +2,10 @@
 
 namespace App\Containers\ConfigurationSection\Configuration\UI\API\Requests;
 
-use App\Ship\Parents\Requests\Request;
+use App\Containers\ConfigurationSection\Configuration\UI\API\Requests\Contracts\ConfigurationShowRequestContract;
+use App\Ship\Parents\Requests\GameReceivableRequest;
 
-class ConfigurationShowRequest extends Request
+class ConfigurationPublicShowRequest extends GameReceivableRequest implements ConfigurationShowRequestContract
 {
     /**
      * Id's that needs decoding before applying the validation rules.

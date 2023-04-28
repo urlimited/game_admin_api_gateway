@@ -18,23 +18,22 @@ class ConfigurationUpdateTask extends Task
     /**
      * @param int $id
      * @param string $name
-     * @param int $structure_id
      * @param string $schema
-     * @param int $author_id
-
      * @return Configuration
      * @throws ValidatorException
      */
-    public function run(int $id, string $name, ?int $structure_id,string $schema, int $author_id ): Configuration
+    public function run(
+        int    $id,
+        string $name,
+        string $schema,
+    ): Configuration
     {
         return $this
             ->repository
             ->update(
                 [
                     'name' => $name,
-                    'structure_id' => $structure_id,
                     'schema' => $schema,
-                    'author_id' => $author_id
                 ],
                 $id
             );

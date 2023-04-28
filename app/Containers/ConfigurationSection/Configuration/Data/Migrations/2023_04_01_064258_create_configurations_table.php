@@ -13,9 +13,10 @@ return new class extends Migration
         Schema::create('configurations', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255)->index();
-            $table->foreignId('structure_id')->nullable()->constrained('structures');
+            $table->foreignId('structure_id')->nullable();
+            $table->foreignId('game_id');
             $table->json('schema');
-            $table->foreignId('author_id')->constrained('users');
+            $table->foreignId('author_id');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -4,7 +4,7 @@ namespace App\Containers\ConfigurationSection\Configuration\UI\API\Requests;
 
 use App\Ship\Parents\Requests\Request;
 
-class ConfigurationDeleteRequest extends Request
+class ConfigurationPrivateIndexRequest extends Request
 {
     /**
      * Id's that needs decoding before applying the validation rules.

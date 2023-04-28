@@ -11,10 +11,9 @@ use App\Containers\ConfigurationSection\User\Models\User;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 
 /**
- * @desription Test receive  configurations list
- *    Covered scenarios:
+ * @desription Test receive  configurations list \
+ *    Covered scenarios: \
  *      1.  Successfully receive the list of all configurations
- *      2.  Successfully receive the list of all configurations with null structure id
  * @group user
  * @group api
  * @covers \App\Containers\ConfigurationSection\Configuration\UI\API\Controllers\ConfigurationsPrivateController::index
@@ -27,7 +26,9 @@ class IndexTest extends ApiTestCase
     {
         // 1. Initialization
         $this->seed();
+
         $game = Game::factory()->createOne();
+
         $user = User::factory()
             ->hasAttached($game)
             ->createOne();
@@ -36,27 +37,27 @@ class IndexTest extends ApiTestCase
             ->for($game)
             ->createOne();
 
-        $userGameId = $user->games->pluck('id')->first();
-
         Configuration::factory()
             ->for($structure)
+            ->for($game)
             ->count(5)
             ->create();
 
         $data=[
             'structure_id'=>$structure->id
         ];
-        //2.Scenarios run
 
+        // 2.Scenarios run
         $response = $this
             ->actingAs($user, 'api')
             ->json('get',
                 route('api.private.games.configurations.index',
                     [
-                        'game' => $userGameId,
+                        'game' => $game->getAttribute('id'),
                     ]
                 ),$data
             );
+
         // 3. Assertion
         $response->assertStatus(200);
 
@@ -74,50 +75,4 @@ class IndexTest extends ApiTestCase
             ]
         );
     }
-
-    public function testSuccessfullyReceiveTheListOfAllConfigurationsWithNullStructureId(): void
-    {
-        // 1. Initialization
-        $this->seed();
-        $game = Game::factory()->createOne();
-        $user = User::factory()
-            ->hasAttached($game)
-            ->createOne();
-
-        $userGameId = $user->games->pluck('id')->first();
-
-        Configuration::factory()
-            ->count(5)
-            ->create();
-
-
-        //2.Scenarios run
-
-        $response = $this
-            ->actingAs($user, 'api')
-            ->json('get',
-                route('api.private.games.configurations.index',
-                    [
-                        'game' => $userGameId,
-                    ]
-                )
-            );
-        // 3. Assertion
-        $response->assertStatus(200);
-
-        $response->assertJsonStructure(
-            [
-                'data' => [
-                    '*' => [
-                        'id',
-                        'name',
-                        'structure_id',
-                        'schema',
-                        'author_id',
-                    ]
-                ]
-            ]
-        );
-    }
-
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\ConfigurationSection\Configuration\UI\API\Tests\Functional\ConfigurationsPrivateController;
+namespace App\Containers\ConfigurationSection\Configuration\UI\API\Tests\Functional\ConfigurationsPublicController;
 
 
 use App\Containers\ConfigurationSection\Configuration\Models\Configuration;
@@ -28,30 +28,26 @@ class ShowTest extends ApiTestCase
         $this->seed();
 
         $game = Game::factory()->createOne();
-        $user = User::factory()
-            ->hasAttached($game)
-            ->createOne();
-
-        $structure = Structure::factory()
-            ->for($game)
-            ->createOne();
 
         $configuration = Configuration::factory()
-            ->for($structure)
             ->for($game)
             ->createOne();
 
+        $gameApiToken = $game->createToken('game-api-token')->plainTextToken;
 
         // 2. Scenario running
         $response = $this
-            ->actingAs($user, 'api')
-            ->json('get',
-                route('api.private.games.configurations.show',
+            ->json(
+                method: 'get',
+                uri: route('api.public.games.configurations.show',
                     [
                         'game' => $game->getAttribute('id'),
                         'configuration' => $configuration->getAttribute('id')
                     ]
-                )
+                ),
+                headers: [
+                    'X-GameToken' => 'Bearer ' . $gameApiToken,
+                ]
             );
 
         // 3. Assertion
@@ -62,9 +58,7 @@ class ShowTest extends ApiTestCase
                 'data' => [
                     'id',
                     'name',
-                    'structure_id',
                     'schema',
-                    'author_id',
                 ]
             ]
         );
