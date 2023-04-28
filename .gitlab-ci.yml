@@ -1,5 +1,6 @@
 #build website:
 stages:
+  - init
   - build
   - deploy
 
@@ -30,6 +31,11 @@ cache:
 #    - serverless deploy
 #    - serverless invoke --function artisan --data "php artisan config:clear"
 #    - serverless invoke --function artisan --data "php artisan dump-autoload"
+
+initializing:
+  stage: init
+  script:
+    - echo "Running ..."
 
 pulling from gitlab:
   stage: build
