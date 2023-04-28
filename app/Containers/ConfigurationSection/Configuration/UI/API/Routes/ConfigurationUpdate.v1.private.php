@@ -16,9 +16,9 @@
  * @apiUse             UserSuccessSingleResponse
  */
 
-use App\Containers\ConfigurationSection\Configuration\UI\API\Controllers\ConfigurationsPublicController;
+use App\Containers\ConfigurationSection\Configuration\UI\API\Controllers\ConfigurationsPrivateController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/games/{game}/configurations/{configuration}', [ConfigurationsPublicController::class, 'show'])
+Route::put('/games/{game}/configurations/{configuration}', [ConfigurationsPrivateController::class, 'update'])
     ->middleware(['auth:sanctum'])
-    ->name('api.private.games.configurations.show');
+    ->name('api.private.games.configurations.update');

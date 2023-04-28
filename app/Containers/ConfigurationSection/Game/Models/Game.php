@@ -3,6 +3,7 @@
 namespace App\Containers\ConfigurationSection\Game\Models;
 
 use App\Containers\ConfigurationSection\Game\Data\Factories\GameFactory;
+use App\Containers\ConfigurationSection\Structure\Models\Structure;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Apiato\Core\Traits\HasResourceKeyTrait;
@@ -30,6 +31,11 @@ class Game extends Model
     protected $hidden = [
 
     ];
+
+    public function structures()
+    {
+        return $this->hasMany(Structure::class);
+    }
 
     protected static function newFactory(): GameFactory
     {

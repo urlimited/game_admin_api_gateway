@@ -25,13 +25,13 @@ class IndexTest extends ApiTestCase
 
         User::factory()->count(10)->create();
 
-        // 3. Assertion
+//        2. Scenarios run
         $response = $this
             ->actingAs($user, 'api')
             ->json('get',
                 route('api.private.users.index')
             );
-
+        // 3. Assertion
         $response->assertStatus(200);
 
         $response->assertJsonStructure(

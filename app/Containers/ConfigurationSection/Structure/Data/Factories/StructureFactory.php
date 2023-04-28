@@ -18,7 +18,6 @@ class StructureFactory extends Factory
     {
         $file = File::get(__DIR__ . '/../Stubs/DefaultStructureStub.json');
 
-
         return [
             'name' => $this->faker->word,
             'game_id' => Game::factory(),

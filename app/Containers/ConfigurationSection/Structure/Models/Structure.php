@@ -3,9 +3,12 @@
 namespace App\Containers\ConfigurationSection\Structure\Models;
 
 use Apiato\Core\Traits\HasResourceKeyTrait;
+use App\Containers\ConfigurationSection\Configuration\Models\Configuration;
+use App\Containers\ConfigurationSection\Game\Models\Game;
 use App\Containers\ConfigurationSection\Structure\Data\Factories\StructureFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -35,7 +38,15 @@ class Structure extends Model
 
     ];
 
+    public function game()
+    {
+        return $this->belongsTo(Game::class);
+    }
 
+    public function configurations()
+    {
+        return $this->hasMany(Configuration::class);
+    }
 
     protected static function newFactory(): StructureFactory
     {
