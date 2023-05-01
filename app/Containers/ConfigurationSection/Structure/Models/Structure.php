@@ -30,7 +30,7 @@ class Structure extends Model
     protected $fillable = [
         'name',
         'game_id',
-        'fields',
+        'schema',
         'version'
     ];
 

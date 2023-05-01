@@ -21,7 +21,7 @@ class StructureFactory extends Factory
         return [
             'name' => $this->faker->word,
             'game_id' => Game::factory(),
-            'fields' => json_encode(json_decode($file)),
+            'schema' => json_encode(json_decode($file)),
             'version'=>'13.25.42'
         ];
     }

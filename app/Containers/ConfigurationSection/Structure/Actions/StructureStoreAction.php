@@ -19,15 +19,13 @@ class StructureStoreAction extends Action
      */
     public function run(StructureStoreRequest $request, Game $game): Structure
     {
-        $fields = $request->get('fields');
-
-        $formattedFields = app(StructureProcessFields::class)->run($fields);
+        //$formattedFields = app(StructureProcessFields::class)->run($fields);
 
         return app(StructureStoreTask::class)
             ->run(
                 $request->get('name'),
                 $request->get('version'),
-                $formattedFields,
+                json_encode($request->get('schema')),
                 $game
             );
     }

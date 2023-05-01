@@ -19,20 +19,20 @@ class StructureStoreTask extends Task
     /**
      * @param string $name
      * @param string $version
-     * @param string $fields
+     * @param string $schema
      * @param Game $game
      * @return Structure
      * @throws ValidatorException
      */
-    public function run(string $name, string $version, string $fields, Game $game): Structure
+    public function run(string $name, string $version, string $schema, Game $game): Structure
     {
         return $this
             ->repository
             ->create(
                 [
                     'name' => $name,
-                    'game_id' => $game->id,
-                    'fields' => $fields,
+                    'game_id' => $game->getAttribute('id'),
+                    'schema' => $schema,
                     'version' => $version
                 ]
             );

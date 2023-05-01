@@ -2,34 +2,27 @@
 
 namespace App\Containers\ConfigurationSection\Structure\Actions;
 
-use App\Containers\ConfigurationSection\Game\Models\Game;
 use App\Containers\ConfigurationSection\Structure\Models\Structure;
-use App\Containers\ConfigurationSection\Structure\Support\StructureValidator\Exceptions\InvalidDataProvidedForRuleException;
-use App\Containers\ConfigurationSection\Structure\Tasks\StructureProcessFields;
-use App\Containers\ConfigurationSection\Structure\Tasks\StructureStoreTask;
-use App\Containers\ConfigurationSection\Structure\UI\API\Requests\ConfigurationStoreRequest;
+use App\Containers\ConfigurationSection\Structure\Tasks\StructureFilterTask;
 use App\Ship\Parents\Actions\Action;
-use Prettus\Validator\Exceptions\ValidatorException;
+use Prettus\Repository\Exceptions\RepositoryException;
 
 class StructureShowAction extends Action
 {
     /**
-     * @throws InvalidDataProvidedForRuleException
-     * @throws ValidatorException
+     * @param Structure $structure
+     * @return Structure
+     * @throws RepositoryException
      */
     public function run(Structure $structure): Structure
     {
-        $fields = $request->get('fields');
-
-        $formattedFields = app(StructureProcessFields::class)->run($fields);
-
-        return app(StructureStoreTask::class)
+        return app(StructureFilterTask::class)
             ->run(
-                $request->get('name'),
-                $request->get('version'),
-                $formattedFields,
-                $game
-            );
+                [
+                    'id' => $structure->getAttribute('id'),
+                ]
+            )
+            ->first();
     }
 
 }

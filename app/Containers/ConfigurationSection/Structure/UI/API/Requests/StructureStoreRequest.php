@@ -26,14 +26,14 @@ class StructureStoreRequest extends Request
         return [
             'name' => ['required', 'string', 'max:255'],
             'version' => ['required', 'string', 'regex:/^(\d{1,58}\.\d{1,58}\.\d{1,58})$/', 'max:60'],
-            'fields' => ['required', 'array'],
-            'fields.*.path' => ['required', 'string'],
-            'fields.*.data_type' => ['required', 'string', 'in:string,int,float,list_values,bool'],
-            'fields.*.min' => ['numeric', 'nullable'],
-            'fields.*.max' => ['numeric', 'nullable'],
-            'fields.*.regex' => ['string', 'nullable', 'regex:/^((?:(?:[^?+*{}()[\]\\|]+|\\.|\[(?:\^?\\.|\^[^\\]|[^\\^])(?:[^\]\\]+|\\.)*\]|\((?:\?[:=!]|\?<[=!]|\?>)?(?1)??\)|\(\?(?:R|[+-]?\d+)\))(?:(?:[?+*]|\{\d+(?:,\d*)?\})[?+]?)?|\|)*)$/'],
-            'fields.*.list_values' => ['array', 'nullable'],
-            'fields.*.list_values.*' => ['string']
+            'schema' => ['required', 'array'],
+            'schema.*.name' => ['required', 'string'],
+            'schema.*.data_type' => ['required', 'string', 'in:string,int,float,list_values,bool'],
+            'schema.*.min' => ['numeric', 'nullable'],
+            'schema.*.max' => ['numeric', 'nullable'],
+            'schema.*.regex' => ['string', 'nullable', 'regex:/^((?:(?:[^?+*{}()[\]\\|]+|\\.|\[(?:\^?\\.|\^[^\\]|[^\\^])(?:[^\]\\]+|\\.)*\]|\((?:\?[:=!]|\?<[=!]|\?>)?(?1)??\)|\(\?(?:R|[+-]?\d+)\))(?:(?:[?+*]|\{\d+(?:,\d*)?\})[?+]?)?|\|)*)$/'],
+            'schema.*.list_values' => ['array', 'nullable'],
+            'schema.*.list_values.*' => ['string']
         ];
     }
 

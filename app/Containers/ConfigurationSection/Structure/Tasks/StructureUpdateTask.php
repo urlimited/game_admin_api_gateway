@@ -32,7 +32,7 @@ class StructureUpdateTask extends Task
                 [
                     'name' => $name,
                     'game_id' => $gameId,
-                    'fields' => $fields,
+                    'schema' => $fields,
                     'version' => $version
                 ],
                 $id
