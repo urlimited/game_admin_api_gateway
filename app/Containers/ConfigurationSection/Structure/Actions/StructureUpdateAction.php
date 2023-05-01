@@ -13,14 +13,13 @@ use Prettus\Validator\Exceptions\ValidatorException;
 class StructureUpdateAction extends Action
 {
     /**
-     * @throws InvalidDataProvidedForRuleException
      * @throws ValidatorException
      */
     public function run(StructureUpdateRequest $request, Structure $structure): Structure
     {
-        $fields = $request->get('fields');
+        $schema = $request->get('schema');
 
-        $formattedFields = app(StructureProcessFields::class)->run($fields);
+        //$formattedFields = app(StructureProcessFields::class)->run($fields);
 
         return app(StructureUpdateTask::class)
             ->run(
@@ -28,7 +27,7 @@ class StructureUpdateAction extends Action
                 $request->get('name'),
                 $request->get('game_id'),
                 $request->get('version'),
-                $formattedFields,
+                json_encode($schema),
             );
     }
 }

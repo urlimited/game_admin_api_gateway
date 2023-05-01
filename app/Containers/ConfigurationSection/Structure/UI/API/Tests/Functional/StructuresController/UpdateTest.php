@@ -42,7 +42,7 @@ class UpdateTest extends ApiTestCase
             'id'=>$structure->id,
             'name'=>'rerum',
             'game_id'=>$structure->game_id,
-            'fields'=>[
+            'schema'=>[
                 [
                     'path' => 'field1',
                     'data_type' => 'string',
@@ -73,7 +73,7 @@ class UpdateTest extends ApiTestCase
                     'id',
                     'name',
                     'version',
-                    'fields',
+                    'schema',
                 ]
             ]
         );

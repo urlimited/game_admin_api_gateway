@@ -6,6 +6,7 @@ use Apiato\Core\Exceptions\InvalidTransformerException;
 use App\Containers\ConfigurationSection\Game\Models\Game;
 use App\Containers\ConfigurationSection\Structure\Actions\StructureDeleteAction;
 use App\Containers\ConfigurationSection\Structure\Actions\StructureIndexAction;
+use App\Containers\ConfigurationSection\Structure\Actions\StructureShowAction;
 use App\Containers\ConfigurationSection\Structure\Actions\StructureStoreAction;
 use App\Containers\ConfigurationSection\Structure\Actions\StructureUpdateAction;
 use App\Containers\ConfigurationSection\Structure\Models\Structure;
@@ -73,6 +74,7 @@ class StructuresController extends ApiController
 
     public function show(StructureShowRequest $request, Game $game, Structure $structure): JsonResponse
     {
+        $structure = app(StructureShowAction::class)->run($structure);
 
         $preparedStructureData = $this->transform($structure, StructureTransformer::class);
 

@@ -33,23 +33,23 @@ class ShowTest extends ApiTestCase
             ->hasAttached($game)
             ->createOne();
 
-        $userGameIds = $user->games->pluck('id')->first();
-
         $structure = Structure::factory()
-            ->createOne(['game_id' => $userGameIds]);
+            ->for($game)
+            ->createOne();
 
-        // 3. Assertion
+        // 2. Scenario run
         $response = $this
             ->actingAs($user, 'api')
             ->json('get',
                 route('api.private.games.structures.show',
                     [
-                        'game' => $userGameIds,
-                        'structure'=>$structure->id
+                        'game' => $game->getAttribute('id'),
+                        'structure'=> $structure->getAttribute('id')
                     ]
                 )
             );
 
+        // 3. Assertion
         $response->assertStatus(200);
 
         $response->assertJsonStructure(
@@ -58,7 +58,7 @@ class ShowTest extends ApiTestCase
                     'id',
                     'name',
                     'version',
-                    'fields',
+                    'schema',
                 ]
             ]
         );

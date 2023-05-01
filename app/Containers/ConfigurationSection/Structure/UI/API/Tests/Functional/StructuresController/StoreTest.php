@@ -35,7 +35,7 @@ class StoreTest extends ApiTestCase
         $data = [
                 'name'=>'rerum',
                 'game_id'=>$userGameIds,
-                'fields'=>[
+                'schema'=>[
                     [
                         'path' => 'field1',
                         'data_type' => 'string',

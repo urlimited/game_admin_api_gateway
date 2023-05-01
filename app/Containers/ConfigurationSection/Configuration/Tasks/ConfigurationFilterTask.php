@@ -10,7 +10,7 @@ use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Collection;
 use Prettus\Repository\Exceptions\RepositoryException;
 
-class FilterConfigurationsTask extends Task
+class ConfigurationFilterTask extends Task
 {
     public function __construct(
         protected ConfigurationRepository $repository

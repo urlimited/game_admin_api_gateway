@@ -56,7 +56,7 @@ class IndexTest extends ApiTestCase
                         'id',
                         'name',
                         'version',
-                        'fields',
+                        'schema',
                     ]
                 ]
             ]
