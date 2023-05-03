@@ -60,7 +60,7 @@ class HttpKernel extends LaravelHttpKernel
             StartSession::class,
 //             \Illuminate\Session\Middleware\AuthenticateSession::class,
             ShareErrorsFromSession::class,
-            VerifyCsrfToken::class,
+//            VerifyCsrfToken::class,
             SubstituteBindings::class,
         ],
 
@@ -72,7 +72,7 @@ class HttpKernel extends LaravelHttpKernel
             ProcessETagHeadersMiddleware::class,
             ProfilerMiddleware::class,
             StartSession::class,
-            VerifyCsrfToken::class,
+//            VerifyCsrfToken::class,
         ],
     ];
 
