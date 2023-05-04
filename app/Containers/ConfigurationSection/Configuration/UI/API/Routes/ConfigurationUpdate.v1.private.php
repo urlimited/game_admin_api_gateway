@@ -19,6 +19,6 @@
 use App\Containers\ConfigurationSection\Configuration\UI\API\Controllers\ConfigurationsPrivateController;
 use Illuminate\Support\Facades\Route;
 
-Route::put('/games/{game}/configurations/{configuration}', [ConfigurationsPrivateController::class, 'update'])
+Route::put('/configurations/{configuration}', [ConfigurationsPrivateController::class, 'update'])
     ->middleware(['auth:sanctum'])
     ->name('api.private.games.configurations.update');
