@@ -3,12 +3,12 @@
 namespace App\Containers\GameManagementSection\Game\Actions;
 
 use App\Containers\GameManagementSection\Game\Models\Game;
-use App\Containers\GameManagementSection\Game\UI\API\Requests\GameApiTokenReCreateRequest;
+use App\Containers\GameManagementSection\Game\UI\Web\Requests\GameWebApiTokenReCreateRequest;
 use App\Ship\Parents\Actions\Action;
 
 class GameApiTokenReCreateAction extends Action
 {
-    public function run(GameApiTokenReCreateRequest $request, Game $game): Game
+    public function run(GameWebApiTokenReCreateRequest $request, Game $game): Game
     {
         $game->tokens()->delete();
 

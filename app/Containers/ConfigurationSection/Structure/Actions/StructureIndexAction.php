@@ -2,8 +2,8 @@
 
 namespace App\Containers\ConfigurationSection\Structure\Actions;
 
-use App\Containers\ConfigurationSection\Game\Models\Game;
 use App\Containers\ConfigurationSection\Structure\Tasks\StructureFilterTask;
+use App\Containers\ConfigurationSection\Structure\UI\Web\Requests\StructureWebIndexRequest;
 use App\Ship\Parents\Actions\Action;
 use Illuminate\Support\Collection;
 use Prettus\Repository\Exceptions\RepositoryException;
@@ -13,11 +13,11 @@ class StructureIndexAction extends Action
     /**
      * @throws RepositoryException
      */
-    public function run(Game $game): Collection
+    public function run(StructureWebIndexRequest $request): Collection
     {
         return app(StructureFilterTask::class)->run(
             [
-                'game_id' => $game->id
+                'game_id' => $request->get('game_id')
             ]
         );
     }

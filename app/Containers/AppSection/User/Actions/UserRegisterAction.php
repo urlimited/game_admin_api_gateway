@@ -6,14 +6,14 @@ use App\Containers\AppSection\Role\Models\Role;
 use App\Containers\AppSection\User\Enums\UserStatus;
 use App\Containers\AppSection\User\Models\User;
 use App\Containers\AppSection\User\Tasks\UserStoreTask;
-use App\Containers\AppSection\User\UI\API\Requests\UserRegisterRequest;
+use App\Containers\AppSection\User\UI\Web\Requests\UserWebRegisterRequest;
 use App\Ship\Parents\Actions\Action;
 
 
 
 class UserRegisterAction extends Action
 {
-    public function run(UserRegisterRequest $request): User
+    public function run(UserWebRegisterRequest $request): User
     {
         $roleId = Role::query()
             ->where('name','common_customer')

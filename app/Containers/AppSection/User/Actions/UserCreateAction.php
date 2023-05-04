@@ -2,16 +2,14 @@
 
 namespace App\Containers\AppSection\User\Actions;
 
-use App\Containers\AppSection\Permission\Models\Permission;
-use App\Containers\AppSection\Role\Models\Role;
 use App\Containers\AppSection\User\Models\User;
 use App\Containers\AppSection\User\Tasks\UserStoreTask;
-use App\Containers\AppSection\User\UI\API\Requests\UserStoreRequest;
+use App\Containers\AppSection\User\UI\Web\Requests\UserWebStoreRequest;
 use App\Ship\Parents\Actions\Action;
 
 class UserCreateAction extends Action
 {
-    public function run(UserStoreRequest $request): User
+    public function run(UserWebStoreRequest $request): User
     {
         $validated = $request->validated();
         return app(UserStoreTask::class)

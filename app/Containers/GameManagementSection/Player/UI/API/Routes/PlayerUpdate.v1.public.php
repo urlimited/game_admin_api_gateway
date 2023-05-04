@@ -18,9 +18,9 @@
 
 use App\Containers\GameManagementSection\Game\Middleware\ValidateGameTokenMiddleware;
 use App\Containers\GameManagementSection\Player\Middleware\ValidatePlayerTokenMiddleware;
-use App\Containers\GameManagementSection\Player\UI\API\Controllers\PlayersPublicController;
+use App\Containers\GameManagementSection\Player\UI\API\Controllers\PlayersApiController;
 use Illuminate\Support\Facades\Route;
 
-Route::put('/players', [PlayersPublicController::class, 'update'])
+Route::put('/players', [PlayersApiController::class, 'update'])
     ->middleware([ValidateGameTokenMiddleware::class, ValidatePlayerTokenMiddleware::class])
     ->name('api.public.players.update');
