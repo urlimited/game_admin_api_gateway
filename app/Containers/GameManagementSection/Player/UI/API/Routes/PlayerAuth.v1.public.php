@@ -17,9 +17,9 @@
  */
 
 use App\Containers\GameManagementSection\Game\Middleware\ValidateGameTokenMiddleware;
-use App\Containers\GameManagementSection\Player\UI\API\Controllers\PlayersPublicController;
+use App\Containers\GameManagementSection\Player\UI\API\Controllers\PlayersApiController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/players/auth', [PlayersPublicController::class, 'auth'])
+Route::post('/players/auth', [PlayersApiController::class, 'auth'])
     ->middleware([ValidateGameTokenMiddleware::class])
     ->name('api.public.players.auth');

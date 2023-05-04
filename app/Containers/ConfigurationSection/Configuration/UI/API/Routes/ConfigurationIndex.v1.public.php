@@ -16,9 +16,9 @@
  * @apiUse             UserSuccessSingleResponse
  */
 
-use App\Containers\ConfigurationSection\Configuration\UI\API\Controllers\ConfigurationsPublicController;
+use App\Containers\ConfigurationSection\Configuration\UI\API\Controllers\ConfigurationsApiController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/configurations/', [ConfigurationsPublicController::class, 'index'])
+Route::get('/configurations/', [ConfigurationsApiController::class, 'index'])
     ->middleware(['auth:sanctum'])
     ->name('api.private.games.configurations.show');

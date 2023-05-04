@@ -16,26 +16,15 @@ class StructureUpdateTask extends Task
     }
 
     /**
+     * @param array $data
      * @param int $id
-     * @param string $name
-     * @param int $gameId
-     * @param string $version
-     * @param string $fields
      * @return Structure
      * @throws ValidatorException
      */
-    public function run(int $id, string $name, int $gameId, string $version, string $fields): Structure
+    public function run(array $data, int $id): Structure
     {
         return $this
             ->repository
-            ->update(
-                [
-                    'name' => $name,
-                    'game_id' => $gameId,
-                    'schema' => $fields,
-                    'version' => $version
-                ],
-                $id
-            );
+            ->update($data, $id);
     }
 }

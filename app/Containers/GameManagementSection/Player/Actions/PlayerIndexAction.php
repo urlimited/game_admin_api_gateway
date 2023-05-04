@@ -4,7 +4,7 @@ namespace App\Containers\GameManagementSection\Player\Actions;
 
 use App\Containers\GameManagementSection\Player\Models\Player;
 use App\Containers\GameManagementSection\Player\Tasks\PlayerFilterTask;
-use App\Containers\GameManagementSection\Player\UI\API\Requests\PlayerPrivateIndexRequest;
+use App\Containers\GameManagementSection\Player\UI\Web\Requests\PlayerWebIndexRequest;
 use App\Ship\Parents\Actions\Action;
 use Illuminate\Support\Collection;
 use Prettus\Repository\Exceptions\RepositoryException;
@@ -12,11 +12,11 @@ use Prettus\Repository\Exceptions\RepositoryException;
 class PlayerIndexAction extends Action
 {
     /**
-     * @param PlayerPrivateIndexRequest $request
+     * @param \App\Containers\GameManagementSection\Player\UI\Web\Requests\PlayerWebIndexRequest $request
      * @return Collection<Player>
      * @throws RepositoryException
      */
-    public function run(PlayerPrivateIndexRequest $request): Collection
+    public function run(PlayerWebIndexRequest $request): Collection
     {
         $gameId = $request->getGameId();
 

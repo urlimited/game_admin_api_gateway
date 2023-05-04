@@ -5,17 +5,17 @@ namespace App\Containers\AppSection\Permission\Actions;
 use App\Containers\AppSection\User\Tasks\FilterUserPermissionsTask;
 use App\Ship\Exceptions\FilterResourceFailedException;
 use App\Ship\Parents\Actions\Action;
-use App\Containers\AppSection\Permission\UI\API\Requests\PermissionIndexRequest;
+use App\Containers\AppSection\Permission\UI\Web\Requests\PermissionWebIndexRequest;
 use Illuminate\Support\Collection;
 
 class PermissionIndexAction extends Action
 {
     /**
-     * @param PermissionIndexRequest $request
+     * @param PermissionWebIndexRequest $request
      * @return Collection
      * @throws FilterResourceFailedException
      */
-    public function run(PermissionIndexRequest $request): Collection
+    public function run(PermissionWebIndexRequest $request): Collection
     {
         return app(FilterUserPermissionsTask::class)->run();
     }

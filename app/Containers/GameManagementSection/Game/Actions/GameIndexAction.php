@@ -3,12 +3,12 @@
 namespace App\Containers\GameManagementSection\Game\Actions;
 
 use App\Containers\GameManagementSection\Game\Tasks\FilterGamesTask;
-use App\Containers\GameManagementSection\Game\UI\API\Requests\GameIndexRequest;
+use App\Containers\GameManagementSection\Game\UI\Web\Requests\GameWebIndexRequest;
 use App\Ship\Parents\Actions\Action;
 
 class GameIndexAction extends Action
 {
-    public function run(GameIndexRequest $request)
+    public function run(GameWebIndexRequest $request)
     {
         return app(FilterGamesTask::class)
             ->run(

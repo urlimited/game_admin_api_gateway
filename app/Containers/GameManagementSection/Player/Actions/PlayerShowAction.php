@@ -4,7 +4,7 @@ namespace App\Containers\GameManagementSection\Player\Actions;
 
 use App\Containers\GameManagementSection\Player\Models\Player;
 use App\Containers\GameManagementSection\Player\Tasks\PlayerFilterTask;
-use App\Containers\GameManagementSection\Player\UI\API\Requests\Contracts\PlayerShowRequestContract;
+use App\Containers\GameManagementSection\Player\UI\Contracts\Requests\PlayerShowRequestContract;
 use App\Ship\Parents\Actions\Action;
 use Prettus\Repository\Exceptions\RepositoryException;
 

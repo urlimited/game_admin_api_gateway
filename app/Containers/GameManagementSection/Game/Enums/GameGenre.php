@@ -7,4 +7,5 @@ enum GameGenre: string
     case RPG = 'rpg';
     case Strategy = 'strategy';
     case Arcade = 'arcade';
+    case Casual = 'casual';
 }
