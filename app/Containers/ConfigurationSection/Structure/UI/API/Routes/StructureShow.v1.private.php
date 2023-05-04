@@ -19,6 +19,6 @@
 use App\Containers\ConfigurationSection\Structure\UI\API\Controllers\StructuresController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/games/{game}/structures/{structure}', [StructuresController::class, 'show'])
+Route::get('/structures/{structure}', [StructuresController::class, 'show'])
     ->middleware(['auth:sanctum'])
     ->name('api.private.games.structures.show');

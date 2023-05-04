@@ -44,7 +44,7 @@ class StructuresController extends ApiController
      * @throws ValidatorException
      * @throws InvalidDataProvidedForRuleException
      */
-    public function update(StructureUpdateRequest $request, Game $game , Structure $structure): JsonResponse
+    public function update(StructureUpdateRequest $request , Structure $structure): JsonResponse
     {
 
         $structure = app(StructureUpdateAction::class)->run($request, $structure);
@@ -54,7 +54,7 @@ class StructuresController extends ApiController
     }
 
 
-    public function delete(StructureDeleteRequest $request, Game $game , Structure $structure): Response
+    public function delete(StructureDeleteRequest $request , Structure $structure): Response
     {
         app(StructureDeleteAction::class)->run($structure);
 

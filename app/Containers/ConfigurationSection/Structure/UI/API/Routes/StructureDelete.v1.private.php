@@ -19,6 +19,6 @@
 use App\Containers\ConfigurationSection\Structure\UI\API\Controllers\StructuresController;
 use Illuminate\Support\Facades\Route;
 
-Route::delete('/games/{game}/structures/{structure}', [StructuresController::class, 'delete'])
+Route::delete('/structures/{structure}', [StructuresController::class, 'delete'])
     ->middleware(['auth:sanctum'])
     ->name('api.private.games.structures.delete');

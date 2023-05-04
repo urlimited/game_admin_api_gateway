@@ -19,6 +19,6 @@
 use App\Containers\ConfigurationSection\Structure\UI\API\Controllers\StructuresController;
 use Illuminate\Support\Facades\Route;
 
-Route::put('/games/{game}/structures/{structure}', [StructuresController::class, 'update'])
+Route::put('/structures/{structure}', [StructuresController::class, 'update'])
     ->middleware(['auth:sanctum'])
     ->name('api.private.games.structures.update');
