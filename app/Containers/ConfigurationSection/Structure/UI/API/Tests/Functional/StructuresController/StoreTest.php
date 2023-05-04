@@ -30,30 +30,25 @@ class StoreTest extends ApiTestCase
             ->createOne();
 
         $userGameIds = $user->games->pluck('id')->first();
+        $json = '[{"name": "A","data_type": "list_values","rules": null,"children": [{"name": "A-C","data_type": "string","rules": null,"children": [{"name": "A-C-G","data_type": "string", "rules": null}]}, {"name": "A-E","data_type": "string","rules": null}]},{"name": "B", "data_type": "string", "rules": null, "children": [{"name": "B-D","data_type": "string","rules": null}]}]';
+        $array = json_decode($json, true);
 
         // 2. Scenario run
         $data = [
-                'name'=>'rerum',
-                'game_id'=>$userGameIds,
-                'schema'=>[
-                    [
-                        'path' => 'field1',
-                        'data_type' => 'string',
-                    ]
-                ],
-                'version'=>'13.25.42',
+            'name' => 'rerum',
+            'game_id' => $userGameIds,
+            'schema' => $array,
+            'version' => '13.25.42',
         ];
+
+
 
 
         // 3. Assertion
         $response = $this
             ->actingAs($user, 'api')
             ->json('post',
-                route('api.private.games.structures.store',
-                [
-                    'game' => $userGameIds,
-                ]
-            ),
+                route('api.private.games.structures.store'),
                 $data,
             );
 

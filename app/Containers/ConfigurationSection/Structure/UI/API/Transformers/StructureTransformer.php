@@ -21,7 +21,7 @@ class StructureTransformer extends Transformer
             'id' => $structure->id,
             'name' => $structure->name,
             'version' => $structure->version,
-            'schema' => $structure->fields
+            'schema' => $structure->schema
         ];
     }
 }

@@ -30,7 +30,7 @@ class StructureShowRequest extends Request
 
     public function authorize(): bool
     {
-        $game = $this->route('game');
+        //$game = $this->route('game');
 
 //        return $this->user()->hasRole('admin')
 //            || $game->user->id === $this->user()->id;

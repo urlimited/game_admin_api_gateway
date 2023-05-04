@@ -19,6 +19,6 @@
 use App\Containers\ConfigurationSection\Configuration\UI\API\Controllers\ConfigurationsPublicController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/games/{game}/structure/{structure}/configurations/', [ConfigurationsPublicController::class, 'index'])
+Route::get('/configurations/', [ConfigurationsPublicController::class, 'index'])
     ->middleware(['auth:sanctum'])
     ->name('api.private.games.configurations.show');

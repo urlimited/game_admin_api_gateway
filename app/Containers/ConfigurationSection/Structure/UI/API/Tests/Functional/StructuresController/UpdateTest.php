@@ -36,18 +36,14 @@ class UpdateTest extends ApiTestCase
         $structure = Structure::factory()
             ->createOne(['game_id' => $userGameIds]);
 
-
+        $json = '[{"name": "A","data_type": "list_values","rules": null,"children": [{"name": "A-C","data_type": "string","rules": null,"children": [{"name": "A-C-G","data_type": "string", "rules": null}]}, {"name": "A-E","data_type": "string","rules": null}]},{"name": "B", "data_type": "string", "rules": null, "children": [{"name": "B-D","data_type": "string","rules": null}]}]';
+        $array = json_decode($json, true);
         // 2. Scenario run
         $data = [
             'id'=>$structure->id,
             'name'=>'rerum',
             'game_id'=>$structure->game_id,
-            'schema'=>[
-                [
-                    'path' => 'field1',
-                    'data_type' => 'string',
-                ]
-            ],
+            'schema'=>$array,
             'version'=>'13.25.42',
         ];
 

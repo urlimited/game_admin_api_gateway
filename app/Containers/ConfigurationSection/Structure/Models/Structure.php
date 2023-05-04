@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $name
  * @property int $game_id
  * @property string $version
- * @property string $fields
+ * @property string $schema
  * @method static StructureFactory factory()
  */
 class Structure extends Model

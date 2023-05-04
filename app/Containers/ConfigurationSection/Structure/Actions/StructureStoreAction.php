@@ -17,7 +17,7 @@ class StructureStoreAction extends Action
      * @throws InvalidDataProvidedForRuleException
      * @throws ValidatorException
      */
-    public function run(StructureStoreRequest $request, Game $game): Structure
+    public function run(StructureStoreRequest $request): Structure
     {
         //$formattedFields = app(StructureProcessFields::class)->run($fields);
 
@@ -26,7 +26,7 @@ class StructureStoreAction extends Action
                 $request->get('name'),
                 $request->get('version'),
                 json_encode($request->get('schema')),
-                $game
+                $request->get('game_id'),
             );
     }
 }

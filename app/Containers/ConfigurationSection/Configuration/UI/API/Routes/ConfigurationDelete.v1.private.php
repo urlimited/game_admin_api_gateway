@@ -19,7 +19,7 @@
 use App\Containers\ConfigurationSection\Configuration\UI\API\Controllers\ConfigurationsPrivateController;
 use Illuminate\Support\Facades\Route;
 
-Route::delete('/games/{game}/configurations/{configuration}', [ConfigurationsPrivateController::class, 'delete'])
+Route::delete('/configurations/{configuration}', [ConfigurationsPrivateController::class, 'delete'])
     ->middleware(['auth:sanctum'])
     ->name('api.private.games.configurations.delete');
 

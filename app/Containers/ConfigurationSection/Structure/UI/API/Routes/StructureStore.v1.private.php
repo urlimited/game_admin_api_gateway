@@ -19,6 +19,6 @@
 use App\Containers\ConfigurationSection\Structure\UI\API\Controllers\StructuresController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/games/{game}/structures/', [StructuresController::class, 'store'])
+Route::post('/structures/', [StructuresController::class, 'store'])
     ->middleware(['auth:sanctum'])
     ->name('api.private.games.structures.store');
