@@ -4,7 +4,7 @@ namespace App\Containers\GameManagementSection\Game\Actions;
 
 use App\Containers\GameManagementSection\Game\Models\Game;
 use App\Containers\GameManagementSection\Game\Tasks\GameDeleteTask;
-use App\Containers\GameManagementSection\Game\UI\Web\Requests\GameWebDeleteRequest;
+use App\Containers\GameManagementSection\Game\UI\WEB\Requests\GameWebDeleteRequest;
 use App\Ship\Parents\Actions\Action;
 use Prettus\Validator\Exceptions\ValidatorException;
 

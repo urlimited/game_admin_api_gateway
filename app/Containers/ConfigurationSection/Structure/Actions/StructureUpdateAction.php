@@ -4,7 +4,7 @@ namespace App\Containers\ConfigurationSection\Structure\Actions;
 
 use App\Containers\ConfigurationSection\Structure\Models\Structure;
 use App\Containers\ConfigurationSection\Structure\Tasks\StructureUpdateTask;
-use App\Containers\ConfigurationSection\Structure\UI\Web\Requests\StructureWebUpdateRequest;
+use App\Containers\ConfigurationSection\Structure\UI\WEB\Requests\StructureWebUpdateRequest;
 use App\Ship\Parents\Actions\Action;
 use Prettus\Validator\Exceptions\ValidatorException;
 

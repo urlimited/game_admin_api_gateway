@@ -3,7 +3,7 @@
 namespace App\Containers\GameManagementSection\Game\Actions;
 
 use App\Containers\GameManagementSection\Game\Tasks\FilterGamesTask;
-use App\Containers\GameManagementSection\Game\UI\Web\Requests\GameWebIndexRequest;
+use App\Containers\GameManagementSection\Game\UI\WEB\Requests\GameWebIndexRequest;
 use App\Ship\Parents\Actions\Action;
 
 class GameIndexAction extends Action

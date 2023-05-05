@@ -4,7 +4,7 @@ namespace App\Containers\GameManagementSection\Game\Actions;
 
 use App\Containers\GameManagementSection\Game\Models\Game;
 use App\Containers\GameManagementSection\Game\Tasks\GameUpdateTask;
-use App\Containers\GameManagementSection\Game\UI\Web\Requests\GameWebUpdateRequest;
+use App\Containers\GameManagementSection\Game\UI\WEB\Requests\GameWebUpdateRequest;
 use App\Ship\Parents\Actions\Action;
 use Prettus\Validator\Exceptions\ValidatorException;
 

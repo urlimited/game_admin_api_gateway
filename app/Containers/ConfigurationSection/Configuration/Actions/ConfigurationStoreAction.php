@@ -5,7 +5,7 @@ namespace App\Containers\ConfigurationSection\Configuration\Actions;
 
 use App\Containers\ConfigurationSection\Configuration\Models\Configuration;
 use App\Containers\ConfigurationSection\Configuration\Tasks\ConfigurationStoreTask;
-use App\Containers\ConfigurationSection\Configuration\UI\Web\Requests\ConfigurationWebStoreRequest;
+use App\Containers\ConfigurationSection\Configuration\UI\WEB\Requests\ConfigurationWebStoreRequest;
 use App\Ship\Parents\Actions\Action;
 use Prettus\Validator\Exceptions\ValidatorException;
 

@@ -14,7 +14,7 @@ use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
  *      1.Successfully receive configuration by id
  * @group user
  * @group api
- * @covers \App\Containers\ConfigurationSection\Configuration\UI\Web\Controllers\ConfigurationsWebController::show
+ * @covers \App\Containers\ConfigurationSection\Configuration\UI\WEB\Controllers\ConfigurationsWebController::show
  */
 class ShowTest extends ApiTestCase
 {

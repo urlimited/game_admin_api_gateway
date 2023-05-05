@@ -4,7 +4,7 @@ namespace App\Containers\ConfigurationSection\Configuration\Actions;
 
 
 use App\Containers\ConfigurationSection\Configuration\Tasks\ConfigurationFilterTask;
-use App\Containers\ConfigurationSection\Configuration\UI\Web\Requests\ConfigurationWebIndexRequest;
+use App\Containers\ConfigurationSection\Configuration\UI\WEB\Requests\ConfigurationWebIndexRequest;
 use App\Ship\Parents\Actions\Action;
 use Illuminate\Support\Collection;
 
