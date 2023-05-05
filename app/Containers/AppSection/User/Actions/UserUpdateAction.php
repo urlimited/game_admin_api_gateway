@@ -3,7 +3,7 @@
 namespace App\Containers\AppSection\User\Actions;
 
 use App\Containers\AppSection\User\Tasks\UserUpdateTask;
-use App\Containers\AppSection\User\UI\Web\Requests\UserWebUpdateRequest;
+use App\Containers\AppSection\User\UI\WEB\Requests\UserWebUpdateRequest;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Models\User;
 use Illuminate\Support\Facades\Hash;

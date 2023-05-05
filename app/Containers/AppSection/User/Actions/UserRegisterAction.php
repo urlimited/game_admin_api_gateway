@@ -4,7 +4,7 @@ namespace App\Containers\AppSection\User\Actions;
 
 use App\Containers\AppSection\User\Enums\UserStatus;
 use App\Containers\AppSection\User\Tasks\UserStoreTask;
-use App\Containers\AppSection\User\UI\Web\Requests\UserWebRegisterRequest;
+use App\Containers\AppSection\User\UI\WEB\Requests\UserWebRegisterRequest;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Models\Role;
 use App\Ship\Parents\Models\User;

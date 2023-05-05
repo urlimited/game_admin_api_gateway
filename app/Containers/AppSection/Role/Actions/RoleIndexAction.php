@@ -5,7 +5,7 @@ namespace App\Containers\AppSection\Role\Actions;
 use App\Containers\AppSection\User\Tasks\FilterUserRolesTask;
 use App\Ship\Exceptions\FilterResourceFailedException;
 use App\Ship\Parents\Actions\Action;
-use App\Containers\AppSection\Role\UI\Web\Requests\RoleWebIndexRequest;
+use App\Containers\AppSection\Role\UI\WEB\Requests\RoleWebIndexRequest;
 use Illuminate\Support\Collection;
 
 class RoleIndexAction extends Action

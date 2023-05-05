@@ -5,7 +5,7 @@ namespace App\Containers\ConfigurationSection\Configuration\Actions;
 
 use App\Containers\ConfigurationSection\Configuration\Models\Configuration;
 use App\Containers\ConfigurationSection\Configuration\Tasks\ConfigurationUpdateTask;
-use App\Containers\ConfigurationSection\Configuration\UI\Web\Requests\ConfigurationWebUpdateRequest;
+use App\Containers\ConfigurationSection\Configuration\UI\WEB\Requests\ConfigurationWebUpdateRequest;
 use App\Ship\Parents\Actions\Action;
 use Prettus\Validator\Exceptions\ValidatorException;
 

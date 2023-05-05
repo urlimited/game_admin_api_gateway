@@ -5,7 +5,7 @@ namespace App\Containers\ConfigurationSection\Structure\Actions;
 use App\Containers\ConfigurationSection\Structure\Models\Structure;
 use App\Containers\ConfigurationSection\Structure\Support\StructureValidator\Exceptions\InvalidDataProvidedForRuleException;
 use App\Containers\ConfigurationSection\Structure\Tasks\StructureStoreTask;
-use App\Containers\ConfigurationSection\Structure\UI\Web\Requests\StructureWebStoreRequest;
+use App\Containers\ConfigurationSection\Structure\UI\WEB\Requests\StructureWebStoreRequest;
 use App\Ship\Parents\Actions\Action;
 use Prettus\Validator\Exceptions\ValidatorException;
 

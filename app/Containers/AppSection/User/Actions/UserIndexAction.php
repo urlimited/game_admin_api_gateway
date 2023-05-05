@@ -3,7 +3,7 @@
 namespace App\Containers\AppSection\User\Actions;
 
 use App\Containers\AppSection\User\Tasks\FilterUsersTask;
-use App\Containers\AppSection\User\UI\Web\Requests\UserWebIndexRequest;
+use App\Containers\AppSection\User\UI\WEB\Requests\UserWebIndexRequest;
 use App\Ship\Exceptions\FilterResourceFailedException;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Models\User;

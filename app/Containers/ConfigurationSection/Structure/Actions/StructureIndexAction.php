@@ -3,7 +3,7 @@
 namespace App\Containers\ConfigurationSection\Structure\Actions;
 
 use App\Containers\ConfigurationSection\Structure\Tasks\StructureFilterTask;
-use App\Containers\ConfigurationSection\Structure\UI\Web\Requests\StructureWebIndexRequest;
+use App\Containers\ConfigurationSection\Structure\UI\WEB\Requests\StructureWebIndexRequest;
 use App\Ship\Parents\Actions\Action;
 use Illuminate\Support\Collection;
 use Prettus\Repository\Exceptions\RepositoryException;

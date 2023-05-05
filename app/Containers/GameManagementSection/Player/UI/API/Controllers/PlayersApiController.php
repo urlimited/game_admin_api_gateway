@@ -12,7 +12,7 @@ use App\Containers\GameManagementSection\Player\UI\API\Requests\PlayerApiShowReq
 use App\Containers\GameManagementSection\Player\UI\API\Requests\PlayerApiStoreRequest;
 use App\Containers\GameManagementSection\Player\UI\API\Requests\PlayerApiUpdateRequest;
 use App\Containers\GameManagementSection\Player\UI\API\Transformers\PlayerTransformer;
-use App\Containers\GameManagementSection\Player\UI\Web\Transformers\PlayerAuthedTransformer;
+use App\Containers\GameManagementSection\Player\UI\WEB\Transformers\PlayerAuthedTransformer;
 use App\Ship\Exceptions\AuthenticationException;
 use App\Ship\Parents\Controllers\ApiController;
 use Illuminate\Http\JsonResponse;

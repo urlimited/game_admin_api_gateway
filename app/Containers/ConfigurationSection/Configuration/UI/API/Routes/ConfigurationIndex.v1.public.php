@@ -21,4 +21,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/configurations/', [ConfigurationsApiController::class, 'index'])
     ->middleware(['auth:sanctum'])
-    ->name('api.private.games.configurations.show');
+    ->name('api.public.games.configurations.index');

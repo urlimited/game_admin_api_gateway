@@ -3,7 +3,7 @@
 namespace App\Containers\GameManagementSection\Game\Actions;
 
 use App\Containers\GameManagementSection\Game\Models\Game;
-use App\Containers\GameManagementSection\Game\UI\Web\Requests\GameWebApiTokenReCreateRequest;
+use App\Containers\GameManagementSection\Game\UI\WEB\Requests\GameWebApiTokenReCreateRequest;
 use App\Ship\Parents\Actions\Action;
 
 class GameApiTokenReCreateAction extends Action
