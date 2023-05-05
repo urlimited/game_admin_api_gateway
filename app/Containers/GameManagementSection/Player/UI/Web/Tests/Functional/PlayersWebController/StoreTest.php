@@ -9,7 +9,9 @@ use App\Containers\GameManagementSection\User\Models\User;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 
 /**
- * @desription Test provides assertion for correct players creating processes
+ * @desription Covers following scenarios: \
+ *  1. Create a player within a game that belong to the current user
+ *  2. Fails to create a player within a game that doesn't belong to the current user
  * @group game
  * @group api
  * @covers \App\Containers\GameManagementSection\Player\UI\Web\Controllers\PlayersWebController::store
@@ -21,23 +23,24 @@ class StoreTest extends ApiTestCase
     public function testSuccessfullyCreatePlayer(): void
     {
         // 1. Initialization
-        $user = User::factory()->createOne();
+        $this->seed();
 
-        $game = Game::factory()->createOne();
+        $actor = $this->asCommonCustomer(User::factory())->createOne();
 
-        $user->games()->attach($game->getAttribute('id'));
+        $game = Game::factory()->hasAttached($actor)->createOne();
 
         // 2. Scenario run
         $data = [
             'login' => 'player-test-login',
             'password' => 'password',
+            'game_id' => $game->getAttribute('id')
         ];
 
         $response = $this
-            ->actingAs($user)
+            ->actingAs($actor)
             ->json(
                 method: 'post',
-                uri: route('api.private.games.players.store', ['game' => $game->getAttribute('id')]),
+                uri: route('api.private.games.players.store'),
                 data: $data,
             );
 
@@ -74,5 +77,34 @@ class StoreTest extends ApiTestCase
                 'tokenable_id' => $parsedResponse['id'],
             ]
         );
+    }
+
+    public function testFailsToCreatePlayerForOtherGame(): void
+    {
+        // 1. Initialization
+        $this->seed();
+
+        $actor = $this->asCommonCustomer(User::factory())->createOne();
+        $otherUser = $this->asCommonCustomer(User::factory())->createOne();
+
+        $game = Game::factory()->hasAttached($otherUser)->createOne();
+
+        // 2. Scenario run
+        $data = [
+            'login' => 'player-test-login',
+            'password' => 'password',
+            'game_id' => $game->getAttribute('id')
+        ];
+
+        $response = $this
+            ->actingAs($actor)
+            ->json(
+                method: 'post',
+                uri: route('api.private.games.players.store'),
+                data: $data,
+            );
+
+        // 3. Assertion
+        $response->assertStatus(403);
     }
 }

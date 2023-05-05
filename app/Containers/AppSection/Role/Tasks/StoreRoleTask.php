@@ -3,10 +3,10 @@
 namespace App\Containers\AppSection\Role\Tasks;
 
 use App\Containers\AppSection\Role\Data\Repositories\RoleRepository;
-use App\Ship\Parents\Factories\UserRoleFactory as ParentUserRoleFactory;
-use App\Containers\AppSection\Role\Models\Role;
+use App\Ship\Parents\Models\Role;
+use App\Ship\Parents\Tasks\Task;
 
-class StoreRoleTask extends ParentUserRoleFactory
+class StoreRoleTask extends Task
 {
     protected RoleRepository $repository;
 

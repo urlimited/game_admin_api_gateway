@@ -2,10 +2,10 @@
 
 namespace App\Containers\AppSection\User\Actions;
 
-use App\Containers\AppSection\User\Models\User;
 use App\Containers\AppSection\User\Tasks\UserStoreTask;
 use App\Containers\AppSection\User\UI\Web\Requests\UserWebStoreRequest;
 use App\Ship\Parents\Actions\Action;
+use App\Ship\Parents\Models\User;
 
 class UserCreateAction extends Action
 {

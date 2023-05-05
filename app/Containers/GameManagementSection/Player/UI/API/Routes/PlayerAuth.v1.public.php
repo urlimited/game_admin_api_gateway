@@ -16,8 +16,8 @@
  * @apiUse             UserSuccessSingleResponse
  */
 
-use App\Containers\GameManagementSection\Game\Middleware\ValidateGameTokenMiddleware;
 use App\Containers\GameManagementSection\Player\UI\API\Controllers\PlayersApiController;
+use App\Ship\Middlewares\Http\ValidateGameTokenMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/players/auth', [PlayersApiController::class, 'auth'])

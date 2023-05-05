@@ -2,9 +2,17 @@
 
 namespace App\Containers\GameManagementSection\Player\UI\API\Requests;
 
+use App\Containers\GameManagementSection\Player\Models\Player;
 use App\Containers\GameManagementSection\Player\UI\Contracts\Requests\PlayerShowRequestContract;
+use App\Ship\Exceptions\AuthenticationException;
 use App\Ship\Parents\Requests\PlayerReceivableRequest;
+use Illuminate\Auth\Access\AuthorizationException;
 
+/**
+ * @description Can be obtained in the following scenarios: \
+ *      1. When the request has correct game token and player token \
+ *              and player token, and player must belong to the current game
+ */
 final class PlayerApiShowRequest extends PlayerReceivableRequest implements PlayerShowRequestContract
 {
     /**
@@ -29,8 +37,15 @@ final class PlayerApiShowRequest extends PlayerReceivableRequest implements Play
         ];
     }
 
+    /**
+     * @throws AuthorizationException
+     * @throws AuthenticationException
+     */
     public function authorize(): bool
     {
-        return true;
+        return (
+            $this->getGameId()
+            && Player::query()->find($this->getPlayerId())->getAttribute('game_id') == $this->getGameId()
+        );
     }
 }

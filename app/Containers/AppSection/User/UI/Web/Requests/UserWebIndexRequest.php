@@ -4,6 +4,9 @@ namespace App\Containers\AppSection\User\UI\Web\Requests;
 
 use App\Ship\Parents\Requests\Request;
 
+/**
+ * @description Only users with permission user-full-other-read can receive the list of all users
+ */
 class UserWebIndexRequest extends Request
 {
     /**
@@ -30,6 +33,8 @@ class UserWebIndexRequest extends Request
 
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->hasPermission(
+            'user-full-other-read'
+        );
     }
 }

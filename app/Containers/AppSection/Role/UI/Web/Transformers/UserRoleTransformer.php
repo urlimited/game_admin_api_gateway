@@ -2,8 +2,8 @@
 
 namespace App\Containers\AppSection\Role\UI\Web\Transformers;
 
+use App\Ship\Parents\Models\Role;
 use App\Ship\Parents\Transformers\Transformer;
-use App\Containers\AppSection\Role\Models\Role;
 
 class UserRoleTransformer extends Transformer
 {

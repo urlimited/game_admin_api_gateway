@@ -2,8 +2,8 @@
 
 namespace App\Containers\AppSection\User\UI\Web\Tests\Functional\AuthenticationWebController;
 
-use App\Containers\AppSection\User\Models\User;
 use App\Containers\AppSection\User\Tests\ApiTestCase;
+use App\Ship\Parents\Models\User;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 

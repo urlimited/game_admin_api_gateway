@@ -6,6 +6,10 @@ use App\Containers\AppSection\User\Enums\UserStatus;
 use App\Ship\Parents\Requests\Request;
 use Illuminate\Validation\Rule;
 
+/**
+ * @description Can be obtained in the following scenarios: \
+ *      1. When user is admin
+ */
 class UserWebStoreRequest extends Request
 {
     /**
@@ -55,6 +59,6 @@ class UserWebStoreRequest extends Request
 
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->hasRole('admin');
     }
 }

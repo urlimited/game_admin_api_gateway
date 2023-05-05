@@ -2,9 +2,15 @@
 
 namespace App\Containers\GameManagementSection\Player\UI\API\Requests;
 
+use App\Containers\GameManagementSection\Player\Models\Player;
 use App\Containers\GameManagementSection\Player\UI\Contracts\Requests\PlayerUpdateRequestContract;
 use App\Ship\Parents\Requests\PlayerReceivableRequest;
 
+/**
+ * @description Can be obtained in the following scenarios: \
+ *      1. When the request has correct game token and player token \
+ *              and player token, and player must belong to the current game
+ */
 final class PlayerApiUpdateRequest extends PlayerReceivableRequest implements PlayerUpdateRequestContract
 {
     /**
@@ -31,6 +37,9 @@ final class PlayerApiUpdateRequest extends PlayerReceivableRequest implements Pl
 
     public function authorize(): bool
     {
-        return true;
+        return (
+            $this->getGameId()
+            && Player::query()->find($this->getPlayerId())->getAttribute('game_id') == $this->getGameId()
+        );
     }
 }

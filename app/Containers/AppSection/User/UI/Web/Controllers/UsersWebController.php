@@ -6,7 +6,6 @@ use Apiato\Core\Exceptions\InvalidTransformerException;
 use App\Containers\AppSection\User\Actions\UserIndexAction;
 use App\Containers\AppSection\User\Actions\UserShowAction;
 use App\Containers\AppSection\User\Actions\UserUpdateAction;
-use App\Containers\AppSection\User\Models\User;
 use App\Containers\AppSection\User\UI\Web\Requests\UserWebIndexRequest;
 use App\Containers\AppSection\User\UI\Web\Requests\UserWebShowRequest;
 use App\Containers\AppSection\User\UI\Web\Requests\UserWebUpdateRequest;
@@ -16,6 +15,7 @@ use App\Containers\AppSection\User\Actions\UserCreateAction;
 use App\Containers\AppSection\User\UI\Web\Requests\UserWebStoreRequest;
 use App\Ship\Exceptions\FilterResourceFailedException;
 use App\Ship\Parents\Controllers\ApiController;
+use App\Ship\Parents\Models\User;
 use Illuminate\Http\JsonResponse;
 use Prettus\Validator\Exceptions\ValidatorException;
 

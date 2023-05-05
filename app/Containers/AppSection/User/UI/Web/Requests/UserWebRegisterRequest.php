@@ -4,6 +4,9 @@ namespace App\Containers\AppSection\User\UI\Web\Requests;
 
 use App\Ship\Parents\Requests\Request;
 
+/**
+ * @description Everyone can perform this request
+ */
 class UserWebRegisterRequest extends Request
 {
     /**
@@ -24,8 +27,15 @@ class UserWebRegisterRequest extends Request
     public function rules(): array
     {
         return [
-            'login' => 'required|max:40|unique:users,login',
-            'password' => 'min:6|max:30',
+            'login' => [
+                'required',
+                'max:40',
+                'unique:users,login'
+            ],
+            'password' => [
+                'string',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'
+            ],
         ];
     }
 

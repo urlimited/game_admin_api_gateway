@@ -10,7 +10,9 @@ use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * @desription Test provides assertion for correct players creating processes
+ * @desription Covers following scenarios: \
+ *  1. Show a player within a game that belong to the current user
+ *  2. Fails to show a player within a game that doesn't belong to the current user
  * @group game
  * @group api
  * @covers \App\Containers\GameManagementSection\Player\UI\Web\Controllers\PlayersWebController::store
@@ -22,30 +24,33 @@ class ShowTest extends ApiTestCase
     public function testSuccessfullyShowPlayer(): void
     {
         // 1. Initialization
-        $user = User::factory()->createOne();
+        $this->seed();
 
-        $game = Game::factory()->createOne();
+        $actor = $this->asCommonCustomer(User::factory())->createOne();
 
-        $user->games()->attach($game->getAttribute('id'));
+        $game = Game::factory()
+            ->hasAttached($actor)
+            ->has(
+                Player::factory()
+                    ->state(
+                        [
+                            'login' => 'login-test',
+                            'password' => Hash::make('password-test'),
+                        ]
+                    )
+            )
+            ->createOne();
 
-        $player = Player::factory()
-            ->createOne(
-                [
-                    'login' => 'login-test',
-                    'game_id' => $game->getAttribute('id'),
-                    'password' => Hash::make('password-test'),
-                ]
-            );
         // 2. Scenario run
         $response = $this
-            ->actingAs($user)
+            ->actingAs($actor)
             ->json(
                 method: 'get',
                 uri: route(
                     'api.private.games.players.show',
                     [
-                        'game' => $game->getAttribute('id'),
-                        'player' => $player->getAttribute('id'),
+                        'player_id' => $game->players()->first()->getAttribute('id'),
+                        'game_id' => $game->getAttribute('id'),
                     ]
                 ),
             );
@@ -64,5 +69,44 @@ class ShowTest extends ApiTestCase
                 ]
             ]
         );
+    }
+
+    public function testFailsToShowPlayerFromOtherGame(): void
+    {
+        // 1. Initialization
+        $this->seed();
+
+        $actor = $this->asCommonCustomer(User::factory())->createOne();
+        $user = $this->asCommonCustomer(User::factory())->createOne();
+
+        $game = Game::factory()
+            ->hasAttached($user)
+            ->has(
+                Player::factory()
+                    ->state(
+                        [
+                            'login' => 'login-test',
+                            'password' => Hash::make('password-test'),
+                        ]
+                    )
+            )
+            ->createOne();
+
+        // 2. Scenario run
+        $response = $this
+            ->actingAs($actor)
+            ->json(
+                method: 'get',
+                uri: route(
+                    'api.private.games.players.show',
+                    [
+                        'player_id' => $game->players()->first()->getAttribute('id'),
+                        'game_id' => $game->getAttribute('id'),
+                    ]
+                ),
+            );
+
+        // 3. Assertion
+        $response->assertStatus(403);
     }
 }

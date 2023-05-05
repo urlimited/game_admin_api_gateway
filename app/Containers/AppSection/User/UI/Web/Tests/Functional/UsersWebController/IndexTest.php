@@ -2,8 +2,8 @@
 
 namespace App\Containers\AppSection\User\UI\Web\Tests\Functional\UsersWebController;
 
-use App\Containers\AppSection\User\Models\User;
 use App\Containers\AppSection\User\Tests\ApiTestCase;
+use App\Ship\Parents\Models\User;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 
 /**
@@ -21,16 +21,17 @@ class IndexTest extends ApiTestCase
         // 1. Initialization
         $this->seed();
 
-        $user = User::factory()->createOne();
+        $actor = $this->asAdmin(User::factory())->createOne();
 
         User::factory()->count(10)->create();
 
-//        2. Scenarios run
+        // 2. Scenarios run
         $response = $this
-            ->actingAs($user, 'api')
+            ->actingAs($actor, 'api')
             ->json('get',
                 route('api.private.users.index')
             );
+
         // 3. Assertion
         $response->assertStatus(200);
 

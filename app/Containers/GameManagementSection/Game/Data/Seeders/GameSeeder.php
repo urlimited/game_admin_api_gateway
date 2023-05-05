@@ -4,7 +4,7 @@ namespace App\Containers\GameManagementSection\Game\Data\Seeders;
 
 use App\Containers\GameManagementSection\Game\Enums\GameGenre;
 use App\Containers\GameManagementSection\Game\Models\Game;
-use App\Containers\GameManagementSection\User\Models\User;
+use App\Ship\Parents\Models\User;
 use App\Ship\Parents\Seeders\Seeder;
 
 

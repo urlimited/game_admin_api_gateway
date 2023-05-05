@@ -2,11 +2,11 @@
 
 namespace App\Containers\AppSection\User\Actions;
 
-use App\Containers\AppSection\User\Models\User;
 use App\Containers\AppSection\User\Tasks\FilterUsersTask;
 use App\Containers\AppSection\User\UI\Web\Requests\UserWebShowRequest;
 use App\Ship\Exceptions\FilterResourceFailedException;
 use App\Ship\Parents\Actions\Action;
+use App\Ship\Parents\Models\User;
 use App\Ship\Parents\Values\FilterValue;
 
 class UserShowAction extends Action
@@ -24,7 +24,7 @@ class UserShowAction extends Action
                     new FilterValue(
                         key: 'id',
                         operator: '=',
-                        value: $request->route('user')
+                        value: $request->route('user_id')
                     )
                 ]
             )

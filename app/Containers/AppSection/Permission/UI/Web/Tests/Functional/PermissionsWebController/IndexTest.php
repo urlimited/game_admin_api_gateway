@@ -2,10 +2,10 @@
 
 namespace App\Containers\AppSection\Permission\UI\Web\Tests\Functional\PermissionsWebController;
 
-use App\Containers\AppSection\User\Models\User;
+use App\Ship\Parents\Models\Permission;
+use App\Ship\Parents\Models\User;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 use App\Ship\Parents\Tests\PhpUnit\TestCase;
-use App\Containers\AppSection\Permission\Models\Permission;
 
 /**
  * @desription Test receive permissions list

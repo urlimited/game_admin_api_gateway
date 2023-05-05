@@ -6,6 +6,12 @@ use App\Containers\AppSection\User\Enums\UserStatus;
 use App\Ship\Parents\Requests\Request;
 use Illuminate\Validation\Rule;
 
+/**
+ * @description Can be obtained in the following scenarios: \
+ *      1. When user has user-full-other-update \
+ *      2. When user has user-full-own-update and he updates only personal data, \
+ *              and doesn't update status, login, permissions or roles
+ */
 class UserWebUpdateRequest extends Request
 {
     /**
@@ -26,12 +32,14 @@ class UserWebUpdateRequest extends Request
     public function rules(): array
     {
         return [
+            'password' => [
+                'string',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'
+            ],
             'status' => [
-                'required',
                 Rule::in(collect(UserStatus::cases())->map(fn($status) => $status->value)->toArray()),
             ],
             'roles' => [
-                'required',
                 'array',
             ],
             'roles.*' => [
@@ -39,7 +47,6 @@ class UserWebUpdateRequest extends Request
                 'exists:roles,id',
             ],
             'permissions' => [
-                'required',
                 'array',
             ],
             'permissions.*' => [
@@ -51,16 +58,15 @@ class UserWebUpdateRequest extends Request
 
     public function authorize(): bool
     {
-        if (
-            $this->user()->hasPermission('user-full-other-update')
+        return $this->user()->hasPermission('user-full-other-update')
             || (
                 $this->user()->hasPermission('user-full-own-update')
-                && $this->user()->id == $this->route('user')->id
-            )
-        ) {
-            return true;
-        }
-
-        return false;
+                && $this->user()->getAttribute('id') == $this->route('user')->getAttribute('id')
+                && (
+                    empty($this->get('permissions'))
+                    && empty($this->get('roles'))
+                    && is_null($this->get('status'))
+                )
+            );
     }
 }

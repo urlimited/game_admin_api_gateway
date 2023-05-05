@@ -3,9 +3,9 @@
 namespace App\Containers\GameManagementSection\Game\Models;
 
 use App\Containers\GameManagementSection\Player\Models\Player;
-use App\Containers\GameManagementSection\User\Models\User;
 use App\Containers\GameManagementSection\Game\Data\Factories\GameFactory;
 use App\Containers\GameManagementSection\Game\Enums\GameGenre;
+use App\Ship\Parents\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Apiato\Core\Traits\HasResourceKeyTrait;

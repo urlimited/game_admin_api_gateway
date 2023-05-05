@@ -2,14 +2,15 @@
 
 namespace App\Containers\GameManagementSection\Game\UI\Web\Tests\Functional\GamesWebController;
 
-use App\Containers\GameManagementSection\User\Models\User;
 use App\Containers\GameManagementSection\Game\Enums\GameGenre;
 use App\Containers\GameManagementSection\Game\Tests\ApiTestCase;
+use App\Ship\Parents\Models\User;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 
 /**
  * @desription Covers following scenarios: \
- *  1. Standard game create flow with Authenticated user
+ *  1. Standard game create flow with a Privileged Customer
+ *  2. Fails to create a game from a Common Customer user
  * @group game
  * @group api
  * @covers \App\Containers\GameManagementSection\Game\UI\Web\Controllers\GamesWebController::store
@@ -21,7 +22,9 @@ class StoreTest extends ApiTestCase
     public function testSuccessfullyCreateGame(): void
     {
         // 1. Initialization
-        $user = User::factory()->createOne();
+        $this->seed();
+
+        $actor = $this->asPrivilegedCustomer(User::factory())->createOne();
 
         // 2. Scenario run
         $data = [
@@ -30,7 +33,7 @@ class StoreTest extends ApiTestCase
         ];
 
         $response = $this
-            ->actingAs($user)
+            ->actingAs($actor)
             ->json(
                 method: 'post',
                 uri: route('api.games.create'),
@@ -76,8 +79,31 @@ class StoreTest extends ApiTestCase
             'game_user',
             [
                 'game_id' => $parsedGameData['id'],
-                'user_id' => $user->id
+                'user_id' => $actor->id
             ]
         );
+    }
+
+    public function testFailsToCreateGameFromCommonCustomer(): void
+    {
+        // 1. Initialization
+        $user = $this->asCommonCustomer(User::factory())->createOne();
+
+        // 2. Scenario run
+        $data = [
+            'name' => 'game-test',
+            'genre' => GameGenre::RPG->value,
+        ];
+
+        $response = $this
+            ->actingAs($user)
+            ->json(
+                method: 'post',
+                uri: route('api.games.create'),
+                data: $data
+            );
+
+        // 3. Assertion
+        $response->assertStatus(403);
     }
 }

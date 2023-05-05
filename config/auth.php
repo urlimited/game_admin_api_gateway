@@ -1,6 +1,6 @@
 <?php
 
-use App\Containers\AppSection\User\Models\User;
+use App\Ship\Parents\Models\User;
 
 return [
 

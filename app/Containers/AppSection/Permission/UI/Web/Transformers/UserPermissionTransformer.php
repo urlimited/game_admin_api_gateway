@@ -2,8 +2,8 @@
 
 namespace App\Containers\AppSection\Permission\UI\Web\Transformers;
 
+use App\Ship\Parents\Models\Permission;
 use App\Ship\Parents\Transformers\Transformer;
-use App\Containers\AppSection\Permission\Models\Permission;
 
 class UserPermissionTransformer extends Transformer
 {

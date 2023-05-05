@@ -2,11 +2,11 @@
 
 namespace App\Containers\AppSection\User\Actions;
 
-use App\Containers\AppSection\User\Models\User;
 use App\Containers\AppSection\User\Tasks\FilterUsersTask;
 use App\Containers\AppSection\User\UI\Web\Requests\UserWebIndexRequest;
 use App\Ship\Exceptions\FilterResourceFailedException;
 use App\Ship\Parents\Actions\Action;
+use App\Ship\Parents\Models\User;
 use Illuminate\Support\Collection;
 
 class UserIndexAction extends Action

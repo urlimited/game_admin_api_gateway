@@ -8,7 +8,9 @@ use App\Containers\GameManagementSection\Game\Tests\ApiTestCase;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 
 /**
- * @desription Test provides assertion for correct players creating processes
+ * @desription Covers following scenarios: \
+ *  1. Create a player within a correct game token
+ *  2. Fails to create player within incorrect game token
  * @group game
  * @group api
  * @covers \App\Containers\GameManagementSection\Player\UI\API\Controllers\PlayersApiController::store
@@ -20,6 +22,8 @@ class StoreTest extends ApiTestCase
     public function testSuccessfullyCreatePlayer(): void
     {
         // 1. Initialization
+        $this->seed();
+
         $game = Game::factory()->createOne();
 
         $gameApiToken = $game->createToken('game-api-token')->plainTextToken;
@@ -73,5 +77,34 @@ class StoreTest extends ApiTestCase
                 'tokenable_id' => $parsedResponse['id'],
             ]
         );
+    }
+
+    public function testFailsToCreatePlayerWithIncorrectGameToken(): void
+    {
+        // 1. Initialization
+        $this->seed();
+
+        $game = Game::factory()->createOne();
+
+        $game->createToken('game-api-token')->plainTextToken;
+
+        // 2. Scenario run
+        $data = [
+            'login' => 'player-test-login',
+            'password' => 'password',
+        ];
+
+        $response = $this
+            ->json(
+                method: 'post',
+                uri: route('api.public.players.store'),
+                data: $data,
+                headers: [
+                    'X-GameToken' => 'Bearer ' . 'incorrect-game-token'
+                ]
+            );
+
+        // 3. Assertion
+        $response->assertStatus(401);
     }
 }

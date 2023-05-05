@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\GameManagementSection\Game\Middleware;
+namespace App\Ship\Middlewares\Http;
 
 use App\Ship\Exceptions\AuthenticationException;
 use Closure;

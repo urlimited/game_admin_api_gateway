@@ -19,6 +19,6 @@
 use App\Containers\GameManagementSection\Player\UI\Web\Controllers\PlayersWebController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/games/{game}/players/{player}', [PlayersWebController::class, 'show'])
+Route::get('/players/{player_id}', [PlayersWebController::class, 'show'])
     ->middleware(['auth:sanctum'])
     ->name('api.private.games.players.show');

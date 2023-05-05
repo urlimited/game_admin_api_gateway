@@ -2,8 +2,8 @@
 
 namespace App\Containers\AppSection\Role\UI\Web\Tests\Functional\RolesWebController;
 
-use App\Containers\AppSection\User\Models\User;
-use App\Containers\AppSection\Role\Models\Role;
+use App\Ship\Parents\Models\Role;
+use App\Ship\Parents\Models\User;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 use App\Ship\Parents\Tests\PhpUnit\TestCase;
 

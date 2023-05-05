@@ -16,10 +16,9 @@
  * @apiUse             UserSuccessSingleResponse
  */
 
-use App\Containers\GameManagementSection\Game\Middleware\ValidateGameTokenMiddleware;
 use App\Containers\GameManagementSection\Game\UI\Web\Controllers\GamesWebController;
 use Illuminate\Support\Facades\Route;
 
 Route::delete('/games/{game}', [GamesWebController::class, 'delete'])
-    ->middleware(['auth:sanctum', ValidateGameTokenMiddleware::class])
+    ->middleware('auth:sanctum')
     ->name('api.games.delete');

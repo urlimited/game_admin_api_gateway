@@ -4,6 +4,9 @@ namespace App\Containers\AppSection\User\UI\Web\Requests;
 
 use App\Ship\Parents\Requests\Request;
 
+/**
+ * @description Everyone can authenticate a user
+ */
 class UserWebAuthRequest extends Request
 {
     /**

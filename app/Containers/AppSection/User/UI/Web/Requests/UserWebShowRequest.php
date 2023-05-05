@@ -4,6 +4,11 @@ namespace App\Containers\AppSection\User\UI\Web\Requests;
 
 use App\Ship\Parents\Requests\Request;
 
+/**
+ * @description Can be obtained in the following scenarios: \
+ *      1. When user has user-full-other-read
+ *      2. When user has user-full-own-read and user id is his own
+ */
 class UserWebShowRequest extends Request
 {
     /**
@@ -30,6 +35,12 @@ class UserWebShowRequest extends Request
 
     public function authorize(): bool
     {
-        return true;
+        return (
+            $this->user()->hasPermission('user-full-other-read')
+            || (
+                $this->user()->getAttribute('id') == $this->route('user_id')
+                && $this->user()->hasPermission('user-full-own-read')
+            )
+        );
     }
 }

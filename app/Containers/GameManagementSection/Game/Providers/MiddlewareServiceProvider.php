@@ -2,7 +2,7 @@
 
 namespace App\Containers\GameManagementSection\Game\Providers;
 
-use App\Containers\GameManagementSection\Game\Middleware\ValidateGameTokenMiddleware;
+use App\Ship\Middlewares\Http\ValidateGameTokenMiddleware;
 use App\Ship\Parents\Providers\MiddlewareProvider;
 use Illuminate\Support\Collection;
 use Laravel\Sanctum\PersonalAccessToken;

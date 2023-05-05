@@ -2,9 +2,15 @@
 
 namespace App\Containers\GameManagementSection\Player\UI\Web\Requests;
 
+use App\Containers\GameManagementSection\Game\Models\Game;
 use App\Containers\GameManagementSection\Player\UI\Contracts\Requests\PlayerShowRequestContract;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @description Can be obtained in the following scenarios: \
+ *      1. When a user has permission player-full-own-read and game belongs to the user \
+ *      2. When a user has permission player-full-other-read
+ */
 final class PlayerWebShowRequest extends FormRequest implements PlayerShowRequestContract
 {
     /**
@@ -25,22 +31,30 @@ final class PlayerWebShowRequest extends FormRequest implements PlayerShowReques
     public function rules(): array
     {
         return [
-
+            'game_id' => ['required', 'exists:games,id']
         ];
     }
 
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->hasPermission('player-full-other-read')
+            || (
+                $this->user()->hasPermission('player-full-own-read')
+                && $this
+                    ->user()
+                    ->games
+                    ->map(fn(Game $game) => $game->getAttribute('id'))
+                    ->contains(fn($gameId) => $gameId == $this->get('game_id'))
+            );
     }
 
     public function getGameId()
     {
-        return $this->route('game')->getAttribute('id');
+        return $this->get('game_id');
     }
 
     public function getPlayerId()
     {
-        return $this->route('player')->getAttribute('id');
+        return $this->route('player_id');
     }
 }

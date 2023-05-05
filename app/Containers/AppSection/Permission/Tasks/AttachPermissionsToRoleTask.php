@@ -4,7 +4,7 @@ namespace App\Containers\AppSection\Permission\Tasks;
 
 use App\Containers\AppSection\Permission\Data\Repositories\PermissionRepository;
 use App\Containers\AppSection\Role\Data\Repositories\RoleRepository;
-use App\Ship\Parents\Factories\UserRoleFactory as ParentUserRoleFactory;
+use App\Ship\Parents\Factories\RoleFactory as ParentUserRoleFactory;
 
 class AttachPermissionsToRoleTask extends ParentUserRoleFactory
 {

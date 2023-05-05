@@ -2,14 +2,15 @@
 
 namespace App\Containers\GameManagementSection\Game\UI\Web\Tests\Functional\GamesWebController;
 
-use App\Containers\GameManagementSection\User\Models\User;
 use App\Containers\GameManagementSection\Game\Models\Game;
 use App\Containers\GameManagementSection\Game\Tests\ApiTestCase;
+use App\Ship\Parents\Models\User;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 
 /**
  * @desription Covers following scenarios: \
- *  1. Standard game update flow with Authenticated user
+ *  1. Standard game update by privileged user
+ *  2. A user can't update others games
  * @group game
  * @group api
  * @covers \App\Containers\GameManagementSection\Game\UI\Web\Controllers\GamesWebController::update
@@ -21,11 +22,11 @@ class UpdateTest extends ApiTestCase
     public function testSuccessfullyUpdateGame(): void
     {
         // 1. Initialization
-        $user = User::factory()->createOne();
+        $this->seed();
 
-        $game = Game::factory()->createOne();
+        $actor = $this->asPrivilegedCustomer(User::factory())->createOne();
 
-        $gameApiToken = $game->createToken('game-api-token')->plainTextToken;
+        $game = Game::factory()->hasAttached($actor)->createOne();
 
         // 2. Scenario run
         $data = [
@@ -33,7 +34,7 @@ class UpdateTest extends ApiTestCase
         ];
 
         $response = $this
-            ->actingAs($user)
+            ->actingAs($actor)
             ->json(
                 method: 'put',
                 uri: route(
@@ -42,10 +43,7 @@ class UpdateTest extends ApiTestCase
                         'game' => $game->id,
                     ]
                 ),
-                data: $data,
-                headers: [
-                    'X-GameToken' => 'Bearer ' . $gameApiToken
-                ]
+                data: $data
             );
 
         // 3. Assertion
@@ -64,5 +62,37 @@ class UpdateTest extends ApiTestCase
             $data['name'],
             json_decode($response->getContent(), true)['data']['name']
         );
+    }
+
+    public function testFailsUpdateOthersGame(): void
+    {
+        // 1. Initialization
+        $this->seed();
+
+        $actor = $this->asPrivilegedCustomer(User::factory())->createOne();
+        $otherUser = $this->asPrivilegedCustomer(User::factory())->createOne();
+
+        $game = Game::factory()->hasAttached($otherUser)->createOne();
+
+        // 2. Scenario run
+        $data = [
+            'name' => 'new-test-name'
+        ];
+
+        $response = $this
+            ->actingAs($actor)
+            ->json(
+                method: 'put',
+                uri: route(
+                    'api.games.update',
+                    [
+                        'game' => $game->id,
+                    ]
+                ),
+                data: $data
+            );
+
+        // 3. Assertion
+        $response->assertStatus(403);
     }
 }

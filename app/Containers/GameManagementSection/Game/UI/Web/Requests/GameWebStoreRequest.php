@@ -6,6 +6,11 @@ use App\Containers\GameManagementSection\Game\Enums\GameGenre;
 use App\Ship\Parents\Requests\Request;
 use Illuminate\Validation\Rule;
 
+/**
+ * @description Can be obtained in the following scenarios: \
+ *      1. When a user has permission game-full-own-create
+ *      2. When a user has permission game-full-other-create
+ */
 class GameWebStoreRequest extends Request
 {
     /**
@@ -37,6 +42,7 @@ class GameWebStoreRequest extends Request
 
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->hasPermission('game-full-own-create')
+            || $this->user()->hasPermission('game-full-other-create');
     }
 }
