@@ -3,7 +3,7 @@
 namespace App\Containers\AppSection\User\UI\Web\Transformers;
 
 use App\Containers\AppSection\Permission\UI\Web\Transformers\UserPermissionTransformer;
-use App\Containers\AppSection\User\Models\User;
+use App\Ship\Parents\Models\User;
 use App\Ship\Parents\Transformers\Transformer;
 use App\Containers\AppSection\Role\UI\Web\Transformers\UserRoleTransformer;
 

@@ -17,7 +17,7 @@
  */
 
 use App\Containers\ConfigurationSection\Configuration\UI\API\Controllers\ConfigurationsApiController;
-use App\Containers\GameManagementSection\Game\Middleware\ValidateGameTokenMiddleware;
+use App\Ship\Middlewares\Http\ValidateGameTokenMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/configurations/{configuration}', [ConfigurationsApiController::class, 'show'])

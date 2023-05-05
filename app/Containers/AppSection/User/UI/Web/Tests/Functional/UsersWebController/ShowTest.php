@@ -2,8 +2,8 @@
 
 namespace App\Containers\AppSection\User\UI\Web\Tests\Functional\UsersWebController;
 
-use App\Containers\AppSection\User\Models\User;
 use App\Containers\AppSection\User\Tests\ApiTestCase;
+use App\Ship\Parents\Models\User;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 
 /**
@@ -16,26 +16,27 @@ class ShowTest extends ApiTestCase
 {
     use GDRefreshDatabase;
 
-    public function testSuccessfullyReceiveUserById(): void
+    public function testSuccessfullyReceiveUserByIdFromAdmin(): void
     {
         // 1. Initialization
         $this->seed();
 
-        $user = User::factory()->createOne();
+        $actor = $this->asAdmin(User::factory())->createOne();
 
         $userB = User::factory()->createOne();
 
-        // 3. Assertion
+        // 2. Scenario run
         $response = $this
-            ->actingAs($user, 'api')
+            ->actingAs($actor, 'api')
             ->json('get',
                 route('api.private.users.show',
                     [
-                        'user' => $userB->id,
+                        'user_id' => $userB->id,
                     ]
                 )
             );
 
+        // 3. Assertion
         $response->assertStatus(200);
 
         $response->assertJsonStructure(
@@ -46,5 +47,62 @@ class ShowTest extends ApiTestCase
                 ]
             ]
         );
+    }
+
+
+    public function testSuccessfullyReceiveUserByHimself(): void
+    {
+        // 1. Initialization
+        $this->seed();
+
+        $actor = $this->asCommonCustomer(User::factory())->createOne();
+
+        // 2. Scenario run
+        $response = $this
+            ->actingAs($actor, 'api')
+            ->json('get',
+                route('api.private.users.show',
+                    [
+                        'user_id' => $actor->id,
+                    ]
+                )
+            );
+
+        // 3. Assertion
+        $response->assertStatus(200);
+
+        $response->assertJsonStructure(
+            [
+                'data' => [
+                    'id',
+                    'login',
+                ]
+            ]
+        );
+    }
+
+
+    public function testFailsToShowOtherUsersDataForCommonUser(): void
+    {
+        // 1. Initialization
+        $this->seed();
+
+        $actor = $this->asCommonCustomer(User::factory())->createOne();
+
+        $userB = User::factory()->createOne();
+
+        // 2. Scenario run
+        $response = $this
+            ->actingAs($actor, 'api')
+            ->json('get',
+                route('api.private.users.show',
+                    [
+                        'user_id' => $userB->id,
+                    ]
+                )
+            );
+
+        // 3. Assertion
+        $response->assertStatus(403);
     }
 }

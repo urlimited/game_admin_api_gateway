@@ -3,16 +3,15 @@
 namespace App\Containers\AppSection\Permission\Tasks;
 
 use App\Containers\AppSection\Permission\Data\Repositories\PermissionRepository;
-use App\Containers\AppSection\Permission\Models\Permission;
-use App\Ship\Parents\Factories\UserRoleFactory as ParentUserRoleFactory;
+use App\Ship\Parents\Models\Permission;
+use App\Ship\Parents\Tasks\Task;
 
-class StorePermissionTask extends ParentUserRoleFactory
+class StorePermissionTask extends Task
 {
-    protected PermissionRepository $repository;
-
-    public function __construct(PermissionRepository $repository)
+    public function __construct(
+        protected PermissionRepository $repository
+    )
     {
-        $this->repository = $repository;
     }
 
     public function run(string $name, string $description = null, string $displayName = null): Permission

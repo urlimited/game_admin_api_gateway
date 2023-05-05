@@ -3,7 +3,7 @@
 namespace App\Containers\AppSection\User\Tasks;
 
 use App\Containers\AppSection\User\Data\Repositories\UserRepository;
-use App\Containers\AppSection\User\Models\User;
+use App\Ship\Parents\Models\User;
 use App\Ship\Parents\Tasks\Task;
 use Prettus\Validator\Exceptions\ValidatorException;
 
@@ -20,23 +20,24 @@ class UserUpdateTask extends Task
      * @throws ValidatorException
      */
     public function run(
-        int $id,
-        string $status,
-        array $roles,
-        array $permissions,
+        int   $id,
+        array $data,
     ): User
     {
         $user = $this
             ->repository
             ->update(
-                [
-                    'status' => $status
-                ],
+                $data,
                 $id
             );
 
-        $user->roles()->sync($roles);
-        $user->permissions()->sync($permissions);
+        if (array_key_exists('roles', $data)) {
+            $user->roles()->sync($data['roles']);
+        }
+
+        if (array_key_exists('permissions', $data)) {
+            $user->permissions()->sync($data['permissions']);
+        }
 
         return $user;
     }

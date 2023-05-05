@@ -5,6 +5,10 @@ namespace App\Containers\GameManagementSection\Player\UI\API\Requests;
 use App\Ship\Parents\Requests\GameReceivableRequest;
 use Illuminate\Validation\Rule;
 
+/**
+ * @description Can be obtained in the following scenarios: \
+ *      1. When the request has correct game token
+ */
 final class PlayerApiAuthRequest extends GameReceivableRequest
 {
     /**
@@ -44,6 +48,6 @@ final class PlayerApiAuthRequest extends GameReceivableRequest
 
     public function authorize(): bool
     {
-        return true;
+        return (bool)$this->getGameId();
     }
 }

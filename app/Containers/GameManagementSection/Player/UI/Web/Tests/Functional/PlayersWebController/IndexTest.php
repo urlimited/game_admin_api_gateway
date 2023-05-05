@@ -9,7 +9,9 @@ use App\Containers\GameManagementSection\User\Models\User;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 
 /**
- * @desription Test provides assertion for correct players authentication process
+ * @desription Covers following scenarios: \
+ *  1. Index players within a game that belong to the current user
+ *  2. Fails to index players within a game that doesn't belong to the current user
  * @group game
  * @group api
  * @covers \App\Containers\GameManagementSection\Player\UI\Web\Controllers\PlayersWebController::store
@@ -21,7 +23,9 @@ class IndexTest extends ApiTestCase
     public function testSuccessfullyIndexedPlayers(): void
     {
         // 1. Initialization
-        $user = User::factory()->createOne();
+        $this->seed();
+
+        $actor = $this->asCommonCustomer(User::factory())->createOne();
 
         $game = Game::factory()
             ->has(
@@ -29,16 +33,20 @@ class IndexTest extends ApiTestCase
                     ->count(5),
                 'players'
             )
+            ->hasAttached($actor)
             ->createOne();
-
-        $user->games()->attach($game->getAttribute('id'));
 
         // 2. Scenario run
         $response = $this
-            ->actingAs($user)
+            ->actingAs($actor)
             ->json(
                 method: 'get',
-                uri: route('api.private.games.players.index', ['game' => $game->getAttribute('id')]),
+                uri: route(
+                    'api.private.games.players.index',
+                    [
+                        'game_id' => $game->getAttribute('id')
+                    ]
+                ),
             );
 
         // 3. Assertion
@@ -58,5 +66,39 @@ class IndexTest extends ApiTestCase
                 ]
             ]
         );
+    }
+
+    public function testFailsToFetchPlayersFromOtherGame(): void
+    {
+        // 1. Initialization
+        $this->seed();
+
+        $actor = $this->asCommonCustomer(User::factory())->createOne();
+        $otherUser = $this->asCommonCustomer(User::factory())->createOne();
+
+        $game = Game::factory()
+            ->has(
+                Player::factory()
+                    ->count(5),
+                'players'
+            )
+            ->hasAttached($otherUser)
+            ->createOne();
+
+        // 2. Scenario run
+        $response = $this
+            ->actingAs($actor)
+            ->json(
+                method: 'get',
+                uri: route(
+                    'api.private.games.players.index',
+                    [
+                        'game_id' => $game->getAttribute('id')
+                    ]
+                ),
+            );
+
+        // 3. Assertion
+        $response->assertStatus(403);
     }
 }

@@ -27,7 +27,7 @@ class PlayersWebController extends ApiController
      * @throws InvalidTransformerException
      * @throws ValidatorException
      */
-    public function store(PlayerWebStoreRequest $request, Game $game): JsonResponse
+    public function store(PlayerWebStoreRequest $request): JsonResponse
     {
         $processedPlayer = app(PlayerStoreAction::class)->run($request);
 
@@ -37,8 +37,7 @@ class PlayersWebController extends ApiController
     }
 
     /**
-     * @param \App\Containers\GameManagementSection\Player\UI\Web\Requests\PlayerWebUpdateRequest $request
-     * @param Game $game
+     * @param PlayerWebUpdateRequest $request
      * @param Player $player
      * @return JsonResponse
      * @throws AuthenticationException
@@ -46,7 +45,7 @@ class PlayersWebController extends ApiController
      * @throws RepositoryException
      * @throws ValidatorException
      */
-    public function update(PlayerWebUpdateRequest $request, Game $game, Player $player): JsonResponse
+    public function update(PlayerWebUpdateRequest $request, Player $player): JsonResponse
     {
         $player = app(PlayerUpdateAction::class)->run($request);
 
@@ -59,7 +58,7 @@ class PlayersWebController extends ApiController
      * @throws InvalidTransformerException
      * @throws RepositoryException
      */
-    public function index(PlayerWebIndexRequest $request, Game $game): JsonResponse
+    public function index(PlayerWebIndexRequest $request): JsonResponse
     {
         $player = app(PlayerIndexAction::class)->run($request);
 
@@ -72,7 +71,7 @@ class PlayersWebController extends ApiController
      * @throws InvalidTransformerException
      * @throws RepositoryException
      */
-    public function show(PlayerWebShowRequest $request, Game $game, Player $player): JsonResponse
+    public function show(PlayerWebShowRequest $request): JsonResponse
     {
         $player = app(PlayerShowAction::class)->run($request);
 

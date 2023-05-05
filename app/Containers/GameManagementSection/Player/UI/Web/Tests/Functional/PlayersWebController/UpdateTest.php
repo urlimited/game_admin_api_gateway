@@ -10,7 +10,9 @@ use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * @desription Test provides assertion for correct players updating processes
+ * @desription Covers following scenarios: \
+ *  1. Update a player within a game that belong to the current user
+ *  2. Fails to update a player within a game that doesn't belong to the current user
  * @group game
  * @group api
  * @covers \App\Containers\GameManagementSection\Player\UI\API\Controllers\PlayersApiController::update
@@ -22,35 +24,37 @@ class UpdateTest extends ApiTestCase
     public function testSuccessfullyUpdatePlayer(): void
     {
         // 1. Initialization
-        $user = User::factory()->createOne();
+        $this->seed();
 
-        $game = Game::factory()->createOne();
+        $actor = $this->asCommonCustomer(User::factory())->createOne();
 
-        $user->games()->attach($game->getAttribute('id'));
-
-        $player = Player::factory()
-            ->createOne(
-                [
-                    'login' => 'login-test',
-                    'game_id' => $game->getAttribute('id'),
-                    'password' => Hash::make('password-test'),
-                ]
-            );
+        $game = Game::factory()
+            ->has(
+                Player::factory()
+                    ->state(
+                        [
+                            'login' => 'login-test',
+                            'password' => Hash::make('password-test'),
+                        ]
+                    )
+            )
+            ->hasAttached($actor)
+            ->createOne();
 
         // 2. Scenario run
         $data = [
-            'password' => 'password-updated-test'
+            'password' => 'password-updated-test',
+            'game_id' => $game->getAttribute('id'),
         ];
 
         $response = $this
-            ->actingAs($user)
+            ->actingAs($actor)
             ->json(
                 method: 'put',
                 uri: route(
                     'api.private.games.players.update',
                     [
-                        'game' => $game->getAttribute('id'),
-                        'player' => $player->getAttribute('id'),
+                        'player' => $game->players()->first()->getAttribute('id'),
                     ]
                 ),
                 data: $data,
@@ -69,5 +73,49 @@ class UpdateTest extends ApiTestCase
                 ]
             ]
         );
+    }
+
+    public function testFailsToUpdatePlayerFromOtherGames(): void
+    {
+        // 1. Initialization
+        $this->seed();
+
+        $actor = $this->asCommonCustomer(User::factory())->createOne();
+        $user = $this->asCommonCustomer(User::factory())->createOne();
+
+        $game = Game::factory()
+            ->has(
+                Player::factory()
+                    ->state(
+                        [
+                            'login' => 'login-test',
+                            'password' => Hash::make('password-test'),
+                        ]
+                    )
+            )
+            ->hasAttached($user)
+            ->createOne();
+
+        // 2. Scenario run
+        $data = [
+            'password' => 'password-updated-test',
+            'game_id' => $game->getAttribute('id'),
+        ];
+
+        $response = $this
+            ->actingAs($actor)
+            ->json(
+                method: 'put',
+                uri: route(
+                    'api.private.games.players.update',
+                    [
+                        'player' => $game->players()->first()->getAttribute('id'),
+                    ]
+                ),
+                data: $data,
+            );
+
+        // 3. Assertion
+        $response->assertStatus(403);
     }
 }

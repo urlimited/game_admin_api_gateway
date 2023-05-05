@@ -2,7 +2,7 @@
 
 namespace App\Containers\AppSection\User\UI\Web\Transformers;
 
-use App\Containers\AppSection\User\Models\User;
+use App\Ship\Parents\Models\User;
 use App\Ship\Parents\Transformers\Transformer;
 
 class UserPublicTransformer extends Transformer

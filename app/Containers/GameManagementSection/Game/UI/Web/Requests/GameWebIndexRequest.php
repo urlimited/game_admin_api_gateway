@@ -2,8 +2,14 @@
 
 namespace App\Containers\GameManagementSection\Game\UI\Web\Requests;
 
+use App\Ship\Parents\Models\User;
 use App\Ship\Parents\Requests\Request;
 
+/**
+ * @description Can be obtained in the following scenarios: \
+ *      1. When a user has permission game-full-own-read \
+ *      2. When a user has permission game-full-other-read
+ */
 class GameWebIndexRequest extends Request
 {
     /**
@@ -30,6 +36,9 @@ class GameWebIndexRequest extends Request
 
     public function authorize(): bool
     {
-        return true;
+        return (
+            $this->user()->hasPermission('game-full-other-read')
+            || $this->user()->hasPermission('game-full-own-read')
+        );
     }
 }

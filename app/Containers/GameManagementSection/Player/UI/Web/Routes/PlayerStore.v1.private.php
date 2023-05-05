@@ -19,6 +19,6 @@
 use App\Containers\GameManagementSection\Player\UI\Web\Controllers\PlayersWebController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/games/{game}/players', [PlayersWebController::class, 'store'])
+Route::post('/players', [PlayersWebController::class, 'store'])
     ->middleware(['auth:sanctum'])
     ->name('api.private.games.players.store');

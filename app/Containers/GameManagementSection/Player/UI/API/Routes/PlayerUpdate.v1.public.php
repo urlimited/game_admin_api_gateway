@@ -16,9 +16,9 @@
  * @apiUse             UserSuccessSingleResponse
  */
 
-use App\Containers\GameManagementSection\Game\Middleware\ValidateGameTokenMiddleware;
 use App\Containers\GameManagementSection\Player\Middleware\ValidatePlayerTokenMiddleware;
 use App\Containers\GameManagementSection\Player\UI\API\Controllers\PlayersApiController;
+use App\Ship\Middlewares\Http\ValidateGameTokenMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::put('/players', [PlayersApiController::class, 'update'])

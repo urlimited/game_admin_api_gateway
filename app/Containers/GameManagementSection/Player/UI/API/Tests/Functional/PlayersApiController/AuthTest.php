@@ -9,7 +9,9 @@ use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * @desription Test provides assertion for correct players authentication process
+ * @desription Covers following scenarios: \
+ *  1. Auth a player within a game with a correct game token
+ *  2. Fails to auth player within a game with incorrect game token
  * @group game
  * @group api
  * @covers \App\Containers\GameManagementSection\Player\UI\API\Controllers\PlayersApiController::store
@@ -21,6 +23,8 @@ class AuthTest extends ApiTestCase
     public function testSuccessfullyAuthenticatePlayer(): void
     {
         // 1. Initialization
+        $this->seed();
+
         $game = Game::factory()
             ->has(
                 Player::factory()
@@ -79,5 +83,45 @@ class AuthTest extends ApiTestCase
                 'tokenable_id' => $parsedResponse['id'],
             ]
         );
+    }
+
+    public function testFailsToAuthenticatePlayerWithIncorrectGameToken(): void
+    {
+        // 1. Initialization
+        $this->seed();
+
+        $game = Game::factory()
+            ->has(
+                Player::factory()
+                    ->state(
+                        [
+                            'login' => 'login-test',
+                            'password' => Hash::make('password-test')
+                        ]
+                    ),
+                'players'
+            )
+            ->createOne();
+
+        $game->createToken('game-api-token')->plainTextToken;
+
+        // 2. Scenario run
+        $data = [
+            'login' => 'login-test',
+            'password' => 'password-test',
+        ];
+
+        $response = $this
+            ->json(
+                method: 'post',
+                uri: route('api.public.players.auth'),
+                data: $data,
+                headers: [
+                    'X-GameToken' => 'Bearer ' . 'incorrect-token'
+                ]
+            );
+
+        // 3. Assertion
+        $response->assertStatus(401);
     }
 }

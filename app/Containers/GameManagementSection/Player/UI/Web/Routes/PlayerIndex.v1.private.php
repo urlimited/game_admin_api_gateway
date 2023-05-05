@@ -19,6 +19,6 @@
 use App\Containers\GameManagementSection\Player\UI\Web\Controllers\PlayersWebController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/games/{game}/players', [PlayersWebController::class, 'index'])
+Route::get('/players', [PlayersWebController::class, 'index'])
     ->middleware(['auth:sanctum'])
     ->name('api.private.games.players.index');

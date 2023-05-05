@@ -4,6 +4,9 @@ namespace App\Containers\AppSection\Permission\UI\Web\Requests;
 
 use App\Ship\Parents\Requests\Request;
 
+/**
+ * @description Everyone can receive that list of permissions
+ */
 class PermissionWebIndexRequest extends Request
 {
     /**

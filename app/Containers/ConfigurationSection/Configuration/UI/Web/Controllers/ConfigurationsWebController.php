@@ -23,7 +23,6 @@ use Prettus\Validator\Exceptions\ValidatorException;
 
 class ConfigurationsWebController extends ApiController
 {
-
     /**
      * @throws InvalidTransformerException
      * @throws ValidatorException

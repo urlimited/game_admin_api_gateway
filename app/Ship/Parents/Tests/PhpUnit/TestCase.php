@@ -2,6 +2,8 @@
 
 namespace App\Ship\Parents\Tests\PhpUnit;
 
+use App\Ship\Parents\Factories\UserFactory;
+use App\Ship\Parents\Models\Role;
 use Illuminate\Foundation\Testing\TestCase as LaravelTestCase;
 use Faker\Generator;
 use Illuminate\Contracts\Console\Kernel as ApiatoConsoleKernel;
@@ -44,5 +46,33 @@ abstract class TestCase extends LaravelTestCase
         $this->faker = $app->make(Generator::class);
 
         return $app;
+    }
+
+    public function asAdmin(UserFactory $userFactory): UserFactory
+    {
+        return $userFactory->hasAttached(
+            Role::query()->whereName('admin')->first()
+        );
+    }
+
+    public function asGuest(UserFactory $userFactory): UserFactory
+    {
+        return $userFactory->hasAttached(
+            Role::query()->whereName('guest')->first()
+        );
+    }
+
+    public function asCommonCustomer(UserFactory $userFactory): UserFactory
+    {
+        return $userFactory->hasAttached(
+            Role::query()->whereName('common_customer')->first()
+        );
+    }
+
+    public function asPrivilegedCustomer(UserFactory $userFactory): UserFactory
+    {
+        return $userFactory->hasAttached(
+            Role::query()->whereName('privileged_customer')->first()
+        );
     }
 }

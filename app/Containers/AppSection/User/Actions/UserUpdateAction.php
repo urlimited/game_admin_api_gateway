@@ -2,10 +2,11 @@
 
 namespace App\Containers\AppSection\User\Actions;
 
-use App\Containers\AppSection\User\Models\User;
 use App\Containers\AppSection\User\Tasks\UserUpdateTask;
 use App\Containers\AppSection\User\UI\Web\Requests\UserWebUpdateRequest;
 use App\Ship\Parents\Actions\Action;
+use App\Ship\Parents\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class UserUpdateAction extends Action
@@ -17,11 +18,11 @@ class UserUpdateAction extends Action
     {
         $validated = $request->validated();
 
+        if (array_key_exists('password', $validated)) {
+            $validated['password'] = Hash::make($validated['password']);
+        }
+
         return app(UserUpdateTask::class)
-            ->run(id: $user->id,
-                status: $validated['status'],
-                roles: $validated['roles'],
-                permissions: $validated['permissions'],
-            );
+            ->run($user->id, $validated);
     }
 }

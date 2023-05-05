@@ -9,7 +9,10 @@ use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * @desription Test provides assertion for correct players creating processes
+ * @desription Covers following scenarios: \
+ *  1. Show a player within a correct game token and correct player token
+ *  2. Fails to show player within incorrect player token
+ *  3. Fails to show player that doesn't belong to current game
  * @group game
  * @group api
  * @covers \App\Containers\GameManagementSection\Player\UI\API\Controllers\PlayersApiController::store
@@ -21,13 +24,15 @@ class ShowTest extends ApiTestCase
     public function testSuccessfullyShowPlayer(): void
     {
         // 1. Initialization
+        $this->seed();
+
         $game = Game::factory()->createOne();
 
         $player = Player::factory()
+            ->for($game)
             ->createOne(
                 [
                     'login' => 'login-test',
-                    'game_id' => $game->getAttribute('id'),
                     'password' => Hash::make('password-test'),
                 ]
             );
@@ -78,5 +83,74 @@ class ShowTest extends ApiTestCase
                 'tokenable_id' => $parsedResponse['id'],
             ]
         );
+    }
+
+    public function testFailsToShowPlayerWithIncorrectPlayerToken(): void
+    {
+        // 1. Initialization
+        $this->seed();
+
+        $game = Game::factory()->createOne();
+
+        $player = Player::factory()
+            ->for($game)
+            ->createOne(
+                [
+                    'login' => 'login-test',
+                    'password' => Hash::make('password-test'),
+                ]
+            );
+
+        $gameApiToken = $game->createToken('game-api-token')->plainTextToken;
+        $playerApiToken = $player->createToken('player-api-token')->plainTextToken;
+
+        // 2. Scenario run
+        $response = $this
+            ->json(
+                method: 'get',
+                uri: route('api.public.players.show'),
+                headers: [
+                    'X-GameToken' => 'Bearer ' . $gameApiToken,
+                    'X-PlayerToken' => 'Bearer ' . 'incorrect-player-token',
+                ]
+            );
+
+        // 3. Assertion
+        $response->assertStatus(401);
+    }
+
+    public function testFailsToShowPlayerWithOtherGameToken(): void
+    {
+        // 1. Initialization
+        $this->seed();
+
+        $game = Game::factory()->createOne();
+        $anotherGame = Game::factory()->createOne();
+
+        $player = Player::factory()
+            ->for($anotherGame)
+            ->createOne(
+                [
+                    'login' => 'login-test',
+                    'password' => Hash::make('password-test'),
+                ]
+            );
+
+        $gameApiToken = $game->createToken('game-api-token')->plainTextToken;
+        $playerApiToken = $player->createToken('player-api-token')->plainTextToken;
+
+        // 2. Scenario run
+        $response = $this
+            ->json(
+                method: 'get',
+                uri: route('api.public.players.show'),
+                headers: [
+                    'X-GameToken' => 'Bearer ' . $gameApiToken,
+                    'X-PlayerToken' => 'Bearer ' . $playerApiToken,
+                ]
+            );
+
+        // 3. Assertion
+        $response->assertStatus(403);
     }
 }

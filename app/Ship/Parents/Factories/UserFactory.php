@@ -2,11 +2,16 @@
 
 namespace App\Ship\Parents\Factories;
 
+use App\Ship\Parents\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 
+/**
+ * @method User createOne($attributes = [])
+ */
 class UserFactory extends Factory
 {
+    protected $model = User::class;
+
     public function definition(): array
     {
         return [

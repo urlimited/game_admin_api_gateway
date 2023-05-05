@@ -2,13 +2,12 @@
 
 namespace App\Containers\AppSection\User\Actions;
 
-use App\Containers\AppSection\Role\Models\Role;
 use App\Containers\AppSection\User\Enums\UserStatus;
-use App\Containers\AppSection\User\Models\User;
 use App\Containers\AppSection\User\Tasks\UserStoreTask;
 use App\Containers\AppSection\User\UI\Web\Requests\UserWebRegisterRequest;
 use App\Ship\Parents\Actions\Action;
-
+use App\Ship\Parents\Models\Role;
+use App\Ship\Parents\Models\User;
 
 
 class UserRegisterAction extends Action

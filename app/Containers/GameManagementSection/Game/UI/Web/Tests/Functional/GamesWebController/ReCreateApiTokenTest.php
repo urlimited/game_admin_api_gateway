@@ -4,12 +4,13 @@ namespace App\Containers\GameManagementSection\Game\UI\Web\Tests\Functional\Game
 
 use App\Containers\GameManagementSection\Game\Models\Game;
 use App\Containers\GameManagementSection\Game\Tests\ApiTestCase;
-use App\Containers\GameManagementSection\User\Models\User;
+use App\Ship\Parents\Models\User;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 
 /**
  * @desription Covers following scenarios: \
- *  1. Standard game recreate api token flow with Authenticated user
+ *  1. Standard game recreate api token flow with own game and authenticated user
+ *  2. A user can't update others games tokens
  * @group game
  * @group api
  * @covers \App\Containers\GameManagementSection\Game\UI\Web\Controllers\GamesWebController::reCreateApiToken
@@ -21,9 +22,13 @@ class ReCreateApiTokenTest extends ApiTestCase
     public function testSuccessfullyRefreshApiToken(): void
     {
         // 1. Initialization
-        $user = User::factory()->createOne();
+        $this->seed();
 
-        $game = Game::factory()->createOne();
+        $actor = $this->asPrivilegedCustomer(User::factory())->createOne();
+
+        $game = Game::factory()
+            ->hasAttached($actor)
+            ->createOne();
 
         $oldToken = $game->createToken('old-token')->plainTextToken;
 
@@ -33,7 +38,7 @@ class ReCreateApiTokenTest extends ApiTestCase
         ];
 
         $response = $this
-            ->actingAs($user)
+            ->actingAs($actor)
             ->json(
                 method: 'post',
                 uri: route('api.games.reCreateApiToken', $game->id),
@@ -56,5 +61,34 @@ class ReCreateApiTokenTest extends ApiTestCase
         );
 
         $this->assertNotEquals($oldToken, json_decode($response->getContent(), true)['data']['api_token']);
+    }
+
+    public function testFailsToRefreshOtherGamesApiToken(): void
+    {
+        // 1. Initialization
+        $this->seed();
+
+        $actor = $this->asPrivilegedCustomer(User::factory())->createOne();
+        $otherUser = $this->asPrivilegedCustomer(User::factory())->createOne();
+
+        $game = Game::factory()
+            ->hasAttached($otherUser)
+            ->createOne();
+
+        // 2. Scenario run
+        $data = [
+            'api_token_name' => 'game-test-api-token-name'
+        ];
+
+        $response = $this
+            ->actingAs($actor)
+            ->json(
+                method: 'post',
+                uri: route('api.games.reCreateApiToken', $game->id),
+                data: $data
+            );
+
+        // 3. Assertion
+        $response->assertStatus(403);
     }
 }

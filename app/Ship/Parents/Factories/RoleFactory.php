@@ -2,8 +2,12 @@
 
 namespace App\Ship\Parents\Factories;
 
-abstract class UserPermissionFactory extends Factory
+use App\Ship\Parents\Models\Role;
+
+class RoleFactory extends Factory
 {
+    protected $model = Role::class;
+
     public function definition(): array
     {
         return [

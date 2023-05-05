@@ -22,6 +22,7 @@ use App\Containers\GameManagementSection\Game\UI\Web\Transformers\GamePublicTran
 use App\Ship\Parents\Controllers\ApiController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Prettus\Validator\Exceptions\ValidatorException;
 
 class GamesWebController extends ApiController
 {
@@ -50,6 +51,10 @@ class GamesWebController extends ApiController
     }
 
 
+    /**
+     * @throws InvalidTransformerException
+     * @throws ValidatorException
+     */
     public function update(GameWebUpdateRequest $request, Game $game): JsonResponse
     {
         $game = app(GameUpdateAction::class)->run($request, $game);
@@ -67,7 +72,10 @@ class GamesWebController extends ApiController
         return response()->noContent();
     }
 
-    public function index(GameWebIndexRequest $request)
+    /**
+     * @throws InvalidTransformerException
+     */
+    public function index(GameWebIndexRequest $request): JsonResponse
     {
         $games = app(GameIndexAction::class)->run($request);
 
@@ -76,9 +84,9 @@ class GamesWebController extends ApiController
         return response()->json($preparedUserData);
     }
 
-    public function show(GameWebShowRequest $request, Game $game): JsonResponse
+    public function show(GameWebShowRequest $request): JsonResponse
     {
-        $game = app(GameShowAction::class)->run($request, $game);
+        $game = app(GameShowAction::class)->run($request);
 
         $preparedUserData = $this->transform($game, GamePublicTransformer::class);
 

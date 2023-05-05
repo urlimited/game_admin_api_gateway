@@ -5,6 +5,7 @@ namespace App\Ship\Parents\Requests;
 use App\Ship\Exceptions\AuthenticationException;
 use App\Ship\Parents\Exceptions\Exception;
 use App\Ship\Parents\Requests\Contracts\PlayerReceivableRequestContract;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\PersonalAccessToken;
 
@@ -29,6 +30,9 @@ abstract class PlayerReceivableRequest extends GameReceivableRequest implements 
         }
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     protected function getPlayerToken(): PersonalAccessToken
     {
         if (is_null($this->playerToken)) {
@@ -36,6 +40,10 @@ abstract class PlayerReceivableRequest extends GameReceivableRequest implements 
                 ::findToken(
                     Str::replace('Bearer ', '', $this->headers->get('X-PlayerToken'))
                 );
+        }
+
+        if (is_null($this->playerToken)) {
+            throw new AuthorizationException();
         }
 
         return $this->playerToken;

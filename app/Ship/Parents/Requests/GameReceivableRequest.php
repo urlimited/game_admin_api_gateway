@@ -5,6 +5,7 @@ namespace App\Ship\Parents\Requests;
 use App\Ship\Exceptions\AuthenticationException;
 use App\Ship\Parents\Exceptions\Exception;
 use App\Ship\Parents\Requests\Contracts\GameReceivableRequestContract;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\PersonalAccessToken;
@@ -16,6 +17,7 @@ abstract class GameReceivableRequest extends FormRequest implements GameReceivab
 
     /**
      * @throws AuthenticationException
+     * @throws AuthorizationException
      */
     public function getGameId(): int
     {
@@ -30,13 +32,21 @@ abstract class GameReceivableRequest extends FormRequest implements GameReceivab
         }
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     protected function getGameToken(): PersonalAccessToken
     {
         if (is_null($this->gameToken)) {
-            $this->gameToken = PersonalAccessToken
-                ::findToken(
-                    Str::replace('Bearer ', '', $this->headers->get('X-GameToken'))
-                );
+            $gameToken = $this->hasHeader('X-GameToken')
+                ? Str::replace('Bearer ', '', $this->headers->get('X-GameToken'))
+                : $this->get('game_token');
+
+            $this->gameToken = PersonalAccessToken::findToken($gameToken);
+        }
+
+        if (is_null($this->gameToken)) {
+            throw new AuthorizationException();
         }
 
         return $this->gameToken;

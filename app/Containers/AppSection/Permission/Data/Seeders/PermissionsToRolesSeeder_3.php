@@ -70,7 +70,6 @@ class PermissionsToRolesSeeder_3 extends Seeder
                     'game-public-own-read',
                     'game-public-other-read',
 
-                    'game-full-own-update',
                     'game-public-own-update',
                     'game-public-other-update',
 

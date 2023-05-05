@@ -9,12 +9,12 @@ use App\Ship\Parents\Actions\Action;
 
 class GameShowAction extends Action
 {
-    public function run(GameWebShowRequest $request, Game $game)
+    public function run(GameWebShowRequest $request)
     {
         return app(FilterGamesTask::class)
             ->run(
                 [
-                    'id' => $game->id
+                    'id' => $request->route('game_id')
                 ]
             )
             ->first();

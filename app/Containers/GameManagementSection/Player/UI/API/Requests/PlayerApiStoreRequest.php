@@ -3,9 +3,15 @@
 namespace App\Containers\GameManagementSection\Player\UI\API\Requests;
 
 use App\Containers\GameManagementSection\Player\UI\Contracts\Requests\PlayerStoreRequestContract;
+use App\Ship\Exceptions\AuthenticationException;
 use App\Ship\Parents\Requests\GameReceivableRequest;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Validation\Rule;
 
+/**
+ * @description Can be obtained in the following scenarios: \
+ *      1. When the request has correct game token
+ */
 final class PlayerApiStoreRequest extends GameReceivableRequest implements PlayerStoreRequestContract
 {
     /**
@@ -43,8 +49,12 @@ final class PlayerApiStoreRequest extends GameReceivableRequest implements Playe
         ];
     }
 
+    /**
+     * @throws AuthorizationException
+     * @throws AuthenticationException
+     */
     public function authorize(): bool
     {
-        return true;
+        return (bool)$this->getGameId();
     }
 }
