@@ -8,6 +8,7 @@ use App\Ship\Criterias\ThisEqualThatCriteria;
 use App\Ship\Criterias\ThisWhereHasThatCriteria;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Prettus\Repository\Exceptions\RepositoryException;
 
 class ConfigurationFilterTask extends Task

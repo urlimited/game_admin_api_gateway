@@ -2,13 +2,12 @@
 
 namespace App\Containers\ConfigurationSection\Structure\Tasks;
 
-use App\Containers\ConfigurationSection\Game\Models\Game;
 use App\Containers\ConfigurationSection\Structure\Data\Repositories\StructureRepository;
 use App\Containers\ConfigurationSection\Structure\Models\Structure;
-use App\Containers\ConfigurationSection\Structure\Support\StructureValidator\Exceptions\InvalidDataProvidedForRuleException;
-use App\Containers\ConfigurationSection\Structure\Support\StructureValidator\Rules\ValidateTypeRulesEnum;
-use App\Containers\ConfigurationSection\Structure\Support\StructureValidator\StructureValidatorFacade;
 use App\Ship\Parents\Tasks\Task;
+use App\Ship\Support\GameControlSettings\Exceptions\InvalidDataProvidedException;
+use App\Ship\Support\GameControlSettings\GameControlSettingsFacade;
+use App\Ship\Support\GameControlSettings\Layouts\Enums\ValidateTypeRulesEnum;
 
 class StructureProcessFields extends Task
 {
@@ -21,12 +20,12 @@ class StructureProcessFields extends Task
     /**
      * @param array $fields
      * @return Structure
-     * @throws InvalidDataProvidedForRuleException
+     * @throws \App\Containers\ConfigurationSection\Structure\Support\GameControlSettings\Layouts\Exceptions\InvalidDataProvidedException
      */
     public function run(array $fields): string
     {
         foreach ($fields as $field) {
-            StructureValidatorFacade::addRule(
+            GameControlSettingsFacade::addRule(
                 [
                     'type' => ValidateTypeRulesEnum::DataType,
                     'value' => $field['data_type'],
@@ -36,7 +35,7 @@ class StructureProcessFields extends Task
 
             if ($field['data_type'] === 'int' || $field['data_type'] === 'float') {
                 if (!is_null($field['min'] ?? null)) {
-                    StructureValidatorFacade::addRule(
+                    GameControlSettingsFacade::addRule(
                         [
                             'type' => ValidateTypeRulesEnum::Min,
                             'value' => $field['min'],
@@ -46,7 +45,7 @@ class StructureProcessFields extends Task
                 }
 
                 if (!is_null($field['max'] ?? null)) {
-                    StructureValidatorFacade::addRule(
+                    GameControlSettingsFacade::addRule(
                         [
                             'type' => ValidateTypeRulesEnum::Max,
                             'value' => $field['max'],
@@ -58,7 +57,7 @@ class StructureProcessFields extends Task
 
             if ($field['data_type'] === 'string') {
                 if (!is_null($field['regex'] ?? null)) {
-                    StructureValidatorFacade::addRule(
+                    GameControlSettingsFacade::addRule(
                         [
                             'type' => ValidateTypeRulesEnum::RegExp,
                             'value' => $field['regex'],
@@ -70,7 +69,7 @@ class StructureProcessFields extends Task
 
             if ($field['data_type'] === 'list_values') {
                 if (!is_null($field['list_values'] ?? null)) {
-                    StructureValidatorFacade::addRule(
+                    GameControlSettingsFacade::addRule(
                         [
                             'type' => ValidateTypeRulesEnum::InList,
                             'value' => $field['list_values'],
@@ -81,6 +80,6 @@ class StructureProcessFields extends Task
             }
         }
 
-        return StructureValidatorFacade::formatToJSON();
+        return GameControlSettingsFacade::formatToJSON();
     }
 }

@@ -4,6 +4,11 @@ namespace App\Containers\ConfigurationSection\Configuration\UI\WEB\Requests;
 
 use App\Ship\Parents\Requests\Request;
 
+/**
+ * @description Can be obtained in the following scenarios: \
+ *      1. When a user has permission configuration-full-other-read \
+ *      2. When a user has permission configuration-full-own-read
+ */
 class ConfigurationWebIndexRequest extends Request
 {
     /**
@@ -24,7 +29,7 @@ class ConfigurationWebIndexRequest extends Request
     public function rules(): array
     {
         return [
-
+            'game_id' => ['required', 'exists:games,id']
         ];
     }
 
