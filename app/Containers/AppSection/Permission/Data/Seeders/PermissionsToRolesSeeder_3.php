@@ -59,6 +59,70 @@ class PermissionsToRolesSeeder_3 extends Seeder
 
                     'user-full-own-delete',
                     'user-full-other-delete',
+
+                    'setting-full-own-read',
+                    'setting-full-other-read',
+                    'setting-public-own-read',
+                    'setting-public-other-read',
+
+                    'setting-full-own-update',
+                    'setting-full-other-update',
+                    'setting-public-own-update',
+                    'setting-public-other-update',
+
+                    'setting-full-own-create',
+                    'setting-full-other-create',
+
+                    'setting-full-own-delete',
+                    'setting-full-other-delete',
+
+                    'adjustment-full-own-read',
+                    'adjustment-full-other-read',
+                    'adjustment-public-own-read',
+                    'adjustment-public-other-read',
+
+                    'adjustment-full-own-update',
+                    'adjustment-full-other-update',
+                    'adjustment-public-own-update',
+                    'adjustment-public-other-update',
+
+                    'adjustment-full-own-create',
+                    'adjustment-full-other-create',
+
+                    'adjustment-full-own-delete',
+                    'adjustment-full-other-delete',
+
+                    'ab-test-full-own-read',
+                    'ab-test-full-other-read',
+                    'ab-test-public-own-read',
+                    'ab-test-public-other-read',
+
+                    'ab-test-full-own-update',
+                    'ab-test-full-other-update',
+                    'ab-test-public-own-update',
+                    'ab-test-public-other-update',
+
+                    'ab-test-full-own-create',
+                    'ab-test-full-other-create',
+
+                    'ab-test-full-own-delete',
+                    'ab-test-full-other-delete',
+
+                    'layout-full-own-read',
+                    'layout-full-other-read',
+                    'layout-public-own-read',
+                    'layout-public-other-read',
+
+                    'layout-full-own-update',
+                    'layout-full-other-update',
+                    'layout-public-own-update',
+                    'layout-public-other-update',
+
+                    'layout-full-own-create',
+                    'layout-full-other-create',
+
+                    'layout-full-own-delete',
+                    'layout-full-other-delete',
                 ]
             );
 
@@ -94,6 +158,46 @@ class PermissionsToRolesSeeder_3 extends Seeder
                     'user-full-own-create',
 
                     'user-full-own-delete',
+
+                    'setting-full-own-read',
+                    'setting-public-own-read',
+
+                    'setting-full-own-update',
+                    'setting-public-own-update',
+
+                    'setting-full-own-create',
+
+                    'setting-full-own-delete',
+
+                    'adjustment-full-own-read',
+                    'adjustment-public-own-read',
+
+                    'adjustment-full-own-update',
+                    'adjustment-public-own-update',
+
+                    'adjustment-full-own-create',
+
+                    'adjustment-full-own-delete',
+
+                    'ab-test-full-own-read',
+                    'ab-test-public-own-read',
+
+                    'ab-test-full-own-update',
+                    'ab-test-public-own-update',
+
+                    'ab-test-full-own-create',
+
+                    'ab-test-full-own-delete',
+
+                    'layout-full-own-read',
+                    'layout-public-own-read',
+
+                    'layout-full-own-update',
+                    'layout-public-own-update',
+
+                    'layout-full-own-create',
+
+                    'layout-full-own-delete',
                 ]
             );
 
