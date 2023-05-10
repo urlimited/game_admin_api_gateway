@@ -58,10 +58,6 @@ final class LayoutSchemaValidator
 
         $rulesDictionary = RulesInfo::getRulesDictionary();
 
-        Log::debug(json_encode($rulesDictionary));
-        Log::debug(json_encode($rules));
-        Log::debug(json_encode(array_keys($rulesDictionary)));
-
         $rules->each(
             function (array $rule) use ($rulesDictionary) {
                 if (

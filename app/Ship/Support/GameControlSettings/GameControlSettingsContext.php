@@ -18,7 +18,7 @@ final class GameControlSettingsContext
 
     }
 
-    public function setSettingSchema(string $settingSchema)
+    public function setSettingSchema(array $settingSchema):void
     {
         $this->settingSchema = SettingSchemaValidator::process($settingSchema);
     }

@@ -6,6 +6,6 @@ final class MinRule extends ValidateRule
 {
     public function check(mixed $value)
     {
-        // TODO: Implement check() method.
+//        dd($this->type,$this->value,$value);
     }
 }

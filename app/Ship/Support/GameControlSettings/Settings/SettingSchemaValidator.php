@@ -9,7 +9,7 @@ final class SettingSchemaValidator
 {
     /**
      */
-    public static function process(string $arraySettingSchema): array
+    public static function process(array $arraySettingSchema): array
     {
         return $arraySettingSchema;
     }
