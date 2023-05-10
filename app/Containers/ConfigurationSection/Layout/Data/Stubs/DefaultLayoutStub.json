@@ -1,0 +1,151 @@
+[
+    {
+        "name": "players",
+        "rules": [
+            {
+                "type": "dataType",
+                "value": "list"
+            },
+            {
+                "type": "isRequired",
+                "value": true
+            }
+        ],
+        "children": [
+            {
+                "name": "*",
+                "rules": [
+                    {
+                        "type": "dataType",
+                        "value": "object"
+                    }
+                ],
+                "children": [
+                    {
+                        "name": "name",
+                        "rules": [
+                            {
+                                "type": "dataType",
+                                "value": "string"
+                            },
+                            {
+                                "type": "isRequired",
+                                "value": true
+                            }
+                        ]
+                    },
+                    {
+                        "name": "rank",
+                        "rules": [
+                            {
+                                "type": "dataType",
+                                "value": "string"
+                            },
+                            {
+                                "type": "isRequired",
+                                "value": true
+                            },
+                            {
+                                "type": "regex",
+                                "value": "(silver)|(global)"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "maps",
+        "rules": [
+            {
+                "type": "dataType",
+                "value": "list"
+            },
+            {
+                "type": "isRequired",
+                "value": true
+            },
+            {
+                "type": "min",
+                "value": "1"
+            }
+        ],
+        "children": [
+            {
+                "name": "*",
+                "rules": [
+                    {
+                        "type": "dataType",
+                        "value": "object"
+                    }
+                ],
+                "children": [
+                    {
+                        "name": "name",
+                        "rules": [
+                            {
+                                "type": "dataType",
+                                "value": "string"
+                            },
+                            {
+                                "type": "isRequired",
+                                "value": true
+                            }
+                        ]
+                    },
+                    {
+                        "name": "width",
+                        "rules": [
+                            {
+                                "type": "dataType",
+                                "value": "numeric"
+                            },
+                            {
+                                "type": "isInteger",
+                                "value": true
+                            },
+                            {
+                                "type": "max",
+                                "value": "2048"
+                            },
+                            {
+                                "type": "min",
+                                "value": "512"
+                            },
+                            {
+                                "type": "isRequired",
+                                "value": true
+                            }
+                        ]
+                    },
+                    {
+                        "name": "height",
+                        "rules": [
+                            {
+                                "type": "dataType",
+                                "value": "numeric"
+                            },
+                            {
+                                "type": "isInteger",
+                                "value": true
+                            },
+                            {
+                                "type": "isRequired",
+                                "value": true
+                            },
+                            {
+                                "type": "min",
+                                "value": "512"
+                            },
+                            {
+                                "type": "max",
+                                "value": "2048"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

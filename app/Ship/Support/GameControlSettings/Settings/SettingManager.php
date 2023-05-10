@@ -8,6 +8,7 @@ use App\Ship\Support\GameControlSettings\Rules\RulesInfo;
 use App\Ship\Support\GameControlSettings\Rules\ValidateRule;
 use App\Ship\Support\GameControlSettings\Settings\Exceptions\SettingNotInitializedException;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 /**
  * @description The class responses for logical validation issues
@@ -28,6 +29,7 @@ class SettingManager
         }
 
         $this->settingPathMaps = $this->processSettingPathMapsFromTree($context->getLayoutSchema());
+
         $this->setting = $context->getSettingSchema();
 
         $this->isInitialized = true;
@@ -49,7 +51,7 @@ class SettingManager
                 $settingPaths = collect(explode('/', $pathToSetting));
                 $settingValue = $this->setting;
 
-                while(empty($settingPaths)) {
+                while (empty($settingPaths)) {
                     $settingValue = $settingValue[$settingPaths->pop()];
                 }
 
@@ -65,7 +67,7 @@ class SettingManager
         $stack = collect($treeLayout);
         $result = collect();
 
-        while (!empty($stack)) {
+        while (!$stack->isEmpty()) {
             $path = substr(
                 $stack
                     ->reduce(fn(string $accum, array $next) => $accum . '/' . $next['name'] ?? '', ''),
@@ -77,7 +79,7 @@ class SettingManager
             $result->put($path, $this->processRules(collect($current['rules'])));
 
             if (!empty($current['children'] ?? [])) {
-                $stack->push($current['children']);
+                $stack->push(...$current['children']);
             }
         }
 
@@ -88,6 +90,14 @@ class SettingManager
     {
         $rulesDictionary = RulesInfo::getRulesDictionary();
 
-        return $rules->map(fn (array $rule) => new $rulesDictionary[$rule['type']]());
+        return $rules
+            ->map(
+                fn(array $rule) => new $rulesDictionary[$rule['type']](
+                    [
+                        'type' => $rule['type'],
+                        'value' => $rule['value']
+                    ]
+                )
+            );
     }
 }

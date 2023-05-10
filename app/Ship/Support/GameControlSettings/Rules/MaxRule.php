@@ -6,6 +6,6 @@ final class MaxRule extends ValidateRule
 {
     public function check(mixed $value)
     {
-        // TODO: Implement check() method.
+//        return $this->value > $value;
     }
 }

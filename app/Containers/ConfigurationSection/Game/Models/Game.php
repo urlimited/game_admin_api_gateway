@@ -2,9 +2,9 @@
 
 namespace App\Containers\ConfigurationSection\Game\Models;
 
-use App\Containers\ConfigurationSection\Configuration\Models\Configuration;
+use App\Containers\ConfigurationSection\Setting\Models\Setting;
 use App\Containers\ConfigurationSection\Game\Data\Factories\GameFactory;
-use App\Containers\ConfigurationSection\Structure\Models\Structure;
+use App\Containers\ConfigurationSection\Layout\Models\Layout;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Apiato\Core\Traits\HasResourceKeyTrait;
@@ -34,14 +34,14 @@ class Game extends Model
 
     ];
 
-    public function structures(): HasMany
+    public function layouts(): HasMany
     {
-        return $this->hasMany(Structure::class);
+        return $this->hasMany(Layout::class);
     }
 
-    public function configurations(): HasMany
+    public function settings(): HasMany
     {
-        return $this->hasMany(Configuration::class);
+        return $this->hasMany(Setting::class);
     }
 
     protected static function newFactory(): GameFactory
