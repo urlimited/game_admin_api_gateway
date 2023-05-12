@@ -44,6 +44,7 @@
         "laravel/framework": "^8.73.0",
         "laravel/sanctum": "^2.15",
         "laravel/tinker": "^2.6.0",
+        "urlimited/data-structures": "^0.0.4",
         "wikimedia/composer-merge-plugin": "^2.0.1"
     },
     "require-dev": {

@@ -1,6 +1,5 @@
 [
     {
-        "name": "required string",
         "rules": [
             {
                 "type": "dataType",
@@ -16,7 +15,6 @@
         "name": "string with regex",
         "rules": [
             {
-                "type": "dataType",
                 "value": "string"
             },
             {

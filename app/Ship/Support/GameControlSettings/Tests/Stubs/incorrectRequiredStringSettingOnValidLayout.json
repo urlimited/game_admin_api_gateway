@@ -1,0 +1,31 @@
+{
+    "string with regex": "qwerty",
+    "required integer": 12,
+    "required float": 12.0,
+    "float with min and max": 5.0,
+    "boolean": true,
+    "required boolean": false,
+    "list": ["str 1", "str 2"],
+    "required list": ["str 1", "str 2"],
+    "list with keys": [
+        {
+            "string name": "qwerty 1"
+        },
+        {
+            "string name": "qwerty 2"
+        }
+    ],
+    "required list with keys": [
+        {
+            "string name": "qwerty 1"
+        }
+    ],
+    "nested list": [
+        {
+            "string": "some string 1"
+        },
+        {
+            "string": "some string 2"
+        }
+    ]
+}
