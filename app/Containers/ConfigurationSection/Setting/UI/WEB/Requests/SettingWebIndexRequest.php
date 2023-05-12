@@ -2,6 +2,7 @@
 
 namespace App\Containers\ConfigurationSection\Setting\UI\WEB\Requests;
 
+use App\Containers\ConfigurationSection\User\Models\User;
 use App\Ship\Parents\Requests\Request;
 
 /**
@@ -35,6 +36,12 @@ class SettingWebIndexRequest extends Request
 
     public function authorize(): bool
     {
-        return true;
+        /** @var User $user */
+        $user = $this->user();
+
+        return (
+            $user->hasPermission('setting-full-other-read')
+            || $user->hasPermission('setting-full-own-read')
+        );
     }
 }

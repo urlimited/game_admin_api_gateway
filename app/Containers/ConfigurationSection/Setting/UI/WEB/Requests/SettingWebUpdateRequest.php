@@ -2,8 +2,14 @@
 
 namespace App\Containers\ConfigurationSection\Setting\UI\WEB\Requests;
 
+use App\Containers\ConfigurationSection\User\Models\User;
 use App\Ship\Parents\Requests\Request;
 
+/**
+ * @description Can be obtained in the following scenarios: \
+ *      1. When a user has permission setting-full-other-update \
+ *      2. When a user has permission setting-full-own-update and game belongs to the user
+ */
 class SettingWebUpdateRequest extends Request
 {
     /**
@@ -31,6 +37,18 @@ class SettingWebUpdateRequest extends Request
 
     public function authorize(): bool
     {
-        return true;
+        /** @var User $user */
+        $user = $this->user();
+
+        return (
+            $user->hasPermission('setting-full-other-update')
+            || (
+                $user->hasPermission('setting-full-own-update')
+                && $user
+                    ->games
+                    ->map(fn($game) => $game->id)
+                    ->contains($this->route('setting')->getAttribute('game_id'))
+            )
+        );
     }
 }
