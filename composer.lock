@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "391a4c9aaab1d0043e2cf5ecdba6bd6c",
+    "content-hash": "1015fb2c66d663ba1f99bd93b88cc129",
     "packages": [
         {
             "name": "apiato/container-installer",
@@ -8227,6 +8227,51 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/2.2.6"
             },
             "time": "2023-01-03T09:29:04+00:00"
+        },
+        {
+            "name": "urlimited/data-structures",
+            "version": "0.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/urlimited/data-structures.git",
+                "reference": "b3844e501a86731512b333f70253a7e19d1e747b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/urlimited/data-structures/zipball/b3844e501a86731512b333f70253a7e19d1e747b",
+                "reference": "b3844e501a86731512b333f70253a7e19d1e747b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CodeBaseTeam\\DataStructures\\Tree\\": "Tree/",
+                    "CodeBaseTeam\\DataStructures\\Queue\\": "Queue/",
+                    "CodeBaseTeam\\DataStructures\\Stack\\": "Stack/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "mt",
+                    "email": "maxim.tsoy.cv@gmail.com"
+                }
+            ],
+            "description": "You can use all datastructures in php here",
+            "support": {
+                "issues": "https://github.com/urlimited/data-structures/issues",
+                "source": "https://github.com/urlimited/data-structures/tree/v0.0.4"
+            },
+            "time": "2023-05-12T12:05:25+00:00"
         },
         {
             "name": "vinkla/hashids",

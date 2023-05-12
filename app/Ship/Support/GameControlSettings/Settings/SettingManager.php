@@ -7,8 +7,11 @@ use App\Ship\Support\GameControlSettings\GameControlSettingsContext;
 use App\Ship\Support\GameControlSettings\Rules\RulesInfo;
 use App\Ship\Support\GameControlSettings\Rules\ValidateRule;
 use App\Ship\Support\GameControlSettings\Settings\Exceptions\SettingNotInitializedException;
+use CodeBaseTeam\DataStructures\Tree\Exceptions\InvalidDataException;
+use CodeBaseTeam\DataStructures\Tree\TreeBuilder;
+use CodeBaseTeam\DataStructures\Tree\TreeNode;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
+
 
 /**
  * @description The class responses for logical validation issues
@@ -51,8 +54,8 @@ class SettingManager
                 $settingPaths = collect(explode('/', $pathToSetting));
                 $settingValue = $this->setting;
 
-                while (empty($settingPaths)) {
-                    $settingValue = $settingValue[$settingPaths->pop()];
+                while ($settingPaths->isNotEmpty()) {
+                    $settingValue = $settingValue[$settingPaths->pop()] ?? null;
                 }
 
                 $rules->each(
@@ -64,33 +67,44 @@ class SettingManager
 
     private function processSettingPathMapsFromTree(array $treeLayout): Collection
     {
-        $stack = collect($treeLayout);
+        $tree = TreeBuilder::fromArray(['children' => $treeLayout]);
+
         $result = collect();
 
-        while (!$stack->isEmpty()) {
-            $path = substr(
-                $stack
-                    ->reduce(fn(string $accum, array $next) => $accum . '/' . $next['name'] ?? '', ''),
-                1
-            );
+        $tree->traversalPreOrder(
+            node: $tree->getRoot(),
+            callback: function(TreeNode $node) use ($result) {
+                $name = $node->getValue()['name'] ?? '';
 
-            $current = $stack->pop();
+                $parent = $node->getParent();
 
-            $result->put($path, $this->processRules(collect($current['rules'])));
+                while(!is_null($parent)) {
+                    if (empty($parent->getValue())) {
+                        $parent = $parent->getParent();
 
-            if (!empty($current['children'] ?? [])) {
-                $stack->push(...$current['children']);
+                        continue;
+                    }
+
+                    $name = $parent->getValue()['name'] . '/' . $name;
+
+                    $parent = $parent->getParent();
+                }
+
+                $result->put($name, $this->processRules($node->getValue()['rules'] ?? []));
             }
-        }
+        );
+
+        // Skip root element
+        $result->shift();
 
         return $result;
     }
 
-    private function processRules(Collection $rules): Collection
+    private function processRules(array $rules): Collection
     {
         $rulesDictionary = RulesInfo::getRulesDictionary();
 
-        return $rules
+        return collect($rules)
             ->map(
                 fn(array $rule) => new $rulesDictionary[$rule['type']](
                     [

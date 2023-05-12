@@ -34,25 +34,24 @@ class StoreTest extends ApiTestCase
             ->createOne();
 
         $json = '{
-    "players": [
-        {
-            "name": "Adam",
-            "rank": "global"
-        },
-        {
-            "name": "Bob",
-            "rank": "global"
-        }
-    ],
-    "maps": [
-        {
-            "name": "dust",
-            "width": 1500,
-            "height": 1400
-        }
-    ]
-}
-';
+            "players": [
+                {
+                    "name": "Adam",
+                    "rank": "global"
+                },
+                {
+                    "name": "Bob",
+                    "rank": "global"
+                }
+            ],
+            "maps": [
+                {
+                    "name": "dust",
+                    "width": 1500,
+                    "height": 1400
+                }
+            ]
+        }';
 
         $array = json_decode($json, true);
 
@@ -83,18 +82,27 @@ class StoreTest extends ApiTestCase
         $user = User::factory()
             ->hasAttached($game)
             ->createOne();
-        $json = '[
-                    {
-                        "id": 1,
-                        "name": "gold",
-                        "icon": "/path/to/icon"
-                    },
-                    {
-                        "id": 2,
-                        "name": "crystal",
-                        "icon": "/path/to/icon"
-                    }
-                ]';
+
+        $json = '{
+            "players": [
+                {
+                    "name": "Adam",
+                    "rank": "global"
+                },
+                {
+                    "name": "Bob",
+                    "rank": "global"
+                }
+            ],
+            "maps": [
+                {
+                    "name": "dust",
+                    "width": 1500,
+                    "height": 1400
+                }
+            ]
+        }';
+
         $array = json_decode($json, true);
 
         // 2. Scenario run
