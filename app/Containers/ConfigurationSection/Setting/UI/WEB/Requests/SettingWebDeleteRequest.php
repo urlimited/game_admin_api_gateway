@@ -2,8 +2,14 @@
 
 namespace App\Containers\ConfigurationSection\Setting\UI\WEB\Requests;
 
+use App\Containers\ConfigurationSection\User\Models\User;
 use App\Ship\Parents\Requests\Request;
 
+/**
+ * @description Can be obtained in the following scenarios: \
+ *      1. When a user has permission setting-full-other-delete
+ *      2. When a user has permission setting-full-own-delete and game belongs to the user
+ */
 class SettingWebDeleteRequest extends Request
 {
     /**
@@ -30,6 +36,18 @@ class SettingWebDeleteRequest extends Request
 
     public function authorize(): bool
     {
-        return true;
+        /** @var User $user */
+        $user = $this->user();
+
+        return (
+            $user->hasPermission('setting-full-other-delete')
+            || (
+                $user->hasPermission('setting-full-own-delete')
+                && $user
+                    ->games
+                    ->map(fn($game) => $game->id)
+                    ->contains($this->route('setting')->getAttribute('game_id'))
+            )
+        );
     }
 }

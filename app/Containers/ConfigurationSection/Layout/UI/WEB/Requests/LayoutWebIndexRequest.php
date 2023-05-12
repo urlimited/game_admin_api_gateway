@@ -2,8 +2,14 @@
 
 namespace App\Containers\ConfigurationSection\Layout\UI\WEB\Requests;
 
+use App\Containers\ConfigurationSection\User\Models\User;
 use App\Ship\Parents\Requests\Request;
 
+/**
+ * @description Can be obtained in the following scenarios: \
+ *      1. When a user has permission layout-full-other-read \
+ *      2. When a user has permission layout-full-own-read
+ */
 class LayoutWebIndexRequest extends Request
 {
     /**
@@ -30,10 +36,12 @@ class LayoutWebIndexRequest extends Request
 
     public function authorize(): bool
     {
-        $game = $this->route('game');
+        /** @var User $user */
+        $user = $this->user();
 
-//        return $this->user()->hasRole('admin')
-//            || $game->user->id === $this->user()->id;
-        return true;
+        return (
+            $user->hasPermission('layout-full-other-read')
+            || $user->hasPermission('layout-full-own-read')
+        );
     }
 }

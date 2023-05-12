@@ -3,8 +3,14 @@
 namespace App\Containers\ConfigurationSection\Setting\UI\WEB\Requests;
 
 use App\Containers\ConfigurationSection\Setting\UI\Contracts\Requests\SettingShowRequestContract;
+use App\Containers\ConfigurationSection\User\Models\User;
 use App\Ship\Parents\Requests\GameReceivableRequest;
 
+/**
+ * @description Can be obtained in the following scenarios: \
+ *      1. When a user has permission setting-full-other-read \
+ *      2. When a user has permission setting-full-own-read and game belongs to the user
+ */
 class SettingWebShowRequest extends GameReceivableRequest implements SettingShowRequestContract
 {
     /**
@@ -31,6 +37,18 @@ class SettingWebShowRequest extends GameReceivableRequest implements SettingShow
 
     public function authorize(): bool
     {
-        return true;
+        /** @var User $user */
+        $user = $this->user();
+
+        return (
+            $user->hasPermission('setting-full-other-read')
+            || (
+                $user->hasPermission('setting-full-own-read')
+                && $user
+                    ->games
+                    ->map(fn($game) => $game->id)
+                    ->contains($this->route('setting')->getAttribute('game_id'))
+            )
+        );
     }
 }
