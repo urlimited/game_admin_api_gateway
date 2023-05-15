@@ -31,7 +31,7 @@ class SettingWebUpdateRequest extends Request
     {
         return [
             'schema' => ['required', 'array'],
-            'name' => ['required', 'string'],
+            'name' => ['required','string','min:3','max:255','regex:/^[^{}*"\',()\[\] \/+%#^&?<>~.№;=!\\\\]+$/'],
         ];
     }
 

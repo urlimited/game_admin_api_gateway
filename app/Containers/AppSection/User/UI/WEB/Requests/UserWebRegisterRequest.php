@@ -29,12 +29,13 @@ class UserWebRegisterRequest extends Request
         return [
             'login' => [
                 'required',
-                'max:40',
-                'unique:users,login'
+                'email',
+                'max:191',
+                'unique:users,login',
             ],
             'password' => [
                 'string',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,60}$/'
             ],
         ];
     }

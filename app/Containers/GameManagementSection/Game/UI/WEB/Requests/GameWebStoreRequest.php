@@ -31,11 +31,12 @@ class GameWebStoreRequest extends Request
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
+            'name' => ['required', 'string','min:3','max:255','regex:/^[^{}*"\',()\[\] \/+%#^&?<>~.№;=!\\\\]+$/'],
             'genre' => [
                 'required',
                 'string',
-                Rule::in(collect(GameGenre::cases())->map(fn($genreEnum) => $genreEnum->value)->toArray())
+                Rule::in(collect(GameGenre::cases())->map(fn($genreEnum) => $genreEnum->value)->toArray()),
+                'max:191'
             ],
         ];
     }
