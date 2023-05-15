@@ -46,7 +46,7 @@ class ExceptionsHandler extends CoreExceptionsHandler
         });
 
         $this->renderable(function (ParentException $e) {
-            $response = null;
+            $code = $e->getCode();
 
             if (config('app.debug')) {
                 $response = [
@@ -58,13 +58,22 @@ class ExceptionsHandler extends CoreExceptionsHandler
                     'trace' => $e->gettrace()
                 ];
             } else {
-                $response = [
-                    'message' => $e->getMessage(),
-                    'errors' => $e->getErrors()
-                ];
+                if (in_array($e->getCode(), [422, 419, 401, 403, 404])) {
+                    $response = [
+                        'message' => $e->getMessage(),
+                        'errors' => $e->getErrors()
+                    ];
+                } else {
+                    $response = [
+                        'message' => 'Bad request, please try again',
+                        'errors' => []
+                    ];
+
+                    $code = 400;
+                }
             }
 
-            return response()->json($response, $e->getCode());
+            return response()->json($response, $code);
         });
     }
 }

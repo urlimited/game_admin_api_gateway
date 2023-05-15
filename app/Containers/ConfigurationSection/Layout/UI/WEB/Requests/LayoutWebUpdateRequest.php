@@ -33,13 +33,6 @@ class LayoutWebUpdateRequest extends Request
             'name' => ['required', 'string', 'max:255'],
             'version' => ['required', 'string', 'regex:/^(\d{1,58}\.\d{1,58}\.\d{1,58})$/', 'max:60'],
             'schema' => ['required', 'array'],
-            'schema.*.name' => ['required', 'string'],
-            'schema.*.data_type' => ['required', 'string', 'in:string,list,int,float,object,bool'],
-            'schema.*.min' => ['numeric', 'nullable'],
-            'schema.*.max' => ['numeric', 'nullable'],
-            'schema.*.regex' => ['string', 'nullable', 'regex:/^((?:(?:[^?+*{}()[\]\\|]+|\\.|\[(?:\^?\\.|\^[^\\]|[^\\^])(?:[^\]\\]+|\\.)*\]|\((?:\?[:=!]|\?<[=!]|\?>)?(?1)??\)|\(\?(?:R|[+-]?\d+)\))(?:(?:[?+*]|\{\d+(?:,\d*)?\})[?+]?)?|\|)*)$/'],
-            'schema.*.list_values' => ['array', 'nullable'],
-            'schema.*.list_values.*' => ['string']
         ];
     }
 
