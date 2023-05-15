@@ -40,7 +40,7 @@ class StoreTest extends ApiTestCase
                 uri: route('api.public.players.store'),
                 data: $data,
                 headers: [
-                    'X-GameToken' => 'Bearer ' . $gameApiToken
+                    'X-GameToken' => $gameApiToken
                 ]
             );
 
@@ -100,7 +100,7 @@ class StoreTest extends ApiTestCase
                 uri: route('api.public.players.store'),
                 data: $data,
                 headers: [
-                    'X-GameToken' => 'Bearer ' . 'incorrect-game-token'
+                    'X-GameToken' => 'incorrect-game-token'
                 ]
             );
 

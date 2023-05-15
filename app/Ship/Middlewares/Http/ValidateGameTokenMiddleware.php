@@ -5,7 +5,6 @@ namespace App\Ship\Middlewares\Http;
 use App\Ship\Exceptions\AuthenticationException;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class ValidateGameTokenMiddleware
@@ -20,7 +19,7 @@ class ValidateGameTokenMiddleware
      */
     public function handle(Request $request, Closure $next): mixed
     {
-        $processedToken = Str::replace('Bearer ', '', $request->headers->get('X-GameToken'));
+        $processedToken =  $request->headers->get('X-GameToken');
 
         $gameToken = PersonalAccessToken::findToken($processedToken);
 

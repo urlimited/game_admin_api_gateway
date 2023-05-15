@@ -46,8 +46,8 @@ class ShowTest extends ApiTestCase
                 method: 'get',
                 uri: route('api.public.players.show'),
                 headers: [
-                    'X-GameToken' => 'Bearer ' . $gameApiToken,
-                    'X-PlayerToken' => 'Bearer ' . $playerApiToken,
+                    'X-GameToken' => $gameApiToken,
+                    'X-PlayerToken' => $playerApiToken,
                 ]
             );
 
@@ -110,8 +110,8 @@ class ShowTest extends ApiTestCase
                 method: 'get',
                 uri: route('api.public.players.show'),
                 headers: [
-                    'X-GameToken' => 'Bearer ' . $gameApiToken,
-                    'X-PlayerToken' => 'Bearer ' . 'incorrect-player-token',
+                    'X-GameToken' => $gameApiToken,
+                    'X-PlayerToken' => 'incorrect-player-token',
                 ]
             );
 
@@ -145,8 +145,8 @@ class ShowTest extends ApiTestCase
                 method: 'get',
                 uri: route('api.public.players.show'),
                 headers: [
-                    'X-GameToken' => 'Bearer ' . $gameApiToken,
-                    'X-PlayerToken' => 'Bearer ' . $playerApiToken,
+                    'X-GameToken' => $gameApiToken,
+                    'X-PlayerToken' => $playerApiToken,
                 ]
             );
 

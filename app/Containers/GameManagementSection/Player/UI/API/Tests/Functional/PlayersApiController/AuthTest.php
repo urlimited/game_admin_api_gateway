@@ -52,7 +52,7 @@ class AuthTest extends ApiTestCase
                 uri: route('api.public.players.auth'),
                 data: $data,
                 headers: [
-                    'X-GameToken' => 'Bearer ' . $gameApiToken
+                    'X-GameToken' => $gameApiToken
                 ]
             );
 
@@ -117,7 +117,7 @@ class AuthTest extends ApiTestCase
                 uri: route('api.public.players.auth'),
                 data: $data,
                 headers: [
-                    'X-GameToken' => 'Bearer ' . 'incorrect-token'
+                    'X-GameToken' => 'incorrect-token'
                 ]
             );
 
