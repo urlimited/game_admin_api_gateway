@@ -20,7 +20,7 @@ class ValidatePlayerTokenMiddleware
      */
     public function handle(Request $request, Closure $next): mixed
     {
-        $processedToken = Str::replace('Bearer ', '', $request->headers->get('X-PlayerToken'));
+        $processedToken =  $request->headers->get('X-PlayerToken');
 
         $playerToken = PersonalAccessToken::findToken($processedToken);
 

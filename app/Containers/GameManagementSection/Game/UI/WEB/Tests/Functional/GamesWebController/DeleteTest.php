@@ -46,7 +46,7 @@ class DeleteTest extends ApiTestCase
                     ]
                 ),
                 headers: [
-                    'X-GameToken' => 'Bearer ' . $gameApiToken,
+                    'X-GameToken' =>  $gameApiToken,
                 ]
             );
 
@@ -113,7 +113,7 @@ class DeleteTest extends ApiTestCase
                     ]
                 ),
                 headers: [
-                    'X-GameToken' => 'Bearer ' . $gameApiToken,
+                    'X-GameToken' => $gameApiToken,
                 ]
             );
 

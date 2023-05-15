@@ -44,7 +44,7 @@ class ShowTest extends ApiTestCase
                     ]
                 ),
                 headers: [
-                    'X-GameToken' => 'Bearer ' . $gameApiToken,
+                    'X-GameToken' => $gameApiToken,
                 ]
             );
 

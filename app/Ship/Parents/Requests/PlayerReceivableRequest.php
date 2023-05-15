@@ -38,7 +38,7 @@ abstract class PlayerReceivableRequest extends GameReceivableRequest implements 
         if (is_null($this->playerToken)) {
             $this->playerToken = PersonalAccessToken
                 ::findToken(
-                    Str::replace('Bearer ', '', $this->headers->get('X-PlayerToken'))
+                   $this->headers->get('X-PlayerToken')
                 );
         }
 
