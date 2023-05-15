@@ -30,7 +30,7 @@ class GameWebUpdateRequest extends Request
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string','min:3','max:255','regex:/^[^{}*"\',()\[\] \/+%#^&?<>~.№;=!\\\\]+$/']
+            'name' => ['required', 'string','min:3','max:255','regex:/^[^{}*"\',\(\)\[\]\s\/+%#\^&\?<>~\.№;=!\\]+$/']
         ];
     }
 
