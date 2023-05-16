@@ -47,7 +47,7 @@ final class PlayerWebStoreRequest extends FormRequest implements PlayerStoreRequ
             'password' => [
                 'required',
                 'string',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,191}$/'
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,100}$/'
             ],
             'game_id' => [
                 'required',
