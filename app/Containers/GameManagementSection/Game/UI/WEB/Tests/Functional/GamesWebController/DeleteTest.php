@@ -49,7 +49,6 @@ class DeleteTest extends ApiTestCase
                     'X-GameToken' =>  $gameApiToken,
                 ]
             );
-
         // 3. Assertion
         $response->assertStatus(204);
     }

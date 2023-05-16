@@ -8,19 +8,13 @@
     "required boolean": false,
     "list": ["str 1", "str 2"],
     "required list": ["str 1", "str 2"],
-    "list with keys": [
-        {
-            "some string": "qwerty 1"
-        },
-        {
-            "some string": "qwerty 2"
-        }
-    ],
-    "required list with keys": [
-        {
-            "some string": "qwerty 1"
-        }
-    ],
+    "list with keys": {
+        "some string 1": "qwerty 1",
+        "some string 2": "qwerty 2"
+    },
+    "required list with keys": {
+        "some string": "qwerty 1"
+    },
     "nested list": [
         {
             "some string": "some string 1"

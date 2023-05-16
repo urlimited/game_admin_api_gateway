@@ -27,9 +27,10 @@ class UpdateTest extends ApiTestCase
         $this->seed();
 
         $game = Game::factory()->createOne();
-        $user = User::factory()
+
+        $user = $this->asCommonCustomer(User::factory()
             ->hasAttached($game)
-            ->createOne();
+        )->createOne();
 
         $layout = Layout::factory()
             ->for($game)

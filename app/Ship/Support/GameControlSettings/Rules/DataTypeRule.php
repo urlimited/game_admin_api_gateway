@@ -12,39 +12,45 @@ final class DataTypeRule extends ValidateRule
      */
     public function check(mixed $value)
     {
-        switch ($this->value) {
-            case DataTypesEnum::Bool:
-                if (!in_array($value, [true, false, 1, 0, "true", "false", "1", "0"])) {
-                    throw new InvalidDataProvidedException();
-                }
-                break;
+        try {
+            switch ($this->value) {
+                case DataTypesEnum::Bool->value:
+                    if (!in_array($value, [true, false, 1, 0, "true", "false", "1", "0"])) {
+                        throw new InvalidDataProvidedException();
+                    }
+                    break;
 
-            case DataTypesEnum::List:
-                if (!is_array($value) || !array_is_list($value)) {
-                    throw new InvalidDataProvidedException();
-                }
-                break;
+                case DataTypesEnum::List->value:
+                    if (!is_array($value) || !array_is_list($value)) {
+                        throw new InvalidDataProvidedException();
+                    }
+                    break;
 
-            case DataTypesEnum::Numeric:
-                if (!is_numeric($value)) {
-                    throw new InvalidDataProvidedException();
-                }
-                break;
+                case DataTypesEnum::Numeric->value:
+                    if (!is_numeric($value)) {
+                        throw new InvalidDataProvidedException();
+                    }
+                    break;
 
-            case DataTypesEnum::Object:
-                if (!is_array($value) || array_is_list($value)) {
-                    throw new InvalidDataProvidedException();
-                }
-                break;
+                case DataTypesEnum::Object->value:
+                    if (!is_array($value) || array_is_list($value)) {
+                        throw new InvalidDataProvidedException();
+                    }
+                    break;
 
-            case DataTypesEnum::String:
-                if (!is_string($value)) {
-                    throw new InvalidDataProvidedException();
-                }
-                break;
+                case DataTypesEnum::String->value:
+                    if (!is_string($value)) {
+                        throw new InvalidDataProvidedException();
+                    }
+                    break;
 
-            default:
-                throw new InvalidDataProvidedException();
+                default:
+                    throw new InvalidDataProvidedException();
+            }
+        } catch (\Exception $e) {
+            dump($this->value);
+            dd($value);
         }
+
     }
 }
