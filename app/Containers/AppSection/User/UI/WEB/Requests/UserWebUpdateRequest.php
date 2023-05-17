@@ -34,10 +34,11 @@ class UserWebUpdateRequest extends Request
         return [
             'password' => [
                 'string',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,100}$/'
             ],
             'status' => [
                 Rule::in(collect(UserStatus::cases())->map(fn($status) => $status->value)->toArray()),
+                'max:191',
             ],
             'roles' => [
                 'array',

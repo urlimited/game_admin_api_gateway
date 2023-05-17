@@ -34,17 +34,20 @@ final class PlayerWebStoreRequest extends FormRequest implements PlayerStoreRequ
         return [
             'login' => [
                 'required',
+                'email',
                 'string',
                 Rule::unique('players')
                     ->where(
                         function ($q) {
                             return $q->where('game_id', $this->getGameId());
                         }
-                    )
+                    ),
+                'max:191'
             ],
             'password' => [
                 'required',
-                'string'
+                'string',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,100}$/'
             ],
             'game_id' => [
                 'required',

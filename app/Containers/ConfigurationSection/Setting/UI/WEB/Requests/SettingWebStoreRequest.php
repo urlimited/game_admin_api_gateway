@@ -30,6 +30,7 @@ class SettingWebStoreRequest extends Request
     public function rules(): array
     {
         return [
+            'name' => ['required','string','min:3','max:255','regex:/^[^{}*"\',\(\)\[\]\s\/+%#\^&\?<>~\.№;=!\\]+$/'],
             'structure_id' => ['nullable','exists:structures,id'],
             'schema' => ['required', 'array'],
             'game_id' => ['required', 'exists:games,id'],
