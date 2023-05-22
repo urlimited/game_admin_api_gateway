@@ -10,6 +10,12 @@ return [
     */
     'hash-id' => env('HASH_ID', true),
 
+    'web' => [
+        'prefix' => env('WEB_PREFIX', '/'),
+        'enable_version_prefix' => true,
+        'url' => env('APP_URL', '/'),
+    ],
+
     'api' => [
 
         /*
