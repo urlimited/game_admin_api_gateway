@@ -20,7 +20,7 @@ class UserPrivateTransformer extends Transformer
     public function transform(User $user): array
     {
         return [
-            'id' => $user->getAttribute('id'),
+            'uuid' => $user->getAttribute('uuidText'),
             'login' => $user->getAttribute('login'),
             'status' => $user->getAttribute('status'),
             'roles' => $user

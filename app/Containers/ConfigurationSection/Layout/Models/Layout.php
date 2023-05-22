@@ -6,13 +6,14 @@ use Apiato\Core\Traits\HasResourceKeyTrait;
 use App\Containers\ConfigurationSection\Setting\Models\Setting;
 use App\Containers\ConfigurationSection\Game\Models\Game;
 use App\Containers\ConfigurationSection\Layout\Data\Factories\LayoutFactory;
+use App\Ship\Libs\OptimisedUuid\HasBinaryUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
- * @property int $id
+ * @property int $uuid
  * @property string $name
  * @property int $game_id
  * @property string $version
@@ -24,10 +25,12 @@ class Layout extends Model
     use HasResourceKeyTrait;
     use HasFactory;
     use SoftDeletes;
+    use HasBinaryUuid;
 
-    protected $table = 'structures';
+    protected $table = 'layouts';
 
     protected $fillable = [
+        'uuid',
         'name',
         'game_id',
         'schema',

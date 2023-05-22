@@ -19,6 +19,6 @@
 use App\Containers\AppSection\User\UI\WEB\Controllers\UsersWebController;
 use Illuminate\Support\Facades\Route;
 
-Route::patch('/users/{user}', [UsersWebController::class, 'update'])
+Route::patch('/users/{user:uuid}', [UsersWebController::class, 'update'])
     ->middleware('auth:sanctum')
     ->name('api.private.users.update');

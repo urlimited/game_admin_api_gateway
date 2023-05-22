@@ -19,6 +19,6 @@
 use App\Containers\ConfigurationSection\Layout\UI\WEB\Controllers\LayoutsWebController;
 use Illuminate\Support\Facades\Route;
 
-Route::delete('/layouts/{layout}', [LayoutsWebController::class, 'delete'])
+Route::delete('/layouts/{layout:uuid}', [LayoutsWebController::class, 'delete'])
     ->middleware(['auth:sanctum'])
     ->name('api.private.games.layouts.delete');

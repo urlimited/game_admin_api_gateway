@@ -55,7 +55,7 @@ class StoreTest extends ApiTestCase
 
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas('structures',
+        $this->assertDatabaseHas('layouts',
             [
                 'name'=> 'rerum',
                 'version'=> '13.25.42',

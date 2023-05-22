@@ -16,7 +16,7 @@ class ShowTest extends ApiTestCase
 {
     use GDRefreshDatabase;
 
-    public function testSuccessfullyReceiveUserByIdFromAdmin(): void
+    public function testSuccessfullyReceiveUserByUuidFromAdmin(): void
     {
         // 1. Initialization
         $this->seed();
@@ -31,7 +31,7 @@ class ShowTest extends ApiTestCase
             ->json('get',
                 route('api.private.users.show',
                     [
-                        'user_id' => $userB->id,
+                        'user' => $userB->getAttribute('uuidText'),
                     ]
                 )
             );
@@ -42,7 +42,7 @@ class ShowTest extends ApiTestCase
         $response->assertJsonStructure(
             [
                 'data' => [
-                    'id',
+                    'uuid',
                     'login',
                 ]
             ]
@@ -63,7 +63,7 @@ class ShowTest extends ApiTestCase
             ->json('get',
                 route('api.private.users.show',
                     [
-                        'user_id' => $actor->id,
+                        'user' => $actor->getAttribute('uuidText'),
                     ]
                 )
             );
@@ -74,7 +74,7 @@ class ShowTest extends ApiTestCase
         $response->assertJsonStructure(
             [
                 'data' => [
-                    'id',
+                    'uuid',
                     'login',
                 ]
             ]
@@ -97,7 +97,7 @@ class ShowTest extends ApiTestCase
             ->json('get',
                 route('api.private.users.show',
                     [
-                        'user_id' => $userB->id,
+                        'user' => $userB->getAttribute('uuidText'),
                     ]
                 )
             );

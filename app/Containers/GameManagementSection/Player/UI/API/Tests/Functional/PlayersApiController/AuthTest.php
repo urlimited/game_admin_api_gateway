@@ -5,8 +5,10 @@ namespace App\Containers\GameManagementSection\Player\UI\API\Tests\Functional\Pl
 use App\Containers\GameManagementSection\Player\Models\Player;
 use App\Containers\GameManagementSection\Game\Models\Game;
 use App\Containers\GameManagementSection\Game\Tests\ApiTestCase;
+use App\Containers\GameManagementSection\User\Models\User;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @desription Covers following scenarios: \
@@ -14,7 +16,7 @@ use Illuminate\Support\Facades\Hash;
  *  2. Fails to auth player within a game with incorrect game token
  * @group game
  * @group api
- * @covers \App\Containers\GameManagementSection\Player\UI\API\Controllers\PlayersApiController::store
+ * @covers \App\Containers\GameManagementSection\Player\UI\API\Controllers\PlayersApiController::auth
  */
 class AuthTest extends ApiTestCase
 {
@@ -67,20 +69,20 @@ class AuthTest extends ApiTestCase
         $response->assertJsonStructure(
             [
                 'data' => [
-                    'id',
+                    'uuid',
                     'login',
-                    'game_id',
+                    'game_uuid',
                     'player_token'
                 ]
             ]
         );
-
+        $playerId= Player::query()->where('uuid', Uuid::fromString($parsedResponse['uuid'])->getBytes())->value('id');
         // 3.3 Assert affects on the DB
         $this->assertDatabaseHas('personal_access_tokens',
             [
                 'tokenable_type' => Player::class,
                 'name' => 'player-api-token',
-                'tokenable_id' => $parsedResponse['id'],
+                'tokenable_id' => $playerId,
             ]
         );
     }

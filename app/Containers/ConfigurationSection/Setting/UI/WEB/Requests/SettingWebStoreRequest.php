@@ -31,7 +31,7 @@ class SettingWebStoreRequest extends Request
     {
         return [
             'name' => ['required','string','min:3','max:255','regex:/^[^{}*"\',\(\)\[\]\s\/+%#\^&\?<>~\.№;=!\\\\]+$/'],
-            'structure_id' => ['nullable','exists:structures,id'],
+            'structure_id' => ['nullable','exists:layouts,id'],
             'schema' => ['required', 'array'],
             'game_id' => ['required', 'exists:games,id'],
         ];

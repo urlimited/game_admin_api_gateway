@@ -5,6 +5,7 @@ namespace App\Containers\ConfigurationSection\Game\Models;
 use App\Containers\ConfigurationSection\Setting\Models\Setting;
 use App\Containers\ConfigurationSection\Game\Data\Factories\GameFactory;
 use App\Containers\ConfigurationSection\Layout\Models\Layout;
+use App\Ship\Libs\OptimisedUuid\HasBinaryUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Apiato\Core\Traits\HasResourceKeyTrait;
@@ -15,7 +16,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\PersonalAccessToken;
 
 /**
- * @property int $id
+ * @property int $uuid
  * @property string $name
  * @property string $genre
  * @property Collection<PersonalAccessToken> $tokens
@@ -27,6 +28,7 @@ class Game extends Model
     use HasApiTokens;
     use HasFactory;
     use SoftDeletes;
+    use HasBinaryUuid;
 
     protected $table = 'games';
 

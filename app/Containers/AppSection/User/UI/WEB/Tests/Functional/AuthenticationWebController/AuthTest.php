@@ -3,6 +3,7 @@
 namespace App\Containers\AppSection\User\UI\WEB\Tests\Functional\AuthenticationWebController;
 
 use App\Containers\AppSection\User\Tests\ApiTestCase;
+use App\Ship\Parents\Models\Permission;
 use App\Ship\Parents\Models\User;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 use Illuminate\Support\Facades\Hash;
@@ -24,15 +25,13 @@ class AuthTest extends ApiTestCase
     {
         // 1. Initialization
         $this->seed();
-
-        User::factory()->createOne(
+        $this->asCommonCustomer(User::factory())
+            ->hasAttached(Permission::query()->where('name','layout-full-other-delete')->first())->createOne(
             [
                 'login' => 'admin-test',
                 'password' => Hash::make('secret'),
             ]
         );
-
-
         // 2. Scenario run
         $data = [
             'login' => 'admin-test',

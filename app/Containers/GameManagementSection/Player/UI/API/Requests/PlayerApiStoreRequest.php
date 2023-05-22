@@ -34,9 +34,8 @@ final class PlayerApiStoreRequest extends GameReceivableRequest implements Playe
         return [
             'login' => [
                 'required',
-                'email',
                 'string',
-                Rule::unique('players')
+                Rule::unique('players', 'login')
                     ->where(
                         function ($q) {
                             return $q->where('game_id', $this->getGameId());
@@ -47,7 +46,7 @@ final class PlayerApiStoreRequest extends GameReceivableRequest implements Playe
             'password' => [
                 'required',
                 'string',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,100}$/'
+                'regex:/^[A-Za-z\d@$!%*?&]{1,100}$/'
             ]
         ];
     }

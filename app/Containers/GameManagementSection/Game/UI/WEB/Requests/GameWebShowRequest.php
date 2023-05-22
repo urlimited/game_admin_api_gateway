@@ -44,7 +44,7 @@ class GameWebShowRequest extends Request
                 && $this->user()
                     ->games
                     ->map(fn(Game $game) => $game->getAttribute('id'))
-                    ->contains(fn($gameId) => $gameId == $this->route('game_id'))
+                    ->contains(fn($gameId) => $gameId == $this->route('game')->getAttribute('id'))
             )
         );
     }

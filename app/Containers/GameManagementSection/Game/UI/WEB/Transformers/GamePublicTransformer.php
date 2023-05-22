@@ -18,16 +18,16 @@ class GamePublicTransformer extends Transformer
 
         #[ArrayShape
         ([
-            'id' => "int",
+            'uuid' => "string",
             'name' => "string",
             'genre' => "genre"
         ])]
     public function transform(Game $game): array
     {
         return [
-            'id' => $game->id,
-            'name' => $game->name,
-            'genre' => $game->genre
+            'uuid' => $game->getAttribute('uuidText'),
+            'name' => $game->getAttribute('name'),
+            'genre' => $game->getAttribute('genre'),
         ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Containers\GameManagementSection\Player\UI\WEB\Requests;
 use App\Containers\GameManagementSection\Game\Models\Game;
 use App\Containers\GameManagementSection\Player\UI\Contracts\Requests\PlayerShowRequestContract;
 use Illuminate\Foundation\Http\FormRequest;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @description Can be obtained in the following scenarios: \
@@ -31,7 +32,6 @@ final class PlayerWebShowRequest extends FormRequest implements PlayerShowReques
     public function rules(): array
     {
         return [
-            'game_id' => ['required', 'exists:games,id']
         ];
     }
 
@@ -44,17 +44,17 @@ final class PlayerWebShowRequest extends FormRequest implements PlayerShowReques
                     ->user()
                     ->games
                     ->map(fn(Game $game) => $game->getAttribute('id'))
-                    ->contains(fn($gameId) => $gameId == $this->get('game_id'))
+                    ->contains(fn($gameId) => $gameId == $this->getGameId())
             );
     }
 
     public function getGameId()
     {
-        return $this->get('game_id');
+        return $this->route('player')->getAttribute('game_id');
     }
 
     public function getPlayerId()
     {
-        return $this->route('player_id');
+        return $this->route('player')->getAttribute('id');
     }
 }

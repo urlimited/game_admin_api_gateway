@@ -38,7 +38,7 @@ class UserWebShowRequest extends Request
         return (
             $this->user()->hasPermission('user-full-other-read')
             || (
-                $this->user()->getAttribute('id') == $this->route('user_id')
+                $this->user()->getAttribute('id') == $this->route('user')->id
                 && $this->user()->hasPermission('user-full-own-read')
             )
         );

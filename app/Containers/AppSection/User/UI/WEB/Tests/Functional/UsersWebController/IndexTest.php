@@ -39,7 +39,7 @@ class IndexTest extends ApiTestCase
             [
                 'data' => [
                     '*' => [
-                        'id',
+                        'uuid',
                         'login',
                     ]
                 ]

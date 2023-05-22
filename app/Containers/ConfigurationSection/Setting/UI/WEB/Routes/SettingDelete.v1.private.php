@@ -19,7 +19,7 @@
 use App\Containers\ConfigurationSection\Setting\UI\WEB\Controllers\SettingsWebController;
 use Illuminate\Support\Facades\Route;
 
-Route::delete('/settings/{setting}', [SettingsWebController::class, 'delete'])
+Route::delete('/settings/{setting:uuid}', [SettingsWebController::class, 'delete'])
     ->middleware(['auth:sanctum'])
     ->name('api.private.games.settings.delete');
 

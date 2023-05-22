@@ -36,7 +36,7 @@ class StoreTest extends ApiTestCase
 
         // 2. Scenario run
         $data = [
-            'login' => 'admin-test',
+            'login' => 'admin-test@mail.ru',
             'password' => 'secret',
             'status' => UserStatus::Active,
             'roles'=>[$roles],

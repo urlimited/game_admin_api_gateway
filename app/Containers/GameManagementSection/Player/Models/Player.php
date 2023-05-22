@@ -4,6 +4,7 @@ namespace App\Containers\GameManagementSection\Player\Models;
 
 use App\Containers\GameManagementSection\Game\Models\Game;
 use App\Containers\GameManagementSection\Player\Data\Factories\PlayerFactory;
+use App\Ship\Libs\OptimisedUuid\HasBinaryUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Apiato\Core\Traits\HasResourceKeyTrait;
@@ -26,6 +27,7 @@ class Player extends Model
     use HasApiTokens;
     use HasFactory;
     use SoftDeletes;
+    use HasBinaryUuid;
 
     protected $table = 'players';
 

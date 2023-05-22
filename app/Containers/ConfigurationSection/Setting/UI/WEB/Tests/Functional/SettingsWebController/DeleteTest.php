@@ -49,8 +49,7 @@ class DeleteTest extends ApiTestCase
             ->json('delete',
                 route('api.private.games.settings.delete',
                     [
-                        'game' => $game->getAttribute('id'),
-                        'setting' => $setting->getAttribute('id')
+                        'setting' => $setting->getAttribute('uuidText')
                     ]
                 )
             );

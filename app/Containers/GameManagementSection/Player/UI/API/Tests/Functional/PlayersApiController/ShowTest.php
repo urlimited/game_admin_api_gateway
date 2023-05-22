@@ -7,6 +7,7 @@ use App\Containers\GameManagementSection\Game\Models\Game;
 use App\Containers\GameManagementSection\Game\Tests\ApiTestCase;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @desription Covers following scenarios: \
@@ -75,12 +76,13 @@ class ShowTest extends ApiTestCase
                 'game_id' => $parsedResponse['game_id'],
             ]
         );
+        $playerId= Player::query()->where('uuid', Uuid::fromString($parsedResponse['uuid'])->getBytes())->value('id');
 
         $this->assertDatabaseHas('personal_access_tokens',
             [
                 'tokenable_type' => Player::class,
                 'name' => 'player-api-token',
-                'tokenable_id' => $parsedResponse['id'],
+                'tokenable_id' => $playerId,
             ]
         );
     }

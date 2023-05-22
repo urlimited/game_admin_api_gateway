@@ -44,7 +44,7 @@ class DeleteTest extends ApiTestCase
                 route(
                     name: 'api.private.games.layouts.delete',
                     parameters: [
-                        'layout' => $layout->id,
+                        'layout' => $layout->getUuidTextAttribute(),
                     ]
                 )
             );

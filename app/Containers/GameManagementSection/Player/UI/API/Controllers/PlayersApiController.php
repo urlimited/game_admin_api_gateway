@@ -7,6 +7,7 @@ use App\Containers\GameManagementSection\Player\Actions\PlayerAuthAction;
 use App\Containers\GameManagementSection\Player\Actions\PlayerShowAction;
 use App\Containers\GameManagementSection\Player\Actions\PlayerStoreAction;
 use App\Containers\GameManagementSection\Player\Actions\PlayerUpdateAction;
+use App\Containers\GameManagementSection\Player\Models\Player;
 use App\Containers\GameManagementSection\Player\UI\API\Requests\PlayerApiAuthRequest;
 use App\Containers\GameManagementSection\Player\UI\API\Requests\PlayerApiShowRequest;
 use App\Containers\GameManagementSection\Player\UI\API\Requests\PlayerApiStoreRequest;
@@ -53,13 +54,13 @@ class PlayersApiController extends ApiController
 
     /**
      * @throws InvalidTransformerException
-     * @throws RepositoryException
+     * @throws AuthenticationException
      */
     public function show(PlayerApiShowRequest $request): JsonResponse
     {
-        $player = app(PlayerShowAction::class)->run($request);
+        $processedPlayer = app(PlayerShowAction::class)->run($request, Player::find($request->getPlayerId()));
 
-        $preparedUserData = $this->transform($player, PlayerTransformer::class);
+        $preparedUserData = $this->transform($processedPlayer, PlayerTransformer::class);
 
         return response()->json($preparedUserData);
     }

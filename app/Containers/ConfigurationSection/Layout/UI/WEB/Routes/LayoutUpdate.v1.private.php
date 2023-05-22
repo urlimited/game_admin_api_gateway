@@ -19,6 +19,6 @@
 use App\Containers\ConfigurationSection\Layout\UI\WEB\Controllers\LayoutsWebController;
 use Illuminate\Support\Facades\Route;
 
-Route::put('/layouts/{layout}', [LayoutsWebController::class, 'update'])
+Route::put('/layouts/{layout:uuid}', [LayoutsWebController::class, 'update'])
     ->middleware(['auth:sanctum'])
     ->name('api.private.games.layouts.update');

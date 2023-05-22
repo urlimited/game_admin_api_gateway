@@ -52,7 +52,6 @@ final class GameControlSettingsContext
             throw new InvalidDataProvidedException();
         }
 
-        // @todo(pluck): remove the pluck
         return $this->layoutSchema;
     }
 }

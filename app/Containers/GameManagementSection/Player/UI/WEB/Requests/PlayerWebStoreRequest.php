@@ -6,6 +6,7 @@ use App\Containers\GameManagementSection\Game\Models\Game;
 use App\Containers\GameManagementSection\Player\UI\Contracts\Requests\PlayerStoreRequestContract;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @description Can be obtained in the following scenarios: \
@@ -34,9 +35,8 @@ final class PlayerWebStoreRequest extends FormRequest implements PlayerStoreRequ
         return [
             'login' => [
                 'required',
-                'email',
                 'string',
-                Rule::unique('players')
+                Rule::unique('players', 'login')
                     ->where(
                         function ($q) {
                             return $q->where('game_id', $this->getGameId());
@@ -47,11 +47,10 @@ final class PlayerWebStoreRequest extends FormRequest implements PlayerStoreRequ
             'password' => [
                 'required',
                 'string',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,100}$/'
+                'regex:/^[A-Za-z\d@$!%*?&]{1,100}$/'
             ],
-            'game_id' => [
+            'game_uuid' => [
                 'required',
-                'exists:games,id'
             ]
         ];
     }
@@ -65,12 +64,14 @@ final class PlayerWebStoreRequest extends FormRequest implements PlayerStoreRequ
                     ->user()
                     ->games
                     ->map(fn(Game $game) => $game->getAttribute('id'))
-                    ->contains(fn($gameId) => $gameId == $this->get('game_id'))
+                    ->contains(fn($gameId) => $gameId == $this->getGameId())
             );
     }
 
     public function getGameId()
     {
-        return $this->get('game_id');
+        return Game::query()
+            ->where('uuid',Uuid::fromString($this->get('game_uuid'))->getBytes())
+            ->value('id');
     }
 }

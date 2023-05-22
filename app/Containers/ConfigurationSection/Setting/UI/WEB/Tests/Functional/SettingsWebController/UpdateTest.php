@@ -78,8 +78,7 @@ class UpdateTest extends ApiTestCase
             ->json('put',
                 route('api.private.games.settings.update',
                     [
-                        'game' => $game->getAttribute('id'),
-                        'setting' => $setting->getAttribute('id'),
+                        'setting' => $setting->getAttribute('uuidText'),
                     ]
                 ),
                 $data,
