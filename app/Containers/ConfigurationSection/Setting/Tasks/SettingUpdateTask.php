@@ -17,8 +17,7 @@ class SettingUpdateTask extends Task
 
     /**
      * @param int $id
-     * @param string $name
-     * @param string $schema
+     * @param array $data
      * @return Setting
      * @throws ValidatorException
      */
@@ -27,11 +26,6 @@ class SettingUpdateTask extends Task
         array $data,
     ): Setting
     {
-        return $this
-            ->repository
-            ->update(
-                $data,
-                $id
-            );
+        return $this->repository->update($data, $id);
     }
 }

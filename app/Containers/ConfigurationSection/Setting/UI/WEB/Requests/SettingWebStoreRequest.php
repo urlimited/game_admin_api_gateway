@@ -2,8 +2,10 @@
 
 namespace App\Containers\ConfigurationSection\Setting\UI\WEB\Requests;
 
+use App\Containers\ConfigurationSection\Game\Models\Game;
 use App\Containers\ConfigurationSection\User\Models\User;
 use App\Ship\Parents\Requests\Request;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @description Can be obtained in the following scenarios: \
@@ -31,9 +33,9 @@ class SettingWebStoreRequest extends Request
     {
         return [
             'name' => ['required','string','min:3','max:255','regex:/^[^{}*"\',\(\)\[\]\s\/+%#\^&\?<>~\.№;=!\\\\]+$/'],
-            'structure_id' => ['nullable','exists:layouts,id'],
+            'game_uuid' => ['required', 'string'],
+            'layout_uuid' => ['nullable', 'string'],
             'schema' => ['required', 'array'],
-            'game_id' => ['required', 'exists:games,id'],
         ];
     }
 
@@ -47,9 +49,16 @@ class SettingWebStoreRequest extends Request
             || (
                 $user->hasPermission('setting-full-own-create')
                 && $user
-                    ->games
+                    ->getAttribute('games')
                     ->map(fn($game) => $game->id)
-                    ->contains($this->get('game_id'))
+                    ->contains(
+                        Game::query()
+                            ->where(
+                                'uuid',
+                                Uuid::fromString($this->get('game_uuid'))->getBytes()
+                            )
+                            ->value('id')
+                    )
             )
         );
     }

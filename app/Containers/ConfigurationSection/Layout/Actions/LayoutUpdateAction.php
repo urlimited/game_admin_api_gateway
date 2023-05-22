@@ -32,7 +32,7 @@ class LayoutUpdateAction extends Action
                     'version' => $request->get('version'),
                     'schema' => json_encode($request->get('schema')),
                 ],
-                $layout->id
+                $layout->getAttribute('id')
             );
     }
 }

@@ -4,13 +4,12 @@ namespace App\Containers\ConfigurationSection\Setting\Data\Factories;
 
 use App\Containers\ConfigurationSection\Setting\Models\Setting;
 use App\Containers\ConfigurationSection\Game\Models\Game;
-use App\Containers\ConfigurationSection\Layout\Models\Layout;
 use App\Ship\Parents\Factories\Factory;
 use App\Ship\Parents\Models\User;
 use Illuminate\Support\Facades\File;
 
 /**
- * @method Layout  createOne($data = [])
+ * @method Setting  createOne($data = [])
  *
  */
 class SettingFactory extends Factory
@@ -19,11 +18,11 @@ class SettingFactory extends Factory
 
     public function definition(): array
     {
-        $file = File::get(__DIR__ . '/../Stubs/setting.json');
+        $file = File::get(__DIR__ . '/../Stubs/Setting.json');
 
         return [
             'name' => $this->faker->word,
-            'structure_id' => null,
+            'layout_id' => null,
             'schema' => json_encode(json_decode($file)),
             'author_id' => User::factory(),
             'game_id' => Game::factory(),

@@ -47,7 +47,7 @@
                             },
                             {
                                 "type": "regex",
-                                "value": "(silver)|(global)"
+                                "value": "^(silver)|(global)$"
                             }
                         ]
                     }

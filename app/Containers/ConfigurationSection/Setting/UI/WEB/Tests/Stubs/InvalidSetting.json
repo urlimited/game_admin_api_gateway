@@ -1,0 +1,91 @@
+{
+    "players": {
+        "content": [
+            {
+                "content": {
+                    "name": {
+                        "content": "Adam",
+                        "meta": {
+                            "order": 1,
+                            "id": 1
+                        }
+                    },
+                    "rank": {
+                        "content": "global123",
+                        "meta": {
+                            "order": 2,
+                            "id": 2
+                        }
+                    }
+                },
+                "meta": {
+                    "order": 1,
+                    "id": 3
+                }
+            },
+            {
+                "content": {
+                    "name": {
+                        "content": "Bob",
+                        "meta": {
+                            "order": 1,
+                            "id": 4
+                        }
+                    },
+                    "rank": {
+                        "content": "global",
+                        "meta": {
+                            "order": 2,
+                            "id": 5
+                        }
+                    }
+                },
+                "meta": {
+                    "order": 2,
+                    "id": 6
+                }
+            }
+        ],
+        "meta": {
+            "order": 1,
+            "id": 7
+        }
+    },
+    "maps": {
+        "content": [
+            {
+                "content": {
+                    "name": {
+                        "content": "dust",
+                        "meta": {
+                            "order": 1,
+                            "id": 8
+                        }
+                    },
+                    "width": {
+                        "content": 1500,
+                        "meta": {
+                            "order": 2,
+                            "id": 9
+                        }
+                    },
+                    "height": {
+                        "content": 1400,
+                        "meta": {
+                            "order": 3,
+                            "id": 10
+                        }
+                    }
+                },
+                "meta": {
+                    "order": 1,
+                    "id": 11
+                }
+            }
+        ],
+        "meta": {
+            "order": 2,
+            "id": 12
+        }
+    }
+}

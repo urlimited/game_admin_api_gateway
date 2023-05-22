@@ -30,7 +30,8 @@ class SettingWebIndexRequest extends Request
     public function rules(): array
     {
         return [
-            'game_id' => ['required', 'exists:games,id']
+            'layout_uuid' => ['string'],
+            'game_uuid' => ['required', 'string'],
         ];
     }
 

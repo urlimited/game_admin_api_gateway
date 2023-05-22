@@ -19,12 +19,12 @@ class SettingsApiController extends ApiController
     {
         $setting = app(SettingShowAction::class)->run($setting);
 
-        $meta = app(SettingShowAction::class)->setMeta($setting->getAttribute('structure_id'));
-
         $preparedLayoutData = $this->transform(
             data:$setting,
             transformerName:  SettingPublicTransformer::class,
-            meta: $meta
+            meta: [
+                'version' => $setting->getAttribute('layout_uuid'),
+            ]
         );
 
         return response()->json($preparedLayoutData);
