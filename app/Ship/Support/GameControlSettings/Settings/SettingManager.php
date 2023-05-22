@@ -34,7 +34,7 @@ class SettingManager
         $this->settingPathMaps = $this->processSettingPathMapsFromTree($context->getLayoutSchema());
 
         $this->setting = $context->getSettingSchema();
-
+dd($this->settingPathMaps);
         $this->isInitialized = true;
 
         return $this;
@@ -55,7 +55,13 @@ class SettingManager
                 $settingValue = $this->setting;
 
                 while ($settingPaths->isNotEmpty()) {
-                    $settingValue = $settingValue[$settingPaths->pop()] ?? null;
+                    $poppedValue = $settingPaths->pop();
+
+                    if ($poppedValue == '*') {
+                        // @todo(mt) need to be processed with recursion each element of setting
+                    }
+
+                    $settingValue = $settingValue[$poppedValue] ?? null;
                 }
 
                 $rules->each(

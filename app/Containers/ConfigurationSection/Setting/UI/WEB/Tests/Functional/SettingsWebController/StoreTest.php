@@ -4,8 +4,10 @@ namespace App\Containers\ConfigurationSection\Setting\UI\WEB\Tests\Functional\Se
 
 use App\Containers\ConfigurationSection\Game\Models\Game;
 use App\Containers\ConfigurationSection\Layout\Models\Layout;
+
 use App\Containers\ConfigurationSection\Layout\Tests\ApiTestCase;
 use App\Containers\ConfigurationSection\User\Models\User;
+use App\Ship\Parents\Models\Permission;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 
 /**
@@ -24,8 +26,11 @@ class StoreTest extends ApiTestCase
     public function testSuccessfullyStoreSetting(): void
     {
         // 1. Initialization
+        $this->seed();
+
         $game = Game::factory()->createOne();
-        $user = User::factory()
+
+        $user = $this->asCommonCustomer(User::factory())
             ->hasAttached($game)
             ->createOne();
 
@@ -78,10 +83,13 @@ class StoreTest extends ApiTestCase
     public function testSuccessfullyStoreSettingWithNullLayoutId(): void
     {
         // 1. Initialization
+        $this->seed();
+
         $game = Game::factory()->createOne();
-        $user = User::factory()
+
+        $user = $this->asCommonCustomer(User::factory()
             ->hasAttached($game)
-            ->createOne();
+        )->createOne();
 
         $json = '{
             "players": [

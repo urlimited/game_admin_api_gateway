@@ -28,9 +28,9 @@ class IndexTest extends ApiTestCase
 
         $game = Game::factory()->createOne();
 
-        $user = User::factory()
+        $user = $this->asCommonCustomer(User::factory()
             ->hasAttached($game)
-            ->createOne();
+        )->createOne();
 
         Layout::factory()
             ->count(10)

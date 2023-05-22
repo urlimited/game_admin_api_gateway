@@ -14,7 +14,7 @@ final class IsIntegerRule extends ValidateRule
         if ($this->value
             && (
                 !is_numeric($value)
-                || preg_match('/(\.)|(\d)|(,)|(e)/', $value)
+                || preg_match('/(\.)|(\s)|(,)|(e)/', $value)
             )
         ) {
             throw new InvalidDataProvidedException();

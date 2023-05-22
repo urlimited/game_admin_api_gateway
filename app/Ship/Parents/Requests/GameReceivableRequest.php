@@ -39,7 +39,7 @@ abstract class GameReceivableRequest extends FormRequest implements GameReceivab
     {
         if (is_null($this->gameToken)) {
             $gameToken = $this->hasHeader('X-GameToken')
-                ?
+                ? $this->header('X-GameToken')
                 : $this->get('game_token');
 
             $this->gameToken = PersonalAccessToken::findToken($gameToken);

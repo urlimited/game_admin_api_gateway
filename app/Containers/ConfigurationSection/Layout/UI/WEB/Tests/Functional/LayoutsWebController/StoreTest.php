@@ -25,9 +25,10 @@ class StoreTest extends ApiTestCase
         $this->seed();
 
         $game = Game::factory()->createOne();
-        $user = User::factory()
+
+        $user = $this->asCommonCustomer(User::factory()
             ->hasAttached($game)
-            ->createOne();
+        )->createOne();
 
         $json = '[{"name": "A","data_type": "list","rules": null,"children": [{"name": "A-C","data_type": "string","rules": null,"children": [{"name": "A-C-G","data_type": "string", "rules": null}]}, {"name": "A-E","data_type": "string","rules": null}]},{"name": "B", "data_type": "string", "rules": null, "children": [{"name": "B-D","data_type": "string","rules": null}]}]';
 

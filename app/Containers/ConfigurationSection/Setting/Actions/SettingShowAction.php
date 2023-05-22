@@ -17,7 +17,8 @@ class SettingShowAction extends Action
         return app(SettingFilterTask::class)
             ->run(
                 [
-                    'id' => $setting->id
+                    'id' => $setting->id,
+                    'structure_id' => $setting->structure_id,
                 ]
             )->first();
     }

@@ -11,7 +11,7 @@ final class RegExpRule extends ValidateRule
      */
     public function check(mixed $value)
     {
-        if (preg_match('/' . $this->value . '/', $value)) {
+        if (!preg_match('/' . $this->value . '/', $value)) {
             throw new InvalidDataProvidedException();
         }
     }

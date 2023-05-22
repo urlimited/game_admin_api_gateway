@@ -4,13 +4,14 @@ namespace App\Ship\Parents\Providers;
 
 use Apiato\Core\Abstracts\Providers\RoutesProvider as AbstractRoutesProvider;
 use Apiato\Core\Loaders\RoutesLoaderTrait;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Route;
 
 class RoutesProvider extends AbstractRoutesProvider
 {
     use RoutesLoaderTrait {
         loadWebContainerRoutes as loadWebContainerRoutesTrait;
+        loadWebRoute as loadWebRouteTrait;
     }
 
     /**
@@ -21,21 +22,25 @@ class RoutesProvider extends AbstractRoutesProvider
         parent::boot();
     }
 
-    private function loadWebContainerRoutes($containerPath): void
+    private function loadWebRoute($file, $controllerNamespace): void
     {
-        // build the container web routes path
-        $webRoutesPath = $containerPath . '/UI/WEB/Routes';
-        // build the namespace from the path
-        $controllerNamespace = $containerPath . '\\UI\WEB\Controllers';
+        Route::group([
+            'namespace' => $controllerNamespace,
+            'middleware' => $this->getMiddlewares(),
+            'domain' => $this->getWebUrl(),
+            'prefix' => is_string($file) ? $file : $this->getWebApiVersionPrefix($file),
+        ], function ($router) use ($file) {
+            require $file->getPathname();
+        });
+    }
 
-        if (File::isDirectory($webRoutesPath)) {
-            $files = File::allFiles($webRoutesPath);
-            $files = Arr::sort($files, function ($file) {
-                return $file->getFilename();
-            });
-            foreach ($files as $file) {
-                $this->loadApiRoute($file, $controllerNamespace);
-            }
-        }
+    private function getWebApiVersionPrefix($file): string
+    {
+        return Config::get('apiato.web.prefix') . (Config::get('apiato.web.enable_version_prefix') ? $this->getRouteFileVersionFromFileName($file) : '');
+    }
+
+    private function getWebUrl()
+    {
+        return Config::get('apiato.web.url');
     }
 }
