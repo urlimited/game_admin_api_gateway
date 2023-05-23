@@ -55,10 +55,11 @@ class HttpKernel extends LaravelHttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
+            EnsureFrontendRequestsAreStateful::class,
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
             StartSession::class,
-//             \Illuminate\Session\Middleware\AuthenticateSession::class,
+            AuthenticateSession::class,
             ShareErrorsFromSession::class,
 //            VerifyCsrfToken::class,
             SubstituteBindings::class,
