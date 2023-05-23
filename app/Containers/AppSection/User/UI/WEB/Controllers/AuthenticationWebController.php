@@ -16,7 +16,7 @@ class AuthenticationWebController extends ApiController
      */
     public function auth(UserWebAuthRequest $request): JsonResponse|Response
     {
-        if(!auth('api')->attempt(
+        if(!auth('web')->attempt(
             [
                 'login' => $request->get('login'),
                 'password' => $request->get('password')
