@@ -20,6 +20,6 @@ use App\Containers\ConfigurationSection\Setting\UI\API\Controllers\SettingsApiCo
 use App\Ship\Middlewares\Http\ValidateGameTokenMiddleware;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/settings/{setting}', [SettingsApiController::class, 'show'])
+Route::get('/settings/{setting:uuid}', [SettingsApiController::class, 'show'])
     ->middleware([ValidateGameTokenMiddleware::class])
     ->name('api.public.games.settings.show');

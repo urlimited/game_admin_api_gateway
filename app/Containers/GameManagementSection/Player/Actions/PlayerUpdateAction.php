@@ -24,8 +24,7 @@ class PlayerUpdateAction extends Action
         $player = app(PlayerFilterTask::class)
             ->run(
                 data: [
-                    'id' => $request->getPlayerId(),
-                    'game_id' => $request->getGameId(),
+                    'id' => $request->getPlayerId()
                 ]
             )
             ->first();

@@ -3,9 +3,11 @@
 namespace App\Containers\GameManagementSection\Game\UI\WEB\Tests\Functional\GamesWebController;
 
 use App\Containers\GameManagementSection\Game\Enums\GameGenre;
+use App\Containers\GameManagementSection\Game\Models\Game;
 use App\Containers\GameManagementSection\Game\Tests\ApiTestCase;
 use App\Ship\Parents\Models\User;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @desription Covers following scenarios: \
@@ -47,7 +49,7 @@ class StoreTest extends ApiTestCase
         $response->assertJsonStructure(
             [
                 'data' => [
-                    'id',
+                    'uuid',
                     'name',
                     'genre',
                     'api_token'
@@ -75,13 +77,24 @@ class StoreTest extends ApiTestCase
             ]
         );
 
+
+        $game_id = Game::query()
+            ->where(
+                'uuid',
+                Uuid::fromString($parsedGameData['uuid'])
+                    ->getBytes()
+            )
+            ->value('id');
+
+
         $this->assertDatabaseHas(
             'game_user',
             [
-                'game_id' => $parsedGameData['id'],
-                'user_id' => $actor->id
+                'game_id' => $game_id,
+                'user_id' => $actor->getAttribute('id')
             ]
         );
+
     }
 
     public function testFailsToCreateGameFromCommonCustomer(): void

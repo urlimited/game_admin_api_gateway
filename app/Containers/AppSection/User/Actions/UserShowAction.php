@@ -12,22 +12,11 @@ use App\Ship\Parents\Values\FilterValue;
 class UserShowAction extends Action
 {
     /**
-     * @param UserWebShowRequest $request
+     * @param User $user
      * @return User
-     * @throws FilterResourceFailedException
      */
-    public function run(UserWebShowRequest $request): User
+    public function run(User $user): User
     {
-        return app(FilterUsersTask::class)
-            ->run(
-                [
-                    new FilterValue(
-                        key: 'id',
-                        operator: '=',
-                        value: $request->route('user_id')
-                    )
-                ]
-            )
-            ->first();
+        return $user;
     }
 }

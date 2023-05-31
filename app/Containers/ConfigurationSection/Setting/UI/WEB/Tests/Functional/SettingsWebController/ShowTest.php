@@ -50,8 +50,7 @@ class ShowTest extends ApiTestCase
             ->json('get',
                 route('api.private.games.settings.show',
                     [
-                        'game' => $game->getAttribute('id'),
-                        'setting' => $setting->getAttribute('id')
+                        'setting' => $setting->getAttribute('uuidText')
                     ]
                 )
             );

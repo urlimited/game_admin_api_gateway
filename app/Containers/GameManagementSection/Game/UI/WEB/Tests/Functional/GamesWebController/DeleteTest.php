@@ -42,7 +42,7 @@ class DeleteTest extends ApiTestCase
                 uri: route(
                     'api.games.delete',
                     [
-                        'game' => $game->id,
+                        'game' => $game->getAttribute('uuidText'),
                     ]
                 ),
                 headers: [
@@ -74,7 +74,7 @@ class DeleteTest extends ApiTestCase
                 uri: route(
                     'api.games.delete',
                     [
-                        'game' => $game->id,
+                        'game' => $game->getAttribute('uuidText'),
                     ]
                 ),
                 headers: [
@@ -108,7 +108,7 @@ class DeleteTest extends ApiTestCase
                 uri: route(
                     'api.games.delete',
                     [
-                        'game' => $game->id,
+                        'game' => $game->getAttribute('uuidText'),
                     ]
                 ),
                 headers: [

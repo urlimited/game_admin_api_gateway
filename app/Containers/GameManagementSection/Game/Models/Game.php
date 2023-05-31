@@ -5,6 +5,7 @@ namespace App\Containers\GameManagementSection\Game\Models;
 use App\Containers\GameManagementSection\Player\Models\Player;
 use App\Containers\GameManagementSection\Game\Data\Factories\GameFactory;
 use App\Containers\GameManagementSection\Game\Enums\GameGenre;
+use App\Ship\Libs\OptimisedUuid\HasBinaryUuid;
 use App\Ship\Parents\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +18,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\PersonalAccessToken;
 
 /**
+ * @property string $uuid
  * @property int $id
  * @property string $name
  * @property string $genre
@@ -29,10 +31,12 @@ class Game extends Model
     use HasApiTokens;
     use HasFactory;
     use SoftDeletes;
+    use HasBinaryUuid;
 
     protected $table = 'games';
 
     protected $fillable = [
+        'uuid',
         'name',
         'genre',
     ];
@@ -47,7 +51,7 @@ class Game extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'game_user', 'game_id');
+        return $this->belongsToMany(User::class, 'game_user', 'game_id','user_id');
     }
 
     public function players(): HasMany

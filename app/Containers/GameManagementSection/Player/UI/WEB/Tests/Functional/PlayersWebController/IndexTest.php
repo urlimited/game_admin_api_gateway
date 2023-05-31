@@ -44,7 +44,7 @@ class IndexTest extends ApiTestCase
                 uri: route(
                     'api.private.games.players.index',
                     [
-                        'game_id' => $game->getAttribute('id')
+                        'game_uuid' => $game->getAttribute('uuidText')
                     ]
                 ),
             );
@@ -59,7 +59,7 @@ class IndexTest extends ApiTestCase
             [
                 'data' => [
                     '*' => [
-                        'id',
+                        'uuid',
                         'login',
                         'game_id',
                     ]

@@ -84,11 +84,11 @@ class GamesWebController extends ApiController
         return response()->json($preparedUserData);
     }
 
-    public function show(GameWebShowRequest $request): JsonResponse
+    public function show(GameWebShowRequest $request, Game $game): JsonResponse
     {
-        $game = app(GameShowAction::class)->run($request);
+        $processedGame = app(GameShowAction::class)->run($request, $game);
 
-        $preparedUserData = $this->transform($game, GamePublicTransformer::class);
+        $preparedUserData = $this->transform($processedGame, GamePublicTransformer::class);
 
         return response()->json($preparedUserData);
     }

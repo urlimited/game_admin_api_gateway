@@ -23,6 +23,6 @@ class UserUpdateAction extends Action
         }
 
         return app(UserUpdateTask::class)
-            ->run($user->id, $validated);
+            ->run($user->getAttribute('id'), $validated);
     }
 }

@@ -19,6 +19,6 @@
 use App\Containers\ConfigurationSection\Setting\UI\WEB\Controllers\SettingsWebController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/settings/{setting}', [SettingsWebController::class, 'show'])
+Route::get('/settings/{setting:uuid}', [SettingsWebController::class, 'show'])
     ->middleware(['auth:sanctum'])
     ->name('api.private.games.settings.show');

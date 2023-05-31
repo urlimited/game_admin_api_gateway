@@ -43,7 +43,7 @@ class ShowTest extends ApiTestCase
                 route(
                     name:'api.private.games.layouts.show',
                     parameters: [
-                        'layout'=> $layout->getAttribute('id')
+                        'layout'=> $layout->getUuidTextAttribute()
                     ]
                 )
             );

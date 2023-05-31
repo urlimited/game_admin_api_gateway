@@ -19,6 +19,6 @@
 use App\Containers\ConfigurationSection\Setting\UI\WEB\Controllers\SettingsWebController;
 use Illuminate\Support\Facades\Route;
 
-Route::put('/settings/{setting}', [SettingsWebController::class, 'update'])
+Route::put('/settings/{setting:uuid}', [SettingsWebController::class, 'update'])
     ->middleware(['auth:sanctum'])
     ->name('api.private.games.settings.update');

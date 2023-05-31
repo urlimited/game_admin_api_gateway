@@ -27,7 +27,7 @@ class AuthenticationWebController extends ApiController
 
         $request->session()->regenerate();
 
-        $preparedUserData = $this->transform(auth('api')->user(), UserAuthTransformer::class);
+        $preparedUserData = $this->transform(auth('web')->user(), UserAuthTransformer::class);
 
         return response()->json($preparedUserData);
     }

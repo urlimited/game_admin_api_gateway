@@ -4,6 +4,7 @@ namespace App\Containers\GameManagementSection\Player\UI\WEB\Requests;
 
 use App\Containers\GameManagementSection\Game\Models\Game;
 use Illuminate\Foundation\Http\FormRequest;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @description Can be obtained in the following scenarios: \
@@ -30,8 +31,8 @@ final class PlayerWebIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'game_id' => [
-                'required', 'exists:games,id'
+            'game_uuid' => [
+                'required',
             ]
         ];
     }
@@ -44,13 +45,14 @@ final class PlayerWebIndexRequest extends FormRequest
                 && $this
                     ->user()
                     ->games
-                    ->map(fn(Game $game) => $game->getAttribute('id'))
-                    ->contains(fn($gameId) => $gameId == $this->get('game_id'))
+                    ->map(fn(Game $game) => $game->getAttribute('uuid'))
+                    ->contains(fn($gameId) => $gameId == Uuid::fromString($this->get('game_uuid'))->getBytes() )
             );
     }
 
     public function getGameId()
     {
-        return $this->get('game_id');
+        return $this->get('game_uuid');
+
     }
 }

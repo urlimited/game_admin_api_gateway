@@ -60,6 +60,7 @@ class PlayersWebController extends ApiController
      */
     public function index(PlayerWebIndexRequest $request): JsonResponse
     {
+
         $player = app(PlayerIndexAction::class)->run($request);
 
         $preparedUserData = $this->transform($player, PlayerGeneralTransformer::class);
@@ -69,13 +70,13 @@ class PlayersWebController extends ApiController
 
     /**
      * @throws InvalidTransformerException
-     * @throws RepositoryException
      */
-    public function show(PlayerWebShowRequest $request): JsonResponse
+    public function show(PlayerWebShowRequest $request, Player $player): JsonResponse
     {
-        $player = app(PlayerShowAction::class)->run($request);
 
-        $preparedUserData = $this->transform($player, PlayerGeneralTransformer::class);
+        $processedPlayer = app(PlayerShowAction::class)->run($request, $player);
+
+        $preparedUserData = $this->transform($processedPlayer, PlayerGeneralTransformer::class);
 
         return response()->json($preparedUserData);
     }

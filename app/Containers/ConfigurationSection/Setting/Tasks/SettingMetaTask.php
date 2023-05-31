@@ -8,18 +8,14 @@ use App\Ship\Parents\Tasks\Task;
 
 class SettingMetaTask extends Task
 {
-    public function run(array $data): array
+    public function run(?int $structureId):array
     {
-        foreach ($data['data'] as $key => $filterCriteria) {
-            if ($key === 'structure_id' && !is_null($filterCriteria) ) {
-                $data['meta']['version']= $this->layoutVersion($filterCriteria);
-                return $data;
-            }
+        if($structureId !== null){
+           return ['version' =>$this->getLayoutVersion($structureId)];
         }
-        $data['meta']['version'] = null;
-        return $data;
+        return [];
     }
-    private function layoutVersion(int $id):string
+    private function getLayoutVersion(int $id):string
     {
         return Layout::query()->where('id',$id)->value('version');
     }

@@ -62,7 +62,7 @@ class UpdateTest extends ApiTestCase
         $response->assertJsonStructure(
             [
                 'data' => [
-                    'id',
+                    'uuid',
                     'login',
                     'game_id',
                 ]

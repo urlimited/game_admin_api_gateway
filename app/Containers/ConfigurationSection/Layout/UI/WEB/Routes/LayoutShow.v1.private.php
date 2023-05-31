@@ -19,6 +19,6 @@
 use App\Containers\ConfigurationSection\Layout\UI\WEB\Controllers\LayoutsWebController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/layouts/{layout}', [LayoutsWebController::class, 'show'])
+Route::get('/layouts/{layout:uuid}', [LayoutsWebController::class, 'show'])
     ->middleware(['auth:sanctum'])
     ->name('api.private.games.layouts.show');

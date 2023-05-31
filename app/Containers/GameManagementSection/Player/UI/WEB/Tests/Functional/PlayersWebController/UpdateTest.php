@@ -54,7 +54,7 @@ class UpdateTest extends ApiTestCase
                 uri: route(
                     'api.private.games.players.update',
                     [
-                        'player' => $game->players()->first()->getAttribute('id'),
+                        'player' => $game->players()->first()->getAttribute('uuidText'),
                     ]
                 ),
                 data: $data,
@@ -67,7 +67,7 @@ class UpdateTest extends ApiTestCase
         $response->assertJsonStructure(
             [
                 'data' => [
-                    'id',
+                    'uuid',
                     'login',
                     'game_id',
                 ]
@@ -109,7 +109,7 @@ class UpdateTest extends ApiTestCase
                 uri: route(
                     'api.private.games.players.update',
                     [
-                        'player' => $game->players()->first()->getAttribute('id'),
+                        'player' => $game->players()->first()->getAttribute('uuidText'),
                     ]
                 ),
                 data: $data,

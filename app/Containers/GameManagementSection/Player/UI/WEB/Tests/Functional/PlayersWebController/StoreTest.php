@@ -7,6 +7,7 @@ use App\Containers\GameManagementSection\Game\Tests\ApiTestCase;
 use App\Containers\GameManagementSection\Player\Models\Player;
 use App\Containers\GameManagementSection\User\Models\User;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @desription Covers following scenarios: \
@@ -31,9 +32,9 @@ class StoreTest extends ApiTestCase
 
         // 2. Scenario run
         $data = [
-            'login' => 'player-test-login',
-            'password' => 'password',
-            'game_id' => $game->getAttribute('id')
+            'login' => 'player-test-login@mail.ru',
+            'password' => '123456789Ed$',
+            'game_uuid' => $game->getAttribute('uuidText')
         ];
 
         $response = $this
@@ -56,17 +57,25 @@ class StoreTest extends ApiTestCase
             [
                 'data' => [
                     'login',
-                    'game_id',
+                    'game_uuid',
                     'player_token'
                 ]
             ]
         );
 
+        $gameId= Game::query()
+            ->where('uuid',Uuid::fromString($parsedResponse['game_uuid'])->getBytes())
+            ->value('id');
+
+        $playerId= Player::query()
+            ->where('uuid',Uuid::fromString($parsedResponse['uuid'])->getBytes())
+            ->value('id');
+
         // 3.3 Assert affects on the DB
         $this->assertDatabaseHas('players',
             [
                 'login' => $parsedResponse['login'],
-                'game_id' => $parsedResponse['game_id'],
+                'game_id' => $gameId,
             ]
         );
 
@@ -74,7 +83,7 @@ class StoreTest extends ApiTestCase
             [
                 'tokenable_type' => Player::class,
                 'name' => 'player-api-token',
-                'tokenable_id' => $parsedResponse['id'],
+                'tokenable_id' => $playerId,
             ]
         );
     }
@@ -91,8 +100,8 @@ class StoreTest extends ApiTestCase
 
         // 2. Scenario run
         $data = [
-            'login' => 'player-test-login',
-            'password' => 'password',
+            'login' => 'player-test-login@mail.ru',
+            'password' => '123456789Ed$',
             'game_id' => $game->getAttribute('id')
         ];
 

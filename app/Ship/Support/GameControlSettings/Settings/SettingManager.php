@@ -7,7 +7,6 @@ use App\Ship\Support\GameControlSettings\GameControlSettingsContext;
 use App\Ship\Support\GameControlSettings\Rules\RulesInfo;
 use App\Ship\Support\GameControlSettings\Rules\ValidateRule;
 use App\Ship\Support\GameControlSettings\Settings\Exceptions\SettingNotInitializedException;
-use CodeBaseTeam\DataStructures\Tree\Exceptions\InvalidDataException;
 use CodeBaseTeam\DataStructures\Tree\TreeBuilder;
 use CodeBaseTeam\DataStructures\Tree\TreeNode;
 use Illuminate\Support\Collection;
@@ -34,7 +33,6 @@ class SettingManager
         $this->settingPathMaps = $this->processSettingPathMapsFromTree($context->getLayoutSchema());
 
         $this->setting = $context->getSettingSchema();
-dd($this->settingPathMaps);
         $this->isInitialized = true;
 
         return $this;
@@ -42,6 +40,7 @@ dd($this->settingPathMaps);
 
     /**
      * @throws SettingNotInitializedException
+     * @throws InvalidDataProvidedException
      */
     public function check(): void
     {
@@ -49,26 +48,46 @@ dd($this->settingPathMaps);
             throw new SettingNotInitializedException();
         }
 
-        $this->settingPathMaps->each(
-            function (Collection $rules, string $pathToSetting) {
-                $settingPaths = collect(explode('/', $pathToSetting));
-                $settingValue = $this->setting;
+        $allSettingsQueue = $this->settingPathMaps;
 
-                while ($settingPaths->isNotEmpty()) {
-                    $poppedValue = $settingPaths->pop();
+        while ($allSettingsQueue->isNotEmpty()) {
+            $pathToSetting = $allSettingsQueue->keys()->first();
+            $rules = $allSettingsQueue->shift();
 
-                    if ($poppedValue == '*') {
-                        // @todo(mt) need to be processed with recursion each element of setting
+            $settingPaths = collect(explode('/', $pathToSetting));
+            $settingValue = $this->setting;
+
+            while($settingPaths->isNotEmpty()) {
+                $queuedValue = $settingPaths->shift();
+
+                // The main idea is just to replace all asterisks with array indexes
+                if ($queuedValue == '*') {
+                    // At the moment setting value contains a parent value of a current
+                    if (!is_array($settingValue) || !array_is_list($settingValue)) {
+                        throw new InvalidDataProvidedException();
                     }
 
-                    $settingValue = $settingValue[$poppedValue] ?? null;
-                }
+                    $lastIndex = count($settingValue);
 
-                $rules->each(
-                    fn(ValidateRule $rule) => $rule->check($settingValue)
-                );
+                    $pos = strpos($pathToSetting, '*');
+
+                    for ($i = 0; $i < $lastIndex; $i++) {
+                        $allSettingsQueue->put(
+                            substr_replace($pathToSetting, (string)$i, $pos, 1),
+                            $rules
+                        );
+                    }
+
+                    continue 2;
+                } else {
+                    $settingValue = $settingValue[$queuedValue] ?? null;
+                }
             }
-        );
+
+            $rules->each(
+                fn(ValidateRule $rule) => $rule->check($settingValue)
+            );
+        }
     }
 
     private function processSettingPathMapsFromTree(array $treeLayout): Collection
@@ -79,12 +98,12 @@ dd($this->settingPathMaps);
 
         $tree->traversalPreOrder(
             node: $tree->getRoot(),
-            callback: function(TreeNode $node) use ($result) {
+            callback: function (TreeNode $node) use ($result) {
                 $name = $node->getValue()['name'] ?? '';
 
                 $parent = $node->getParent();
 
-                while(!is_null($parent)) {
+                while (!is_null($parent)) {
                     if (empty($parent->getValue())) {
                         $parent = $parent->getParent();
 

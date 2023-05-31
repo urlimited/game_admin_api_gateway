@@ -41,7 +41,7 @@ class UpdateTest extends ApiTestCase
             ->json('patch',
                 route('api.private.users.update',
                     [
-                        'user' => $actor->id,
+                        'user' => $actor->getAttribute('uuidText'),
                     ]
                 ),
                 $data,
@@ -53,7 +53,7 @@ class UpdateTest extends ApiTestCase
         $response->assertJsonStructure(
             [
                 'data' => [
-                    'id',
+                    'uuid',
                     'login',
                 ]
             ]
@@ -87,7 +87,7 @@ class UpdateTest extends ApiTestCase
             ->json('patch',
                 route('api.private.users.update',
                     [
-                        'user' => $actor->id,
+                        'user' => $actor->getAttribute('uuidText'),
                     ]
                 ),
                 $data,
@@ -126,7 +126,7 @@ class UpdateTest extends ApiTestCase
             ->json('patch',
                 route('api.private.users.update',
                     [
-                        'user' => $otherUser->id,
+                        'user' => $otherUser->getAttribute('uuidText'),
                     ]
                 ),
                 $data,
@@ -138,7 +138,7 @@ class UpdateTest extends ApiTestCase
         $response->assertJsonStructure(
             [
                 'data' => [
-                    'id',
+                    'uuid',
                     'login',
                 ]
             ]
@@ -179,7 +179,7 @@ class UpdateTest extends ApiTestCase
             ->json('patch',
                 route('api.private.users.update',
                     [
-                        'user' => $otherUser->id,
+                        'user' => $otherUser->getAttribute('uuidText'),
                     ]
                 ),
                 $data,

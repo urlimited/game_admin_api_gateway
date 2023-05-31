@@ -19,6 +19,6 @@
 use App\Containers\GameManagementSection\Player\UI\WEB\Controllers\PlayersWebController;
 use Illuminate\Support\Facades\Route;
 
-Route::put('/players/{player}', [PlayersWebController::class, 'update'])
+Route::put('/players/{player:uuid}', [PlayersWebController::class, 'update'])
     ->middleware(['auth:sanctum'])
     ->name('api.private.games.players.update');

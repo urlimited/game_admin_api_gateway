@@ -6,6 +6,7 @@ use App\Containers\GameManagementSection\Game\Models\Game;
 use App\Containers\GameManagementSection\Game\Tests\ApiTestCase;
 use App\Containers\GameManagementSection\User\Models\User;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @desription Covers following scenarios: \
@@ -35,7 +36,12 @@ class ShowTest extends ApiTestCase
             ->actingAs($actor)
             ->json(
                 method: 'get',
-                uri: route('api.games.show', ['game_id' => $game->getAttribute('id')])
+                uri: route(
+                    'api.games.show',
+                    [
+                        'game' => $game->getAttribute('uuidText')
+                    ]
+                )
             );
 
         // 3. Assertion
@@ -44,7 +50,7 @@ class ShowTest extends ApiTestCase
         $response->assertJsonStructure(
             [
                 'data' => [
-                    'id',
+                    'uuid',
                     'name',
                     'genre'
                 ]
@@ -59,8 +65,9 @@ class ShowTest extends ApiTestCase
         );
 
         $this->assertEquals(
-            $game->getAttribute('id'),
-            $parsedGameData['id']
+            $game->getAttribute('uuid'),
+            Uuid::fromString($parsedGameData['uuid'])
+                ->getBytes()
         );
     }
 
@@ -82,7 +89,12 @@ class ShowTest extends ApiTestCase
             ->actingAs($actor)
             ->json(
                 method: 'get',
-                uri: route('api.games.show', ['game_id' => $game->getAttribute('id')])
+                uri: route(
+                    'api.games.show',
+                    [
+                        'game' => $game->getAttribute('uuidText')
+                    ]
+                )
             );
 
         // 3. Assertion

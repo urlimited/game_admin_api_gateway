@@ -19,6 +19,6 @@
 use App\Containers\GameManagementSection\Game\UI\WEB\Controllers\GamesWebController;
 use Illuminate\Support\Facades\Route;
 
-Route::put('/games/{game}', [GamesWebController::class, 'update'])
+Route::put('/games/{game:uuid}', [GamesWebController::class, 'update'])
     ->middleware(['auth:sanctum'])
     ->name('api.games.update');

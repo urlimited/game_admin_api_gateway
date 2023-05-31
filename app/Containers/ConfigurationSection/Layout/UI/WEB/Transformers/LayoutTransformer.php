@@ -18,10 +18,10 @@ class LayoutTransformer extends Transformer
     public function transform(Layout $layout): array
     {
         return [
-            'id' => $layout->id,
-            'name' => $layout->name,
-            'version' => $layout->version,
-            'schema' => $layout->schema
+            'uuid' => $layout->getAttribute('uuidText'),
+            'name' => $layout->getAttribute('name'),
+            'version' => $layout->getAttribute('version'),
+            'schema' => $layout->getAttribute('schema')
         ];
     }
 }

@@ -17,6 +17,8 @@ use App\Ship\Exceptions\FilterResourceFailedException;
 use App\Ship\Parents\Controllers\ApiController;
 use App\Ship\Parents\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class UsersWebController extends ApiController
@@ -42,6 +44,8 @@ class UsersWebController extends ApiController
     {
         $user = app(UserUpdateAction::class)->run($request, $user);
 
+        // @todo(mt): need to keep session via redis to be able to control other users sessions
+
         $preparedUserData = $this->transform($user, UserPublicTransformer::class);
 
         return response()->json($preparedUserData);
@@ -64,14 +68,14 @@ class UsersWebController extends ApiController
 
     /**
      * @throws InvalidTransformerException
-     * @throws FilterResourceFailedException
      */
-    public function show(UserWebShowRequest $request): JsonResponse
+    public function show(UserWebShowRequest $request, User $user): JsonResponse
     {
-        $user = app(UserShowAction::class)->run($request);
+        $user = app(UserShowAction::class)->run($user);
 
         $preparedUserData = $this->transform($user, UserPrivateTransformer::class);
 
         return response()->json($preparedUserData);
     }
+
 }

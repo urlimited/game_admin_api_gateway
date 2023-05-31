@@ -19,6 +19,6 @@
 use App\Containers\AppSection\User\UI\WEB\Controllers\UsersWebController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/users/{user_id}', [UsersWebController::class, 'show'])
+Route::get('/users/{user:uuid}', [UsersWebController::class, 'show'])
     ->middleware('auth:sanctum')
     ->name('api.private.users.show');

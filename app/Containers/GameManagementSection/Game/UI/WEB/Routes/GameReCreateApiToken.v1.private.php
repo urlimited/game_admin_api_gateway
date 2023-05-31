@@ -19,4 +19,6 @@
 use App\Containers\GameManagementSection\Game\UI\WEB\Controllers\GamesWebController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/games/{game}/token', [GamesWebController::class, 'reCreateApiToken'])->name('api.games.reCreateApiToken');
+Route::post('/games/{game:uuid}/token', [GamesWebController::class, 'reCreateApiToken'])
+    ->middleware(['auth:sanctum'])
+    ->name('api.games.reCreateApiToken');

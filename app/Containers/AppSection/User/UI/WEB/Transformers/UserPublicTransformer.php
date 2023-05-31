@@ -17,9 +17,11 @@ class UserPublicTransformer extends Transformer
 
     public function transform(User $user): array
     {
+        $roleNames = $user->roles()->pluck('name')->toArray();
         return [
-            'id' => $user->id,
+            'uuid' => $user->getAttribute('uuidText'),
             'login' => $user->login,
+            'role'=>$roleNames
         ];
     }
 }

@@ -18,7 +18,7 @@ class PlayerGeneralTransformer extends Transformer
     public function transform(Player $player): array
     {
         return [
-            'id' => $player->getAttribute('id'),
+            'uuid' => $player->getAttribute('uuidText'),
             'login' => $player->getAttribute('login'),
             'game_id' => $player->getAttribute('game_id'),
             'player_token' => $player->getAttribute('apiToken'),

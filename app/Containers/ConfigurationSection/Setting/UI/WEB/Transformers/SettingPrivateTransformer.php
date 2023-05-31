@@ -18,12 +18,12 @@ class SettingPrivateTransformer extends Transformer
         public function transform(Setting $setting): array
     {
         return [
-            'id' => $setting->id,
-            'name' => $setting->name,
-            'structure_id' => $setting->structure_id,
-            'game_id' => $setting->game_id,
-            'schema' => $setting->schema,
-            'author_id'=>$setting->author_id,
+            'uuid' => $setting->getAttribute('uuidText'),
+            'name' => $setting->getAttribute('name'),
+            'structure_id' => $setting->getAttribute('structure_id'),
+            'game_id' => $setting->getAttribute('game_id'),
+            'schema' => $setting->getAttribute('schema'),
+            'author_id' =>$setting->getAttribute('author_id'),
         ];
     }
 

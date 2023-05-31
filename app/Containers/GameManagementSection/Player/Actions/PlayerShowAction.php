@@ -12,21 +12,11 @@ class PlayerShowAction extends Action
 {
     /**
      * @param PlayerShowRequestContract $request
+     * @param Player $player
      * @return Player
-     * @throws RepositoryException
      */
-    public function run(PlayerShowRequestContract $request): Player
+    public function run(PlayerShowRequestContract $request, Player $player): Player
     {
-        $gameId = $request->getGameId();
-        $playerId = $request->getPlayerId();
-
-        return app(PlayerFilterTask::class)
-            ->run(
-                [
-                    'game_id' => $gameId,
-                    'id' => $playerId,
-                ]
-            )
-            ->first();
+        return $player;
     }
 }

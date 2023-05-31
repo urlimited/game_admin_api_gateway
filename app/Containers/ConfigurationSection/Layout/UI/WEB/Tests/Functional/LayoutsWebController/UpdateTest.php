@@ -52,7 +52,7 @@ class UpdateTest extends ApiTestCase
             ->json('put',
                 route('api.private.games.layouts.update',
                     [
-                        'layout' => $layout->getAttribute('id'),
+                        'layout' => $layout->getAttribute('uuidText'),
                     ]
                 ),
                 $data,

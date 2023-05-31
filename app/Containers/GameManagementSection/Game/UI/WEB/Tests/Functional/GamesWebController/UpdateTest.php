@@ -40,7 +40,7 @@ class UpdateTest extends ApiTestCase
                 uri: route(
                     'api.games.update',
                     [
-                        'game' => $game->id,
+                        'game' => $game->getAttribute('uuidText'),
                     ]
                 ),
                 data: $data
@@ -53,7 +53,7 @@ class UpdateTest extends ApiTestCase
         $response->assertJsonStructure(
             [
                 'data' => [
-                    'id',
+                    'uuid',
                 ]
             ]
         );
@@ -86,7 +86,7 @@ class UpdateTest extends ApiTestCase
                 uri: route(
                     'api.games.update',
                     [
-                        'game' => $game->id,
+                        'game' => $game->getAttribute('uuidText'),
                     ]
                 ),
                 data: $data

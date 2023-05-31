@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Hash;
  *  2. Fails to show a player within a game that doesn't belong to the current user
  * @group game
  * @group api
- * @covers \App\Containers\GameManagementSection\Player\UI\WEB\Controllers\PlayersWebController::store
+ * @covers \App\Containers\GameManagementSection\Player\UI\WEB\Controllers\PlayersWebController::show
  */
 class ShowTest extends ApiTestCase
 {
@@ -49,10 +49,12 @@ class ShowTest extends ApiTestCase
                 uri: route(
                     'api.private.games.players.show',
                     [
-                        'player_id' => $game->players()->first()->getAttribute('id'),
-                        'game_id' => $game->getAttribute('id'),
+                        'player' => $game->players()->first()->getAttribute('uuidText'),
                     ]
                 ),
+                data: [
+                    'game_uuid' => $game->getAttribute('uuidText')
+                ]
             );
 
         // 3. Assertion
@@ -100,8 +102,7 @@ class ShowTest extends ApiTestCase
                 uri: route(
                     'api.private.games.players.show',
                     [
-                        'player_id' => $game->players()->first()->getAttribute('id'),
-                        'game_id' => $game->getAttribute('id'),
+                        'player' => $game->players()->first()->getAttribute('uuidText'),
                     ]
                 ),
             );

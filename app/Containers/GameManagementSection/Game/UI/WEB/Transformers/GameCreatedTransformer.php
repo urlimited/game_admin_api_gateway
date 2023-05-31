@@ -18,7 +18,7 @@ class GameCreatedTransformer extends Transformer
 
         #[ArrayShape
         ([
-            'id' => "int",
+            'uuid' => "string",
             'name' => "string",
             'genre' => "genre",
             'api_token' => 'string'
@@ -26,10 +26,10 @@ class GameCreatedTransformer extends Transformer
     public function transform(Game $game): array
     {
         return [
-            'id' => $game->id,
-            'name' => $game->name,
-            'genre' => $game->genre,
-            'api_token' => $game->apiToken
+            'uuid' => $game->getAttribute('uuidText'),
+            'name' => $game->getAttribute('name'),
+            'genre' => $game->getAttribute('genre'),
+            'api_token' => $game->getAttribute('apiToken')
         ];
     }
 }

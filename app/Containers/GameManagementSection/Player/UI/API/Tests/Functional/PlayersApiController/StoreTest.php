@@ -6,6 +6,7 @@ use App\Containers\GameManagementSection\Player\Models\Player;
 use App\Containers\GameManagementSection\Game\Models\Game;
 use App\Containers\GameManagementSection\Game\Tests\ApiTestCase;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @desription Covers following scenarios: \
@@ -30,8 +31,8 @@ class StoreTest extends ApiTestCase
 
         // 2. Scenario run
         $data = [
-            'login' => 'player-test-login',
-            'password' => 'password',
+            'login' => 'player-test-login@mail.ru',
+            'password' => '123456789Ed$',
         ];
 
         $response = $this
@@ -56,7 +57,7 @@ class StoreTest extends ApiTestCase
             [
                 'data' => [
                     'login',
-                    'game_id',
+                    'game_uuid',
                     'player_token'
                 ]
             ]
@@ -66,15 +67,16 @@ class StoreTest extends ApiTestCase
         $this->assertDatabaseHas('players',
             [
                 'login' => $parsedResponse['login'],
-                'game_id' => $parsedResponse['game_id'],
+                'game_id' => $game->getAttribute('id'),
             ]
         );
+        $playerId= Player::query()->where('uuid', Uuid::fromString($parsedResponse['uuid'])->getBytes())->value('id');
 
         $this->assertDatabaseHas('personal_access_tokens',
             [
                 'tokenable_type' => Player::class,
                 'name' => 'player-api-token',
-                'tokenable_id' => $parsedResponse['id'],
+                'tokenable_id' => $playerId,
             ]
         );
     }
@@ -90,8 +92,8 @@ class StoreTest extends ApiTestCase
 
         // 2. Scenario run
         $data = [
-            'login' => 'player-test-login',
-            'password' => 'password',
+            'login' => 'player-test-login@mail.ru',
+            'password' => '123456789Ed$',
         ];
 
         $response = $this

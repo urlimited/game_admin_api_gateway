@@ -41,7 +41,12 @@ class ReCreateApiTokenTest extends ApiTestCase
             ->actingAs($actor)
             ->json(
                 method: 'post',
-                uri: route('api.games.reCreateApiToken', $game->id),
+                uri: route(
+                    'api.games.reCreateApiToken',
+                    [
+                        'game' => $game->getAttribute('uuidText'),
+                    ]
+                ),
                 data: $data
             );
 
@@ -52,7 +57,7 @@ class ReCreateApiTokenTest extends ApiTestCase
         $response->assertJsonStructure(
             [
                 'data' => [
-                    'id',
+                    'uuid',
                     'name',
                     'genre',
                     'api_token'
@@ -84,7 +89,12 @@ class ReCreateApiTokenTest extends ApiTestCase
             ->actingAs($actor)
             ->json(
                 method: 'post',
-                uri: route('api.games.reCreateApiToken', $game->id),
+                uri: route(
+                    'api.games.reCreateApiToken',
+                    [
+                        'game' => $game->getAttribute('uuidText'),
+                    ]
+                ),
                 data: $data
             );
 

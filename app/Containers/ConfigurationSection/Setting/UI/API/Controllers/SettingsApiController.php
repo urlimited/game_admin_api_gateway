@@ -3,7 +3,6 @@
 namespace App\Containers\ConfigurationSection\Setting\UI\API\Controllers;
 
 use Apiato\Core\Exceptions\InvalidTransformerException;
-use App\Containers\ConfigurationSection\Setting\Actions\SettingMetaAction;
 use App\Containers\ConfigurationSection\Setting\Actions\SettingShowAction;
 use App\Containers\ConfigurationSection\Setting\Models\Setting;
 use App\Containers\ConfigurationSection\Setting\UI\API\Requests\SettingApiShowRequest;
@@ -20,10 +19,14 @@ class SettingsApiController extends ApiController
     {
         $setting = app(SettingShowAction::class)->run($setting);
 
-        $preparedLayoutData = $this->transform($setting, SettingPublicTransformer::class);
+        $meta = app(SettingShowAction::class)->setMeta($setting->getAttribute('structure_id'));
 
-        $data = app(SettingMetaAction::class)->run($preparedLayoutData);
+        $preparedLayoutData = $this->transform(
+            data:$setting,
+            transformerName:  SettingPublicTransformer::class,
+            meta: $meta
+        );
 
-        return response()->json($data);
+        return response()->json($preparedLayoutData);
     }
 }

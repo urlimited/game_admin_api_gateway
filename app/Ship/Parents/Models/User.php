@@ -4,8 +4,13 @@ namespace App\Ship\Parents\Models;
 
 use Apiato\Core\Traits\HashIdTrait;
 use Apiato\Core\Traits\HasResourceKeyTrait;
+
+use App\Containers\GameManagementSection\Game\Models\Game;
+use App\Ship\Libs\Casts\UuidToByte;
+use App\Ship\Libs\OptimisedUuid\HasBinaryUuid;
 use App\Ship\Parents\Factories\UserFactory;
 use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as LaravelUser;
@@ -14,6 +19,7 @@ use \Illuminate\Contracts\Auth\Authenticatable as AuthenticatableInterface;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
+ * @property string $uuid
  * @property int $id
  * @property string $login
  * @method static UserFactory factory()
@@ -26,10 +32,12 @@ class User extends LaravelUser implements AuthenticatableInterface
     use HashIdTrait;
     use HasResourceKeyTrait;
     use AuthenticatableTrait;
+    use HasBinaryUuid;
 
     protected $table = 'users';
 
     protected $fillable = [
+        'uuid',
         'login',
         'password',
         'status',
@@ -41,9 +49,17 @@ class User extends LaravelUser implements AuthenticatableInterface
     ];
 
     protected $casts = [
-
+        'uuid'=>UuidToByte::class
     ];
 
+    public function games(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Game::class, 'game_user',
+            'user_id',
+            'game_id',
+        );
+    }
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(

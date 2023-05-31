@@ -19,6 +19,6 @@
 use App\Containers\GameManagementSection\Game\UI\WEB\Controllers\GamesWebController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/games/{game_id}', [GamesWebController::class, 'show'])
+Route::get('/games/{game:uuid}', [GamesWebController::class, 'show'])
     ->middleware(['auth:sanctum'])
     ->name('api.games.show');

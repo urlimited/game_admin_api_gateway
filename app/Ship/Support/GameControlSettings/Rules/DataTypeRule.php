@@ -48,8 +48,7 @@ final class DataTypeRule extends ValidateRule
                     throw new InvalidDataProvidedException();
             }
         } catch (\Exception $e) {
-            dump($this->value);
-            dd($value);
+
         }
 
     }
