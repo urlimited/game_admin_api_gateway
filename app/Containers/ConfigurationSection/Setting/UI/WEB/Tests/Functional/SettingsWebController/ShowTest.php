@@ -61,11 +61,11 @@ class ShowTest extends ApiTestCase
         $response->assertJsonStructure(
             [
                 'data' => [
-                    'id',
+                    'uuid',
                     'name',
-                    'structure_id',
+                    'layout_uuid',
+                    'game_uuid',
                     'schema',
-                    'author_id',
                 ]
             ]
         );

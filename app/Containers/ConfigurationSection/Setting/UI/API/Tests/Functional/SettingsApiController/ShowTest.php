@@ -64,6 +64,11 @@ class ShowTest extends ApiTestCase
                     'id',
                     'name',
                     'schema',
+                ],
+                'meta' => [
+                    'custom' => [
+                        'version'
+                    ]
                 ]
             ]
         );
@@ -106,6 +111,11 @@ class ShowTest extends ApiTestCase
                     'id',
                     'name',
                     'schema',
+                ],
+                'meta' => [
+                    'custom' => [
+                        'version'
+                    ]
                 ]
             ]
         );

@@ -73,7 +73,6 @@ class PlayersWebController extends ApiController
      */
     public function show(PlayerWebShowRequest $request, Player $player): JsonResponse
     {
-
         $processedPlayer = app(PlayerShowAction::class)->run($request, $player);
 
         $preparedUserData = $this->transform($processedPlayer, PlayerGeneralTransformer::class);

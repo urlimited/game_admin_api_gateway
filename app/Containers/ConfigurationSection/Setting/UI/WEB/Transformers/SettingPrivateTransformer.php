@@ -20,10 +20,9 @@ class SettingPrivateTransformer extends Transformer
         return [
             'uuid' => $setting->getAttribute('uuidText'),
             'name' => $setting->getAttribute('name'),
-            'structure_id' => $setting->getAttribute('structure_id'),
-            'game_id' => $setting->getAttribute('game_id'),
+            'layout_uuid' => $setting->getAttribute('layout')?->getAttribute('uuidText'),
+            'game_uuid' => $setting->getAttribute('game')->getAttribute('uuidText'),
             'schema' => $setting->getAttribute('schema'),
-            'author_id' =>$setting->getAttribute('author_id'),
         ];
     }
 

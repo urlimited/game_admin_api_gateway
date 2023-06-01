@@ -45,8 +45,8 @@ class IndexTest extends ApiTestCase
             ->create();
 
         $data=[
-            'structure_id' => $layout->id,
-            'game_id' => $game->getAttribute('id'),
+            'layout_uuid' => $layout->getAttribute('uuidText'),
+            'game_uuid' => $game->getAttribute('uuidText'),
         ];
 
         // 2.Scenarios run
@@ -64,11 +64,11 @@ class IndexTest extends ApiTestCase
             [
                 'data' => [
                     '*' => [
-                        'id',
+                        'uuid',
                         'name',
-                        'structure_id',
+                        'layout_uuid',
+                        'game_uuid',
                         'schema',
-                        'author_id',
                     ]
                 ]
             ]

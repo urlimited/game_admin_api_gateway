@@ -7,6 +7,7 @@ use App\Ship\Support\GameControlSettings\GameControlSettingsContext;
 use App\Ship\Support\GameControlSettings\Rules\RulesInfo;
 use App\Ship\Support\GameControlSettings\Rules\ValidateRule;
 use App\Ship\Support\GameControlSettings\Settings\Exceptions\SettingNotInitializedException;
+use CodeBaseTeam\DataStructures\Tree\Exceptions\InvalidDataException;
 use CodeBaseTeam\DataStructures\Tree\TreeBuilder;
 use CodeBaseTeam\DataStructures\Tree\TreeNode;
 use Illuminate\Support\Collection;
@@ -22,6 +23,9 @@ class SettingManager
     private array $setting;
 
     /**
+     * @param GameControlSettingsContext $context
+     * @return SettingManager
+     * @throws InvalidDataException
      * @throws InvalidDataProvidedException
      */
     public function init(GameControlSettingsContext $context): SettingManager
@@ -30,7 +34,13 @@ class SettingManager
             return $this;
         }
 
-        $this->settingPathMaps = $this->processSettingPathMapsFromTree($context->getLayoutSchema());
+        $layoutSchema = $context->getLayoutSchema();
+
+        if (!empty($layoutSchema)) {
+            $this->settingPathMaps = $this->processSettingPathMapsFromTree($layoutSchema);
+        } else {
+            $this->settingPathMaps = collect();
+        }
 
         $this->setting = $context->getSettingSchema();
         $this->isInitialized = true;
@@ -55,7 +65,7 @@ class SettingManager
             $rules = $allSettingsQueue->shift();
 
             $settingPaths = collect(explode('/', $pathToSetting));
-            $settingValue = $this->setting;
+            $settingValue = [SettingSchemaValidator::VISIBLE_FIELDS => $this->setting];
 
             while($settingPaths->isNotEmpty()) {
                 $queuedValue = $settingPaths->shift();
@@ -63,11 +73,14 @@ class SettingManager
                 // The main idea is just to replace all asterisks with array indexes
                 if ($queuedValue == '*') {
                     // At the moment setting value contains a parent value of a current
-                    if (!is_array($settingValue) || !array_is_list($settingValue)) {
+                    if (
+                        !is_array($settingValue[SettingSchemaValidator::VISIBLE_FIELDS])
+                        || !array_is_list($settingValue[SettingSchemaValidator::VISIBLE_FIELDS])
+                    ) {
                         throw new InvalidDataProvidedException();
                     }
 
-                    $lastIndex = count($settingValue);
+                    $lastIndex = count($settingValue[SettingSchemaValidator::VISIBLE_FIELDS]);
 
                     $pos = strpos($pathToSetting, '*');
 
@@ -80,18 +93,25 @@ class SettingManager
 
                     continue 2;
                 } else {
-                    $settingValue = $settingValue[$queuedValue] ?? null;
+                    $settingValue = $settingValue[SettingSchemaValidator::VISIBLE_FIELDS][$queuedValue] ?? null;
                 }
             }
 
             $rules->each(
-                fn(ValidateRule $rule) => $rule->check($settingValue)
+                fn(ValidateRule $rule) => $rule->check($settingValue[SettingSchemaValidator::VISIBLE_FIELDS])
             );
         }
     }
 
+    /**
+     * @throws InvalidDataException
+     */
     private function processSettingPathMapsFromTree(array $treeLayout): Collection
     {
+        TreeBuilder::setValueContentFieldKey(null);
+        TreeBuilder::setMetaFieldKeys([]);
+        TreeBuilder::setChildrenFieldKey('children');
+
         $tree = TreeBuilder::fromArray(['children' => $treeLayout]);
 
         $result = collect();

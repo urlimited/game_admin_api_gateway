@@ -34,7 +34,7 @@ class Setting extends Model
     protected $fillable = [
         'uuid',
         'name',
-        'structure_id',
+        'layout_id',
         'game_id',
         'schema',
         'author_id',
@@ -46,12 +46,12 @@ class Setting extends Model
 
     public function layout(): BelongsTo
     {
-        return $this->belongsTo(Layout::class,'structure_id');
+        return $this->belongsTo(Layout::class,'layout_id');
     }
 
     public function game(): BelongsTo
     {
-        return $this->belongsTo(Game::class);
+        return $this->belongsTo(Game::class, 'game_id');
     }
 
     protected static function newFactory(): SettingFactory

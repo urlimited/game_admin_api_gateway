@@ -42,9 +42,6 @@ class StoreTest extends ApiTestCase
             'version' => '13.25.42',
         ];
 
-
-
-
         // 3. Assertion
         $response = $this
             ->actingAs($user, 'api')

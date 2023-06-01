@@ -4,11 +4,11 @@ namespace App\Containers\ConfigurationSection\Setting\UI\WEB\Tests\Functional\Se
 
 use App\Containers\ConfigurationSection\Game\Models\Game;
 use App\Containers\ConfigurationSection\Layout\Models\Layout;
-
-use App\Containers\ConfigurationSection\Layout\Tests\ApiTestCase;
+use App\Containers\ConfigurationSection\Setting\Tests\ApiTestCase;
 use App\Containers\ConfigurationSection\User\Models\User;
 use App\Ship\Parents\Models\Permission;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
+use Illuminate\Support\Facades\File;
 
 /**
  * @desription test creates a new game setting \
@@ -30,7 +30,7 @@ class StoreTest extends ApiTestCase
 
         $game = Game::factory()->createOne();
 
-        $user = $this->asCommonCustomer(User::factory())
+        $actor = $this->asCommonCustomer(User::factory())
             ->hasAttached($game)
             ->createOne();
 
@@ -38,39 +38,21 @@ class StoreTest extends ApiTestCase
             ->for($game)
             ->createOne();
 
-        $json = '{
-            "players": [
-                {
-                    "name": "Adam",
-                    "rank": "global"
-                },
-                {
-                    "name": "Bob",
-                    "rank": "global"
-                }
-            ],
-            "maps": [
-                {
-                    "name": "dust",
-                    "width": 1500,
-                    "height": 1400
-                }
-            ]
-        }';
+        $json = File::get(__DIR__ . '/../../Stubs/CorrectSetting.json');
 
         $array = json_decode($json, true);
 
         // 2. Scenario run
         $data = [
-            'name' => 'rerum',
-            'structure_id' => $layout->getAttribute('id'),
-            'game_id' => $game->getAttribute('id'),
+            'name' => 'setting-test-name',
+            'layout_uuid' => $layout->getAttribute('uuidText'),
+            'game_uuid' => $game->getAttribute('uuidText'),
             'schema' => $array
         ];
 
         // 3. Assertion
         $response = $this
-            ->actingAs($user, 'api')
+            ->actingAs($actor, 'api')
             ->json('post',
                 route('api.private.games.settings.store'),
                 $data,
@@ -91,33 +73,15 @@ class StoreTest extends ApiTestCase
             ->hasAttached($game)
         )->createOne();
 
-        $json = '{
-            "players": [
-                {
-                    "name": "Adam",
-                    "rank": "global"
-                },
-                {
-                    "name": "Bob",
-                    "rank": "global"
-                }
-            ],
-            "maps": [
-                {
-                    "name": "dust",
-                    "width": 1500,
-                    "height": 1400
-                }
-            ]
-        }';
+        $json = File::get(__DIR__ . '/../../Stubs/CorrectSetting.json');
 
         $array = json_decode($json, true);
 
         // 2. Scenario run
         $data = [
-            'name' => 'rerum',
-            'structure_id' => null,
-            'game_id' => $game->getAttribute('id'),
+            'name' => 'setting-test-name',
+            'layout_uuid' => null,
+            'game_uuid' => $game->getAttribute('uuidText'),
             'schema' => $array
         ];
 
@@ -132,4 +96,78 @@ class StoreTest extends ApiTestCase
         $response->assertStatus(200);
     }
 
+    public function testFailsStoreSettingWithIncorrectData(): void
+    {
+        // 1. Initialization
+        $this->seed();
+
+        $game = Game::factory()->createOne();
+
+        $layout = Layout::factory()
+            ->for($game)
+            ->createOne();
+
+        $user = $this->asCommonCustomer(User::factory()
+            ->hasAttached($game)
+        )->createOne();
+
+        $json = File::get(__DIR__ . '/../../Stubs/IncorrectSetting.json');
+
+        $array = json_decode($json, true);
+
+        // 2. Scenario run
+        $data = [
+            'name' => 'setting-test-name',
+            'layout_uuid' => null,
+            'game_uuid' => $game->getAttribute('uuidText'),
+            'schema' => $array
+        ];
+
+        // 3. Assertion
+        $response = $this
+            ->actingAs($user, 'api')
+            ->json('post',
+                route('api.private.games.settings.store'),
+                $data,
+            );
+
+        $response->assertStatus(422);
+    }
+
+    public function testFailsStoreSettingWithInvalidData(): void
+    {
+        // 1. Initialization
+        $this->seed();
+
+        $game = Game::factory()->createOne();
+
+        $layout = Layout::factory()->for($game)
+            ->createOne();
+
+        $user = $this->asCommonCustomer(User::factory()
+            ->hasAttached($game)
+        )->createOne();
+
+        $json = File::get(__DIR__ . '/../../Stubs/InvalidSetting.json');
+
+        $array = json_decode($json, true);
+
+        // 2. Scenario run
+        $data = [
+            'name' => 'setting-test-name',
+            'layout_uuid' => $layout->getAttribute('uuidText'),
+            'game_uuid' => $game->getAttribute('uuidText'),
+            'schema' => $array
+        ];
+
+        // 3. Assertion
+        $response = $this
+            ->actingAs($user, 'api')
+            ->json('post',
+                route('api.private.games.settings.store'),
+                $data,
+            );
+
+        $response->assertStatus(422);
+    }
 }
