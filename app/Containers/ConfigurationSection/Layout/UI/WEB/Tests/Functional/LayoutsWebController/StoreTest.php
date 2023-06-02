@@ -37,7 +37,7 @@ class StoreTest extends ApiTestCase
         // 2. Scenario run
         $data = [
             'name' => 'rerum',
-            'game_id' => $game->getAttribute('id'),
+            'game_uuid' => $game->getUuidTextAttribute(),
             'schema' => $array,
             'version' => '13.25.42',
         ];
@@ -56,7 +56,7 @@ class StoreTest extends ApiTestCase
             [
                 'name'=> 'rerum',
                 'version'=> '13.25.42',
-                'game_id'=> $game->getAttribute('id'),
+                'game_id'=> $game->getAttribute('id')
             ]
         );
 

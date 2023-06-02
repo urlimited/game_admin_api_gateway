@@ -45,7 +45,7 @@ class IndexTest extends ApiTestCase
                 route(
                     name: 'api.private.games.layouts.index',
                     parameters: [
-                        'game_id' => $game->getAttribute('id')
+                        'game_uuid' => $game->getUuidTextAttribute()
                     ]
                 )
             );
