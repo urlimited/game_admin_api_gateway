@@ -20,7 +20,7 @@ class PlayerGeneralTransformer extends Transformer
         return [
             'uuid' => $player->getAttribute('uuidText'),
             'login' => $player->getAttribute('login'),
-            'game_id' => $player->getAttribute('game_id'),
+            'game_uuid' => $player->getAttribute('game')->getAttribute('uuidText'),
             'player_token' => $player->getAttribute('apiToken'),
         ];
     }

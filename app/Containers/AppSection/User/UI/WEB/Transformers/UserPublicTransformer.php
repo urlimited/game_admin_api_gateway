@@ -21,7 +21,7 @@ class UserPublicTransformer extends Transformer
         return [
             'uuid' => $user->getAttribute('uuidText'),
             'login' => $user->login,
-            'role'=>$roleNames
+            'roles'=>$roleNames
         ];
     }
 }
