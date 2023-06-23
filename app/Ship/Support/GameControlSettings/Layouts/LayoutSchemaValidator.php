@@ -24,8 +24,8 @@ final class LayoutSchemaValidator
             while (!$stack->isEmpty()) {
                 $current = $stack->pop();
 
-                self::checkThatLayoutHasValidSchema($schema);
-                self::checkThatLayoutHasValidRules($schema);
+                self::checkThatLayoutHasValidSchema($schema['content']);
+                self::checkThatLayoutHasValidRules($schema['content']);
 
                 if (!empty($current['children'] ?? [])) {
                     $stack->push($current['children']);

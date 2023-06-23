@@ -5,6 +5,7 @@ namespace App\Containers\ConfigurationSection\Setting\UI\WEB\Requests;
 use App\Containers\ConfigurationSection\Game\Models\Game;
 use App\Containers\ConfigurationSection\User\Models\User;
 use App\Ship\Parents\Requests\Request;
+use Illuminate\Support\Facades\Log;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -43,6 +44,8 @@ class SettingWebStoreRequest extends Request
     {
         /** @var User $user */
         $user = $this->user();
+
+        Log::debug(123);
 
         return (
             $user->hasPermission('setting-full-other-create')

@@ -108,11 +108,17 @@ class SettingManager
      */
     private function processSettingPathMapsFromTree(array $treeLayout): Collection
     {
-        TreeBuilder::setValueContentFieldKey(null);
-        TreeBuilder::setMetaFieldKeys([]);
+        TreeBuilder::setValueContentFieldKey('content');
+        TreeBuilder::setMetaFieldKeys(['id', 'meta']);
         TreeBuilder::setChildrenFieldKey('children');
 
-        $tree = TreeBuilder::fromArray(['children' => $treeLayout]);
+        $tree = TreeBuilder::fromArray(
+            [
+                'content' => [
+                    'children' => $treeLayout
+                ],
+            ]
+        );
 
         $result = collect();
 
