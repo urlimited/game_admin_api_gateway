@@ -71,7 +71,7 @@ final class PlayerWebStoreRequest extends FormRequest implements PlayerStoreRequ
     public function getGameId()
     {
         return Game::query()
-            ->where('uuid',Uuid::fromString($this->get('game_uuid'))->getBytes())
+            ->where('uuid', Uuid::fromString($this->get('game_uuid'))->getBytes())
             ->value('id');
     }
 }

@@ -16,14 +16,16 @@ class SettingIndexAction extends Action
     public function run(SettingWebIndexRequest $request): Collection
     {
         $layout = null;
-        if (!is_null($request->get('layout_uuid')) ){
-        $layout = Layout::query()
-            ->where(
-                'uuid',
-                Uuid::fromString($request->get('layout_uuid'))->getBytes()
-            )
-            ->first();
+
+        if (!is_null($request->get('layout_uuid'))) {
+            $layout = Layout::query()
+                ->where(
+                    'uuid',
+                    Uuid::fromString($request->get('layout_uuid'))->getBytes()
+                )
+                ->first();
         }
+
         $game = Game::query()
             ->where(
                 'uuid',
@@ -34,7 +36,7 @@ class SettingIndexAction extends Action
         return app(SettingFilterTask::class)
             ->run(
                 [
-                    'layout_id' => !is_null($layout) ? $layout->getAttribute('id') : null,
+                    'layout_id' => $layout?->getAttribute('id'),
                     'game_id' => $game->getAttribute('id'),
                 ]
             );
