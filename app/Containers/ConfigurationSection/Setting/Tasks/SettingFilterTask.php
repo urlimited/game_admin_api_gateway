@@ -21,9 +21,9 @@ class SettingFilterTask extends Task
         $result = $this->repository;
 
         foreach ($data as $key => $filterCriteria) {
-            if ($key === 'structure_id') {
+            if ($key === 'layout_id') {
                 if (!is_null($filterCriteria)) {
-                    $result->pushCriteria(new ThisEqualThatCriteria('structure_id', $filterCriteria));
+                    $result->pushCriteria(new ThisEqualThatCriteria('layout_id', $filterCriteria));
                 }
             } else {
                 $result->pushCriteria(new ThisEqualThatCriteria($key, $filterCriteria));

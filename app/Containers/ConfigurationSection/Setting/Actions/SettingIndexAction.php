@@ -15,13 +15,15 @@ class SettingIndexAction extends Action
 {
     public function run(SettingWebIndexRequest $request): Collection
     {
+        $layout = null;
+        if (!is_null($request->get('layout_uuid')) ){
         $layout = Layout::query()
             ->where(
                 'uuid',
                 Uuid::fromString($request->get('layout_uuid'))->getBytes()
             )
             ->first();
-
+        }
         $game = Game::query()
             ->where(
                 'uuid',

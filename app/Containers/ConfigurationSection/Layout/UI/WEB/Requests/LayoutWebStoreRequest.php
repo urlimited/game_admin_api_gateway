@@ -2,8 +2,10 @@
 
 namespace App\Containers\ConfigurationSection\Layout\UI\WEB\Requests;
 
+use App\Containers\ConfigurationSection\Game\Models\Game;
 use App\Containers\ConfigurationSection\User\Models\User;
 use App\Ship\Parents\Requests\Request;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @description Can be obtained in the following scenarios: \
@@ -48,8 +50,11 @@ class LayoutWebStoreRequest extends Request
                 && $user
                     ->games
                     ->map(fn($game) => $game->id)
-                    ->contains($this->get('game_id'))
+                    ->contains($this->getGameId())
             )
         );
+    }
+    public function getGameId(){
+        return Game::query()->where('uuid',Uuid::fromString($this->get('game_uuid'))->getBytes())->value('id');
     }
 }

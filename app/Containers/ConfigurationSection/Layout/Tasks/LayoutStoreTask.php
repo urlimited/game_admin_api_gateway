@@ -22,6 +22,7 @@ class LayoutStoreTask extends Task
      */
     public function run(array $data): Layout
     {
+
         return $this->repository->create($data);
     }
 }

@@ -31,7 +31,7 @@ class LayoutStoreAction extends Action
                     'name' => $request->get('name'),
                     'version' => $request->get('version'),
                     'schema' => json_encode($request->get('schema')),
-                    'game_id' => $request->get('game_id'),
+                    'game_id' => $request->getGameId(),
                 ]
             );
     }
