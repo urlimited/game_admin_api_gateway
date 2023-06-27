@@ -98,7 +98,7 @@ class SettingManager
             }
 
             $rules->each(
-                fn(ValidateRule $rule) => $rule->check($settingValue[SettingSchemaValidator::VISIBLE_FIELDS])
+                fn(ValidateRule $rule) => $rule->check($settingValue[SettingSchemaValidator::VISIBLE_FIELDS] ?? null)
             );
         }
     }
@@ -109,7 +109,7 @@ class SettingManager
     private function processSettingPathMapsFromTree(array $treeLayout): Collection
     {
         TreeBuilder::setValueContentFieldKey('content');
-        TreeBuilder::setMetaFieldKeys(['id', 'meta']);
+        TreeBuilder::setMetaFieldKeys(['meta']);
         TreeBuilder::setChildrenFieldKey('children');
 
         $tree = TreeBuilder::fromArray(
