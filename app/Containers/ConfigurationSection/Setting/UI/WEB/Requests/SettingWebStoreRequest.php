@@ -45,8 +45,6 @@ class SettingWebStoreRequest extends Request
         /** @var User $user */
         $user = $this->user();
 
-        Log::debug(123);
-
         return (
             $user->hasPermission('setting-full-other-create')
             || (
