@@ -72,6 +72,11 @@ class ShowTest extends ApiTestCase
                 ]
             ]
         );
+
+        $this->assertJsonStringEqualsJsonString(
+            json_decode($response->getContent(), true)['data']['schema'],
+            '{"maps":[{"name":"dust","width":1500,"height":1400}],"players":[{"name":"Adam","rank":"global"},{"name":"Bob","rank":"global"}],"multidimensional_array":[[1,"2"],[2,"3"]]}'
+        );
     }
 
     public function testSuccessfullyReceiveSettingByIdWithNullLayoutId(): void
