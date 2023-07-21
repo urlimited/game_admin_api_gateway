@@ -1,151 +1,244 @@
 [
     {
-        "name": "players",
-        "rules": [
-            {
-                "type": "dataType",
-                "value": "list"
-            },
-            {
-                "type": "isRequired",
-                "value": true
-            }
-        ],
-        "children": [
-            {
-                "name": "*",
-                "rules": [
-                    {
-                        "type": "dataType",
-                        "value": "object"
-                    }
-                ],
-                "children": [
-                    {
-                        "name": "name",
-                        "rules": [
-                            {
-                                "type": "dataType",
-                                "value": "string"
-                            },
-                            {
-                                "type": "isRequired",
-                                "value": true
-                            }
-                        ]
+        "meta": {
+            "id": 1,
+            "order": 1
+        },
+        "content": {
+            "name": "players",
+            "rules": [
+                {
+                    "type": "dataType",
+                    "value": "list"
+                },
+                {
+                    "type": "isRequired",
+                    "value": true
+                }
+            ],
+            "children": [
+                {
+                    "meta": {
+                        "id": 0,
+                        "order": 0
                     },
-                    {
-                        "name": "rank",
+                    "content": {
+                        "name": "*",
                         "rules": [
                             {
                                 "type": "dataType",
-                                "value": "string"
+                                "value": "object"
+                            }
+                        ],
+                        "children": [
+                            {
+                                "meta": {
+                                    "id": 0,
+                                    "order": 0
+                                },
+                                "content": {
+                                    "name": "name",
+                                    "rules": [
+                                        {
+                                            "type": "dataType",
+                                            "value": "string"
+                                        },
+                                        {
+                                            "type": "isRequired",
+                                            "value": true
+                                        }
+                                    ],
+                                    "children": []
+                                }
                             },
                             {
-                                "type": "isRequired",
-                                "value": true
-                            },
-                            {
-                                "type": "regex",
-                                "value": "^(silver)|(global)$"
+                                "meta": {
+                                    "id": 6,
+                                    "order": 2
+                                },
+                                "content": {
+                                    "name": "rank",
+                                    "rules": [
+                                        {
+                                            "type": "dataType",
+                                            "value": "string"
+                                        },
+                                        {
+                                            "type": "isRequired",
+                                            "value": true
+                                        },
+                                        {
+                                            "type": "regex",
+                                            "value": "^(global)|(silver)$"
+                                        }
+                                    ],
+                                    "children": []
+                                }
                             }
                         ]
                     }
-                ]
-            }
-        ]
+                }
+            ]
+        }
     },
     {
-        "name": "maps",
-        "rules": [
-            {
-                "type": "dataType",
-                "value": "list"
-            },
-            {
-                "type": "isRequired",
-                "value": true
-            },
-            {
-                "type": "min",
-                "value": "1"
-            }
-        ],
-        "children": [
-            {
-                "name": "*",
-                "rules": [
-                    {
-                        "type": "dataType",
-                        "value": "object"
-                    }
-                ],
-                "children": [
-                    {
-                        "name": "name",
-                        "rules": [
-                            {
-                                "type": "dataType",
-                                "value": "string"
-                            },
-                            {
-                                "type": "isRequired",
-                                "value": true
-                            }
-                        ]
+        "meta": {
+            "id": 3,
+            "order": 2
+        },
+        "content": {
+            "name": "maps",
+            "rules": [
+                {
+                    "type": "dataType",
+                    "value": "list"
+                },
+                {
+                    "type": "isRequired",
+                    "value": true
+                }
+            ],
+            "children": [
+                {
+                    "meta": {
+                        "id": 0,
+                        "order": 0
                     },
-                    {
-                        "name": "width",
+                    "content": {
+                        "name": "*",
                         "rules": [
                             {
                                 "type": "dataType",
-                                "value": "numeric"
-                            },
-                            {
-                                "type": "isInteger",
-                                "value": true
-                            },
-                            {
-                                "type": "max",
-                                "value": "2048"
-                            },
-                            {
-                                "type": "min",
-                                "value": "512"
-                            },
-                            {
-                                "type": "isRequired",
-                                "value": true
+                                "value": "object"
                             }
-                        ]
-                    },
-                    {
-                        "name": "height",
-                        "rules": [
+                        ],
+                        "children": [
                             {
-                                "type": "dataType",
-                                "value": "numeric"
+                                "meta": {
+                                    "id": 0,
+                                    "order": 0
+                                },
+                                "content": {
+                                    "name": "name",
+                                    "rules": [
+                                        {
+                                            "type": "dataType",
+                                            "value": "string"
+                                        },
+                                        {
+                                            "type": "isRequired",
+                                            "value": true
+                                        }
+                                    ],
+                                    "children": []
+                                }
                             },
                             {
-                                "type": "isInteger",
-                                "value": true
+                                "meta": {
+                                    "id": 9,
+                                    "order": 2
+                                },
+                                "content": {
+                                    "name": "width",
+                                    "rules": [
+                                        {
+                                            "type": "dataType",
+                                            "value": "numeric"
+                                        },
+                                        {
+                                            "type": "isRequired",
+                                            "value": true
+                                        },
+                                        {
+                                            "type": "isInteger",
+                                            "value": true
+                                        }
+                                    ],
+                                    "children": []
+                                }
                             },
                             {
-                                "type": "isRequired",
-                                "value": true
-                            },
-                            {
-                                "type": "min",
-                                "value": "512"
-                            },
-                            {
-                                "type": "max",
-                                "value": "2048"
+                                "meta": {
+                                    "id": 10,
+                                    "order": 3
+                                },
+                                "content": {
+                                    "name": "height",
+                                    "rules": [
+                                        {
+                                            "type": "dataType",
+                                            "value": "numeric"
+                                        },
+                                        {
+                                            "type": "isRequired",
+                                            "value": true
+                                        },
+                                        {
+                                            "type": "isInteger",
+                                            "value": true
+                                        }
+                                    ],
+                                    "children": []
+                                }
                             }
                         ]
                     }
-                ]
-            }
-        ]
+                }
+            ]
+        }
+    },
+    {
+        "meta": {
+            "id": 4,
+            "order": 3
+        },
+        "content": {
+            "name": "multidimensional_array",
+            "rules": [
+                {
+                    "type": "dataType",
+                    "value": "list"
+                },
+                {
+                    "type": "isRequired",
+                    "value": true
+                }
+            ],
+            "children": [
+                {
+                    "meta": {
+                        "id": 0,
+                        "order": 0
+                    },
+                    "content": {
+                        "name": "*",
+                        "rules": [
+                            {
+                                "type": "dataType",
+                                "value": "list"
+                            }
+                        ],
+                        "children": [
+                            {
+                                "meta": {
+                                    "id": 0,
+                                    "order": 0
+                                },
+                                "content": {
+                                    "name": "*",
+                                    "rules": [
+                                        {
+                                            "type": "dataType",
+                                            "value": "string"
+                                        }
+                                    ],
+                                    "children": []
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
     }
 ]

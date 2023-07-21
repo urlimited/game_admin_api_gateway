@@ -87,5 +87,53 @@
             "order": 2,
             "id": 12
         }
+    },
+    "multidimensional_array": {
+        "content": [
+            {
+                "content": [
+                    {
+                        "content": 1,
+                        "meta": {
+                            "order": 1,
+                            "id": 13
+                        }
+                    },
+                    {
+                        "content": "2",
+                        "meta": {
+                            "order": 2,
+                            "id": 14
+                        }
+                    }
+                ],
+                "meta": {
+                    "order": 1,
+                    "id": 15
+                }
+            },
+            {
+                "content": [
+                    {
+                        "content": 2,
+                        "meta": {
+                            "order": 1,
+                            "id": 16
+                        }
+                    },
+                    {
+                        "content": "3",
+                        "meta": {
+                            "order": 2,
+                            "id": 17
+                        }
+                    }
+                ],
+                "meta": {
+                    "order": 1,
+                    "id": 18
+                }
+            }
+        ]
     }
 }
