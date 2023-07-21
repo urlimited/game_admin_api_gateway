@@ -6,6 +6,7 @@ use App\Containers\ConfigurationSection\Layout\Tests\ApiTestCase;
 use App\Containers\ConfigurationSection\Game\Models\Game;
 use App\Containers\ConfigurationSection\User\Models\User;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
+use Illuminate\Support\Facades\File;
 
 /**
  * @desription test creates a new game layout \
@@ -30,7 +31,7 @@ class StoreTest extends ApiTestCase
             ->hasAttached($game)
         )->createOne();
 
-        $json = '[{"name": "A","data_type": "list","rules": null,"children": [{"name": "A-C","data_type": "string","rules": null,"children": [{"name": "A-C-G","data_type": "string", "rules": null}]}, {"name": "A-E","data_type": "string","rules": null}]},{"name": "B", "data_type": "string", "rules": null, "children": [{"name": "B-D","data_type": "string","rules": null}]}]';
+        $json = File::get(__DIR__ . '/../../../../../Data/Stubs/DefaultLayoutStub.json');
 
         $array = json_decode($json, true);
 
