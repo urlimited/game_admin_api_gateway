@@ -94,12 +94,20 @@ class SettingManager
                     continue 2;
                 } else {
                     $settingValue = $settingValue[SettingSchemaValidator::VISIBLE_FIELDS][$queuedValue] ?? null;
+                    $settingId = $settingValue[SettingSchemaValidator::TECH_FIELDS]['id'];
                 }
             }
 
-            $rules->each(
-                fn(ValidateRule $rule) => $rule->check($settingValue[SettingSchemaValidator::VISIBLE_FIELDS] ?? null)
-            );
+            try {
+                $rules->each(
+                    fn(ValidateRule $rule) => $rule->check($settingValue[SettingSchemaValidator::VISIBLE_FIELDS] ?? null)
+                );
+            } catch (InvalidDataProvidedException $e) {
+                throw new InvalidDataProvidedException(
+                    $e->getMessage(),
+                    $settingId
+                );
+            }
         }
     }
 

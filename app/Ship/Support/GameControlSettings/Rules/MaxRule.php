@@ -12,7 +12,7 @@ final class MaxRule extends ValidateRule
     public function check(mixed $value)
     {
         if ($this->value < $value) {
-            throw new InvalidDataProvidedException();
+            throw new InvalidDataProvidedException("The value doesn't match max rule, must be less or equal than: $this->value");
         }
     }
 }

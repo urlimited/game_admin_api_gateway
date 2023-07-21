@@ -12,44 +12,39 @@ final class DataTypeRule extends ValidateRule
      */
     public function check(mixed $value)
     {
-        try {
-            switch ($this->value) {
-                case DataTypesEnum::Bool->value:
-                    if (!in_array($value, [true, false, 1, 0, "true", "false", "1", "0"])) {
-                        throw new InvalidDataProvidedException();
-                    }
-                    break;
+        switch ($this->value) {
+            case DataTypesEnum::Bool->value:
+                if (!in_array($value, [true, false, 1, 0, "true", "false", "1", "0"])) {
+                    throw new InvalidDataProvidedException("The value must be boolean, string that contains boolean or integers 0, 1");
+                }
+                break;
 
-                case DataTypesEnum::List->value:
-                    if (!is_array($value) || !array_is_list($value)) {
-                        throw new InvalidDataProvidedException();
-                    }
-                    break;
-
-                case DataTypesEnum::Numeric->value:
-                    if (!is_numeric($value)) {
-                        throw new InvalidDataProvidedException();
-                    }
-                    break;
-
-                case DataTypesEnum::Object->value:
-                    if (!is_array($value) || array_is_list($value)) {
-                        throw new InvalidDataProvidedException();
-                    }
-                    break;
-
-                case DataTypesEnum::String->value:
-                    if (!is_string($value)) {
-                        throw new InvalidDataProvidedException();
-                    }
-                    break;
-
-                default:
+            case DataTypesEnum::List->value:
+                if (!is_array($value) || !array_is_list($value)) {
                     throw new InvalidDataProvidedException();
-            }
-        } catch (\Exception $e) {
+                }
+                break;
 
+            case DataTypesEnum::Numeric->value:
+                if (!is_numeric($value)) {
+                    throw new InvalidDataProvidedException("The value must be numerical");
+                }
+                break;
+
+            case DataTypesEnum::Object->value:
+                if (!is_array($value) || array_is_list($value)) {
+                    throw new InvalidDataProvidedException("The value must be object");
+                }
+                break;
+
+            case DataTypesEnum::String->value:
+                if (!is_string($value)) {
+                    throw new InvalidDataProvidedException("The value must be string");
+                }
+                break;
+
+            default:
+                throw new InvalidDataProvidedException("There is no such value type");
         }
-
     }
 }
