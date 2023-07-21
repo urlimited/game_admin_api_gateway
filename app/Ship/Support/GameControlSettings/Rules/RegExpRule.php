@@ -3,7 +3,6 @@
 namespace App\Ship\Support\GameControlSettings\Rules;
 
 use App\Ship\Support\GameControlSettings\Exceptions\InvalidDataProvidedException;
-use Illuminate\Support\Facades\Log;
 
 final class RegExpRule extends ValidateRule
 {
@@ -23,11 +22,11 @@ final class RegExpRule extends ValidateRule
             )
         ) {
             if (!preg_match($this->value, $value)) {
-                throw new InvalidDataProvidedException();
+                throw new InvalidDataProvidedException("The value doesn\'t match regular expression: $this->value");
             }
         } else {
             if (!preg_match('/' . $this->value . '/', $value)) {
-                throw new InvalidDataProvidedException();
+                throw new InvalidDataProvidedException("The value doesn\'t match regular expression: $this->value");
             }
         }
     }

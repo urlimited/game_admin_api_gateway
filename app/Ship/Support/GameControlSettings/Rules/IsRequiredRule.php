@@ -12,7 +12,7 @@ final class IsRequiredRule extends ValidateRule
     public function check(mixed $value)
     {
         if ($this->value && is_null($value)) {
-            throw new InvalidDataProvidedException();
+            throw new InvalidDataProvidedException("The value is required");
         }
     }
 }

@@ -17,7 +17,7 @@ final class IsIntegerRule extends ValidateRule
                 || preg_match('/(\.)|(\s)|(,)|(e)/', $value)
             )
         ) {
-            throw new InvalidDataProvidedException();
+            throw new InvalidDataProvidedException("The value must be integer");
         }
     }
 }

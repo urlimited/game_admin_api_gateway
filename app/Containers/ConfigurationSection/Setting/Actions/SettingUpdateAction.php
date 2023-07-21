@@ -13,6 +13,7 @@ use App\Ship\Support\GameControlSettings\GameControlSettingsContext;
 use App\Ship\Support\GameControlSettings\GameControlSettingsFacade;
 use App\Ship\Support\GameControlSettings\Settings\Exceptions\SettingNotInitializedException;
 use CodeBaseTeam\DataStructures\Tree\Exceptions\InvalidDataException;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Prettus\Validator\Exceptions\ValidatorException;
 
@@ -53,8 +54,13 @@ class SettingUpdateAction extends Action
 
             try {
                 GameControlSettingsFacade::checkSetting($context);
-            } catch (InvalidDataProvidedException) {
-                throw ValidationException::withMessages(["The configuration does not applicable for all layout rules"]);
+            } catch (InvalidDataProvidedException $e) {
+                throw ValidationException::withMessages(
+                    [
+                        'setting_id' => $e->getSettingId(),
+                        'message' => $e->getMessage(),
+                    ]
+                );
             }
         }
 

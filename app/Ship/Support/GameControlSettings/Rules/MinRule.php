@@ -12,7 +12,7 @@ final class MinRule extends ValidateRule
     public function check(mixed $value)
     {
         if ($this->value > $value) {
-            throw new InvalidDataProvidedException();
+            throw new InvalidDataProvidedException("The value doesn't match min rule, must be more or equal than: $this->value");
         }
     }
 }
