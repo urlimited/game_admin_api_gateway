@@ -64,7 +64,7 @@ class ShowTest extends ApiTestCase
             [
                 'data' => [
                     'login',
-                    'game_id',
+                    'uuid',
                 ]
             ]
         );
@@ -73,9 +73,10 @@ class ShowTest extends ApiTestCase
         $this->assertDatabaseHas('players',
             [
                 'login' => $parsedResponse['login'],
-                'game_id' => $parsedResponse['game_id'],
+                'uuid' => Uuid::fromString($parsedResponse['uuid'])->getBytes(),
             ]
         );
+
         $playerId= Player::query()->where('uuid', Uuid::fromString($parsedResponse['uuid'])->getBytes())->value('id');
 
         $this->assertDatabaseHas('personal_access_tokens',

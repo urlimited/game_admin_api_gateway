@@ -2,8 +2,10 @@
 
 namespace App\Containers\ConfigurationSection\Setting\UI\WEB\Requests;
 
+use App\Containers\ConfigurationSection\Game\Models\Game;
 use App\Containers\ConfigurationSection\User\Models\User;
 use App\Ship\Parents\Requests\Request;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @description Can be obtained in the following scenarios: \
@@ -42,7 +44,21 @@ class SettingWebIndexRequest extends Request
 
         return (
             $user->hasPermission('setting-full-other-read')
-            || $user->hasPermission('setting-full-own-read')
+            || (
+                $user->hasPermission('setting-full-own-read')
+                && $user
+                    ->games
+                    ->map(fn($game) => $game->id)
+                    ->contains($this->getGameId())
+            )
         );
+    }
+
+    public function getGameId(){
+        return Game::query()
+            ->where(
+                'uuid',
+                Uuid::fromString($this->get('game_uuid'))->getBytes()
+            )->value('id');
     }
 }

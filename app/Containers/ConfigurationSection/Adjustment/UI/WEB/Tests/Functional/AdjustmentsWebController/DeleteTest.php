@@ -39,7 +39,6 @@ class DeleteTest extends ApiTestCase
 
         $adjustment = Adjustment::factory()
             ->for($setting)
-            ->for($user)
             ->createOne();
 
         // 2. Scenarios run

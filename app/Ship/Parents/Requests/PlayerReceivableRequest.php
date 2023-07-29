@@ -6,7 +6,6 @@ use App\Ship\Exceptions\AuthenticationException;
 use App\Ship\Parents\Exceptions\Exception;
 use App\Ship\Parents\Requests\Contracts\PlayerReceivableRequestContract;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Support\Str;
 use Laravel\Sanctum\PersonalAccessToken;
 
 abstract class PlayerReceivableRequest extends GameReceivableRequest implements PlayerReceivableRequestContract
@@ -16,6 +15,7 @@ abstract class PlayerReceivableRequest extends GameReceivableRequest implements 
 
     /**
      * @throws AuthenticationException
+     * @throws AuthorizationException
      */
     public function getPlayerId(): int
     {

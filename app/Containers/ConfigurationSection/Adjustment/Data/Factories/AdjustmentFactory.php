@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\File;
  */
 class AdjustmentFactory extends Factory
 {
-    protected $model = Layout::class;
+    protected $model = Adjustment::class;
 
     public function definition(): array
     {

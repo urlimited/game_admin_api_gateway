@@ -69,7 +69,8 @@ class UpdateTest extends ApiTestCase
                 'data' => [
                     'uuid',
                     'login',
-                    'game_id',
+                    'game_uuid',
+                    'player_token',
                 ]
             ]
         );

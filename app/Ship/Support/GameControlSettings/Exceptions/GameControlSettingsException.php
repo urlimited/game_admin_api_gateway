@@ -7,16 +7,16 @@ use Throwable;
 
 abstract class GameControlSettingsException extends Exception
 {
-    protected int $settingId;
+    protected string|int $settingId;
 
-    public function __construct(string $message = "", int $settingId = 0, int $code = 0, ?Throwable $previous = null)
+    public function __construct(string $message = "", ?int $settingId = 0, int $code = 0, ?Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
 
-        $this->settingId = $settingId;
+        $this->settingId = $settingId ?? 'setting not found';
     }
 
-    public function getSettingId(): int
+    public function getSettingId(): int|string
     {
         return $this->settingId;
     }

@@ -17,7 +17,7 @@ use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
  *          1. Successfully update setting
  * @group user
  * @group api
- * @covers \App\Containers\ConfigurationSection\Setting\UI\WEB\Controllers\SettingsWebController::update
+ * @covers \App\Containers\ConfigurationSection\Adjustment\UI\WEB\Controllers\AdjustmentsWebController::update
  */
 class UpdateTest extends ApiTestCase
 {

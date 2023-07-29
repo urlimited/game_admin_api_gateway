@@ -8,7 +8,6 @@ use App\Containers\ConfigurationSection\Setting\Tests\ApiTestCase;
 use App\Containers\ConfigurationSection\Game\Models\Game;
 use App\Containers\ConfigurationSection\Layout\Models\Layout;
 use App\Containers\ConfigurationSection\User\Models\User;
-use App\Ship\Parents\Models\Permission;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 
 /**
@@ -61,7 +60,6 @@ class ShowTest extends ApiTestCase
         $response->assertJsonStructure(
             [
                 'data' => [
-                    'id',
                     'name',
                     'structure_id',
                     'schema',
