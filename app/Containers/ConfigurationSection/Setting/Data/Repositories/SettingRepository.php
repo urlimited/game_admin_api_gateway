@@ -11,7 +11,7 @@ class SettingRepository extends Repository
 {
     protected $fieldSearchable = [
         'game_id'=>'=',
-        'structure_id'=>'=',
+        'layout_id'=>'=',
         'name' => '=',
         'author_id' => '=',
         'id' => '='

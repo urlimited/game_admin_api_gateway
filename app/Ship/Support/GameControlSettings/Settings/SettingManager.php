@@ -94,7 +94,7 @@ class SettingManager
                     continue 2;
                 } else {
                     $settingValue = $settingValue[SettingSchemaValidator::VISIBLE_FIELDS][$queuedValue] ?? null;
-                    $settingId = $settingValue[SettingSchemaValidator::TECH_FIELDS]['id'];
+                    $settingId = $settingValue[SettingSchemaValidator::TECH_FIELDS]['id'] ?? null;
                 }
             }
 

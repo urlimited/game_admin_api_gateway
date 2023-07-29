@@ -61,7 +61,8 @@ class IndexTest extends ApiTestCase
                     '*' => [
                         'uuid',
                         'login',
-                        'game_id',
+                        'game_uuid',
+                        'player_token'
                     ]
                 ]
             ]

@@ -87,5 +87,28 @@
             "order": 2,
             "id": 12
         }
+    },
+    "multidimensional_array": {
+        "content": [
+            {
+                "content": [
+                    {
+                        "content": "test 1",
+                        "meta": {
+                            "order": 1,
+                            "id": 13
+                        }
+                    }
+                ],
+                "meta": {
+                    "order": 1,
+                    "id": 14
+                }
+            }
+        ],
+        "meta": {
+            "order": 3,
+            "id": 15
+        }
     }
 }

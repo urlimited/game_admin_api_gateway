@@ -16,7 +16,7 @@
  * @apiUse             UserSuccessSingleResponse
  */
 
-use App\Containers\GameManagementSection\Player\Middleware\ValidatePlayerTokenMiddleware;
+use App\Ship\Middlewares\Http\ValidatePlayerTokenMiddleware;
 use App\Containers\GameManagementSection\Player\UI\API\Controllers\PlayersApiController;
 use App\Ship\Middlewares\Http\ValidateGameTokenMiddleware;
 use Illuminate\Support\Facades\Route;

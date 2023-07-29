@@ -11,6 +11,7 @@ use App\Containers\ConfigurationSection\User\Models\User;
 use App\Ship\Parents\Models\Permission;
 use App\Ship\Parents\Tests\PhpUnit\GDRefreshDatabase;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * @desription Successfully update setting \

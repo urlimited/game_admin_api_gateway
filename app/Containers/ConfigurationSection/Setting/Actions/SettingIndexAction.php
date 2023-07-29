@@ -2,7 +2,6 @@
 
 namespace App\Containers\ConfigurationSection\Setting\Actions;
 
-
 use App\Containers\ConfigurationSection\Game\Models\Game;
 use App\Containers\ConfigurationSection\Layout\Models\Layout;
 use App\Containers\ConfigurationSection\Setting\Tasks\SettingFilterTask;

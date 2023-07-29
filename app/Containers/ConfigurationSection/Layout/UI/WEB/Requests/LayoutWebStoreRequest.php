@@ -54,6 +54,7 @@ class LayoutWebStoreRequest extends Request
             )
         );
     }
+
     public function getGameId(){
         return Game::query()->where('uuid',Uuid::fromString($this->get('game_uuid'))->getBytes())->value('id');
     }

@@ -67,7 +67,9 @@ class ShowTest extends ApiTestCase
             [
                 'data' => [
                     'login',
-                    'game_id',
+                    'uuid',
+                    'game_uuid',
+                    'player_token',
                 ]
             ]
         );
