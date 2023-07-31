@@ -1,0 +1,8 @@
+[
+    {
+        "type": "player_data",
+        "field": "uuid",
+        "operator": "in",
+        "value": "1,2,3"
+    }
+]

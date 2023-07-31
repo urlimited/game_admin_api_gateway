@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\File;
 
 /**
  * @method Setting  createOne($data = [])
- *
  */
 class SettingFactory extends Factory
 {
